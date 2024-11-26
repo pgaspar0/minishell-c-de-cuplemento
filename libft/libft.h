@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 17:37:53 by pgaspar           #+#    #+#             */
-/*   Updated: 2024/11/01 17:13:03 by pgaspar          ###   ########.fr       */
+/*   Updated: 2024/11/19 14:11:06 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ int					ft_toupper(int c);
 int					ft_tolower(int c);
 int					ft_atoi_base(const char *str, int str_base);
 int					ft_atoi(const char *str);
+int					ft_strcmp(char *s1, char *s2);
 int					ft_strncmp(const char *str1, const char *str2, size_t n);
 int					ft_memcmp(const void *ptr1, const void *ptr2, size_t n);
 int					get_strlen(char *s);

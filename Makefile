@@ -9,6 +9,7 @@ OBJS = ${SRCS:.c=.o}
 
 ${NAME}: ${OBJS}
 	@make -s -C libft MAKEFLAGS=-silent
+	@make -s -C pipex MAKEFLAGS=-silent
 	@${CC} ${FLAGS} ${OBJS} -lreadline -L./libft -lft -o ${NAME}
 
 all: ${NAME}
@@ -16,10 +17,12 @@ all: ${NAME}
 
 clean:
 	@make clean -s -C libft MAKEFLAGS=-silent
+	@make clean -s -C pipex MAKEFLAGS=-silent
 	@rm -rf ${OBJS}
 
 fclean: clean
 	@make fclean -s -C libft MAKEFLAGS=-silent
+	@make fclean -s -C pipex MAKEFLAGS=-silent
 	@rm -rf ${NAME}
 
 re: fclean all
