@@ -1,7 +1,7 @@
 COMPILER = cc
 FLAGS = -Wall -Wextra -Werror 
 NAME = minishell
-SRCS = minishell.c parse.c
+SRCS = minishell.c parse.c parse2.c concat.c
 OBJS = ${SRCS:.c=.o}
 
 .c.o:

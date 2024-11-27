@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.c                                            :+:      :+:    :+:   */
+/*   parse2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:52:31 by pgaspar           #+#    #+#             */
-/*   Updated: 2024/11/27 08:08:50 by pgaspar          ###   ########.fr       */
+/*   Updated: 2024/11/27 08:19:19 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	is_special(char c)
 {
-	if (c == '|' || c == '>' || c == '<' || c == ' ' || c == '\t')
+	if (c == '|' || c == '>' || c == '<')
 		return (1);
 	return (0);
 }
@@ -35,7 +35,7 @@ static size_t	ft_toklen(const char *s)
 				++i;
 			while (s[i] && !is_special(s[i]))
 				++i;
-			if (is_special(s[i]) && (s[i] != ' ' && s[i] != '\t'))
+			if (is_special(s[i]))
 				++ret;
 		}
 		else
@@ -44,7 +44,7 @@ static size_t	ft_toklen(const char *s)
 	return (ret);
 }
 
-char	**ft_parse(const char *s)
+char	**ft_parse2(const char *s)
 {
 	char	**ptr;
 	size_t	i;
@@ -56,6 +56,7 @@ char	**ft_parse(const char *s)
 	ptr = malloc(sizeof(char *) * (ft_toklen(s) + 1));
 	if (ptr == 0)
 		return (0);
+	printf("Tokens: %zu\n", ft_toklen(s));
 	while (*s)
 	{
 		if (!is_special(*s))
@@ -65,10 +66,10 @@ char	**ft_parse(const char *s)
 				++s;
 			ptr[i++] = ft_substr(s - len, 0, len);
 		}
-		else if (is_special(*s) && (*s != ' ' && *s != '\t'))
+		else if (is_special(*s))
 		{
 			len = 0;
-			while (*s && (is_special(*s) && (*s != ' ' && *s != '\t')))
+			while (*s && (is_special(*s)))
 			{
 				++len;
 				++s;

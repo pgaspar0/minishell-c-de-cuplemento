@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 08:01:11 by pgaspar           #+#    #+#             */
-/*   Updated: 2024/11/26 18:28:14 by pgaspar          ###   ########.fr       */
+/*   Updated: 2024/11/27 07:58:17 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,7 @@
 # include <readline/history.h>
 
 char	**ft_parse(const char *s);
+char	**ft_parse2(const char *s);
+char	*mat_concat(char **mat);
 
 #endif
