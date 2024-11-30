@@ -12,3 +12,6 @@ for (int i = 0; str3[i]; i++)
 for (int i = 0; paulo[i]; i++)
 	printf("heheheheh:%s\n", paulo[i]);
 printf("string concat: %s\n", concat);
+
+printf("Extracting substring: start=%ld, len=%zu, token='%.*s'\n",
+       s - len, len, (int)len, s - len);

@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 08:00:27 by pgaspar           #+#    #+#             */
-/*   Updated: 2024/11/28 17:43:51 by pgaspar          ###   ########.fr       */
+/*   Updated: 2024/11/30 17:37:54 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,29 @@ void	handle_sigint(int sig)
 
 void	pipex(char **tokens)
 {
-	for (int i = 0; tokens[i]; i++)
-		printf("%s\n", tokens[i]);
+	int	i;
+
+	i = 0;
+	while (tokens[i])
+	{
+		if (tokens[i + 1] = '|')
+		{
+
+		}
+		else if (tokens[i + 1 = '>'])
+		{
+
+		}
+		else if (tokens[i + 1 = '>'])
+		{
+			
+		}
+		else
+		{
+			
+		}
+		i++;
+	}
 }
 
 void	faz_tudo(char *str)
@@ -46,15 +67,12 @@ void	faz_tudo(char *str)
 	char	*concat;
 
 	tokens = ft_parse(str);
-	debug_tokens(tokens, "ft_parse");
 	concat = mat_concat(tokens);
-	printf("Concat: %s\n", concat);
 	final_tokens = ft_parse2(concat);
-	debug_tokens(final_tokens, "ft_parse2");
 	pipex(final_tokens);
-	free_matrix(tokens);
+	// free_matrix(tokens);
 	free(concat);
-	free_matrix(final_tokens);
+	// free_matrix(final_tokens);
 }
 int	main(void)
 {

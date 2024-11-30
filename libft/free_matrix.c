@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:11:53 by pgaspar           #+#    #+#             */
-/*   Updated: 2024/11/28 17:05:47 by pgaspar          ###   ########.fr       */
+/*   Updated: 2024/11/29 12:02:02 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	free_matrix(char **s)
 	while (s[i])
 	{
 		free(s[i]);
+		// s[i] = NULL;
 		i++;
 	}
 	free(s);

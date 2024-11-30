@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:52:31 by pgaspar           #+#    #+#             */
-/*   Updated: 2024/11/28 19:42:50 by pgaspar          ###   ########.fr       */
+/*   Updated: 2024/11/30 17:03:15 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ char	**ft_parse2(const char *s)
 	ptr = malloc(sizeof(char *) * (ft_toklen(s) + 1));
 	if (ptr == 0)
 		return (0);
-	printf("Tokens: %zu\n", ft_toklen(s));
 	while (*s)
 	{
 		while (*s && (*s == ' ' || *s == '\t'))
@@ -66,7 +65,7 @@ char	**ft_parse2(const char *s)
 		if (!is_special(*s))
 		{
 			len = 0;
-			while (*s && (!is_special(*s)) && ((*s == ' ' || *s == '\t')) && ++len)
+			while (*s && (!is_special(*s)) && ++len)
 				++s;
 			ptr[i++] = ft_substr(s - len, 0, len);
 		}

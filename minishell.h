@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 08:01:11 by pgaspar           #+#    #+#             */
-/*   Updated: 2024/11/27 07:58:17 by pgaspar          ###   ########.fr       */
+/*   Updated: 2024/11/30 17:00:35 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <signal.h>
+# include <stdbool.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
