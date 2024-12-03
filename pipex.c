@@ -6,11 +6,29 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 14:47:55 by pgaspar           #+#    #+#             */
-/*   Updated: 2024/11/26 18:08:31 by pgaspar          ###   ########.fr       */
+/*   Updated: 2024/12/03 13:28:19 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+void	cuta(char **command, char **envp)
+{
+	char	*caminho;
+	char	*path;
+	char	**path_copy;
+
+	path = getenv("PATH");
+	path_copy = ft_split(path, ':');
+	caminho = get_caminho(path_copy, command);
+	if (!caminho)
+	{
+		perror("Error");
+		free_matrix(path_copy);
+		exit(1);
+	}
+	execve(caminho, command, envp);
+}
 
 void	here_doc(char *delimiter)
 {
@@ -37,7 +55,7 @@ void	here_doc(char *delimiter)
 	close(pipe_fd[0]);
 }
 
-static void	keeping_up_main(char *av[], int *fd, int *i, int ac)
+/* void	keeping_up_main(char *av[], int *fd, int *i, int ac)
 {
 	if (!ft_strcmp(av[1], "here_doc"))
 	{
@@ -91,4 +109,4 @@ int	main(int ac, char *av[], char *envp[])
 		waitpid(fpid, NULL, 0);
 	free_matrix(last_command);
 	return (0);
-}
+} */

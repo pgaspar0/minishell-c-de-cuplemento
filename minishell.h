@@ -14,7 +14,7 @@
 # define MINISHELL_H
 
 # include "./libft/libft.h"
-# include "./pipex/pipex.h"
+# include "pipex.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <signal.h>
