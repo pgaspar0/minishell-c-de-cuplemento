@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 11:44:07 by pgaspar           #+#    #+#             */
-/*   Updated: 2024/12/02 19:03:02 by pgaspar          ###   ########.fr       */
+/*   Updated: 2024/12/04 13:48:46 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,7 @@ void	pipe_it(char **command, char **envp)
 	}
 	fpid = fork();
 	if (fpid == 0)
-	{
 		cuta_in_between(command, envp, pipe_fd);
-	}
 	else
 	{
 		dup2(pipe_fd[0], 0);

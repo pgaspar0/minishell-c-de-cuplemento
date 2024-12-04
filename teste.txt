@@ -15,3 +15,37 @@ printf("string concat: %s\n", concat);
 
 printf("Extracting substring: start=%ld, len=%zu, token='%.*s'\n",
        s - len, len, (int)len, s - len);
+
+void	pipex(char **tokens, char **envp)
+{
+	char	**command;
+	int		saved_stdin;
+	int 	saved_stdout;
+	int		i;
+
+	i = 0;
+	saved_stdin = dup(0);
+	saved_stdout = dup(1);
+	while (tokens[i])
+	{
+		if (tokens[i + 1] && tokens[i + 1][0] == '|')
+		{
+			command = ft_split(tokens[i], ' ');
+			pipe_it(command, envp);
+			free_matrix(command);
+			i++;
+		}
+		else
+		{
+    		dup2(saved_stdout, 1);
+			command = ft_split(tokens[i], ' ');
+			just_execute(command, envp);
+			free_matrix(command);
+		}
+		i++;
+	}
+	dup2(saved_stdin, 0);
+    dup2(saved_stdout, 1);
+    close(saved_stdin);
+    close(saved_stdout);
+}

@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 08:00:27 by pgaspar           #+#    #+#             */
-/*   Updated: 2024/12/03 13:08:10 by pgaspar          ###   ########.fr       */
+/*   Updated: 2024/12/04 14:45:11 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,36 +23,34 @@ void	handle_sigint(int sig)
 
 void	pipex(char **tokens, char **envp)
 {
-	char	**command;
-	int		saved_stdin;
-	int 	saved_stdout;
 	int		i;
+	int		original_fd[2];
+	char	**command;
 
 	i = 0;
-	saved_stdin = dup(0);
-	saved_stdout = dup(1);
+	original_fd[0] = dup(0);
+	original_fd[1] = dup(1);
 	while (tokens[i])
 	{
-		if (tokens[i + 1] && tokens[i + 1][0] == '|')
+		printf("Token: %s\n", tokens[i]);
+		command = ft_split(tokens[i], ' ');
+		if (tokens[i + 1] && !ft_strcmp(tokens[i + 1], "|"))
 		{
-			command = ft_split(tokens[i], ' ');
-			pipe_it(command, envp);
-			free_matrix(command);
 			i++;
+			// printf("pipe\n");
+			pipe_it(command, envp);
 		}
 		else
 		{
-    		dup2(saved_stdout, 1);
-			command = ft_split(tokens[i], ' ');
+			dup2(original_fd[1], 1);
+			close(original_fd[1]);
 			just_execute(command, envp);
-			free_matrix(command);
 		}
+		free_matrix(command);
 		i++;
 	}
-	dup2(saved_stdin, 0);
-    dup2(saved_stdout, 1);
-    close(saved_stdin);
-    close(saved_stdout);
+	dup2(original_fd[0], 0);
+	close(original_fd[0]);
 }
 
 void	faz_tudo(char *str, char **envp)
@@ -64,6 +62,9 @@ void	faz_tudo(char *str, char **envp)
 	tokens = ft_parse(str);
 	concat = mat_concat(tokens);
 	final_tokens = ft_parse2(concat);
+	printf("Concat: %s\n", concat);
+	for (int i = 0; final_tokens[i]; i++)
+		printf("Final token: %s\n", final_tokens[i]);
 	pipex(final_tokens, envp);
 	// free_matrix(tokens);
 	free(concat);
