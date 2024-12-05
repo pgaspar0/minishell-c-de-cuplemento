@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hfuncs.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gamekiller2111 <gamekiller2111@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 19:05:09 by pgaspar           #+#    #+#             */
-/*   Updated: 2024/12/02 11:37:12 by pgaspar          ###   ########.fr       */
+/*   Updated: 2024/12/05 22:36:44 by gamekiller2      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void	cuta_in_between(char **command, char **envp, int *pipe_fd)
 	}
 	dup2(pipe_fd[1], 1);
 	close(pipe_fd[0]);
+	close(pipe_fd[1]);
 	execve(caminho, command, envp);
 }
 

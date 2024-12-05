@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gamekiller2111 <gamekiller2111@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 17:37:53 by pgaspar           #+#    #+#             */
-/*   Updated: 2024/11/19 14:11:06 by pgaspar          ###   ########.fr       */
+/*   Updated: 2024/12/05 21:07:15 by gamekiller2      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void				int_to_hex_lower(unsigned int i, int *c);
 void				int_to_hex_upper(unsigned int i, int *c);
 int					ft_printf(const char *p, ...);
 int					ft_lstsize(t_list *lst);
+int					ft_isspace(int c);
 int					ft_isalpha(int c);
 int					ft_isdigit(int c);
 int					ft_isalnum(int c);

@@ -6,7 +6,7 @@
 /*   By: gamekiller2111 <gamekiller2111@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 08:00:27 by pgaspar           #+#    #+#             */
-/*   Updated: 2024/12/04 20:37:50 by gamekiller2      ###   ########.fr       */
+/*   Updated: 2024/12/05 22:20:27 by gamekiller2      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,10 @@ void	pipex(char **tokens, char **envp)
 	original_fd[1] = dup(1);
 	while (tokens[i])
 	{
-		printf("Token: %s\n", tokens[i]);
+		// printf("Token: %s\n", tokens[i]);
 		command = ft_split(tokens[i], ' ');
+		/* for (int j = 0; command[j]; j++)
+			printf("Command: %s\n", command[j]); */
 		if (tokens[i + 1] && !ft_strcmp(tokens[i + 1], "|"))
 		{
 			i++;
@@ -62,11 +64,11 @@ void	faz_tudo(char *str, char **envp)
 	tokens = ft_parse(str);
 	concat = mat_concat(tokens);
 	final_tokens = ft_parse2(concat);
-	printf("Concat: %s\n", concat);
+	/* printf("Concat: %s\n", concat);
 	for (int i = 0; tokens[i]; i++)
 		printf("Token: %s\n", tokens[i]);
 	for (int i = 0; final_tokens[i]; i++)
-		printf("Final token: %s\n", final_tokens[i]);
+		printf("Final token: %s\n", final_tokens[i]); */
 	pipex(final_tokens, envp);
 	// free_matrix(tokens);
 	free(concat);

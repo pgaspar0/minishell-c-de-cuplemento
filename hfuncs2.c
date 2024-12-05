@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hfuncs2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gamekiller2111 <gamekiller2111@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 11:44:07 by pgaspar           #+#    #+#             */
-/*   Updated: 2024/12/04 13:48:46 by pgaspar          ###   ########.fr       */
+/*   Updated: 2024/12/05 22:35:35 by gamekiller2      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	pipe_it(char **command, char **envp)
 	{
 		dup2(pipe_fd[0], 0);
 		close(pipe_fd[1]);
+		close(pipe_fd[0]);
 		waitpid(fpid, NULL, 0);
 	}
 }
