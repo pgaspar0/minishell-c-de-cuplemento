@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gamekiller2111 <gamekiller2111@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:52:31 by pgaspar           #+#    #+#             */
-/*   Updated: 2024/11/30 17:03:15 by pgaspar          ###   ########.fr       */
+/*   Updated: 2024/12/05 04:59:43 by gamekiller2      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ static size_t	ft_toklen(const char *s)
 		if (!is_special(s[i]))
 		{
 			++ret;
-			if (s[i] == '>' || s[i] == '<')
+			if ((s[i] == '>' || s[i] == '<') && (s[i + 1] == '>' || s[i
+					+ 1] == '<'))
 				++i;
 			while (s[i] && !is_special(s[i]))
 				++i;

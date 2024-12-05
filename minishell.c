@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gamekiller2111 <gamekiller2111@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 08:00:27 by pgaspar           #+#    #+#             */
-/*   Updated: 2024/12/04 14:45:11 by pgaspar          ###   ########.fr       */
+/*   Updated: 2024/12/04 20:37:50 by gamekiller2      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ void	faz_tudo(char *str, char **envp)
 	concat = mat_concat(tokens);
 	final_tokens = ft_parse2(concat);
 	printf("Concat: %s\n", concat);
+	for (int i = 0; tokens[i]; i++)
+		printf("Token: %s\n", tokens[i]);
 	for (int i = 0; final_tokens[i]; i++)
 		printf("Final token: %s\n", final_tokens[i]);
 	pipex(final_tokens, envp);

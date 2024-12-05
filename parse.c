@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gamekiller2111 <gamekiller2111@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:52:31 by pgaspar           #+#    #+#             */
-/*   Updated: 2024/11/29 11:52:58 by pgaspar          ###   ########.fr       */
+/*   Updated: 2024/12/05 04:59:19 by gamekiller2      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,18 @@ static size_t	ft_toklen(const char *s)
 		if (!is_special(s[i]))
 		{
 			++ret;
-			if (s[i] == '>' || s[i] == '<')
-				++i;
 			while (s[i] && !is_special(s[i]))
 				++i;
-			if (is_special(s[i]) && (s[i] != ' ' && s[i] != '\t'))
+			if ((s[i] == '>' || s[i] == '<') && (s[i + 1] == '>' || s[i
+					+ 1] == '<'))
+				++i;
+			if (is_special(s[i]))
 				++ret;
 		}
 		else
 			++i;
 	}
+	printf("ret: %zu\n", ret);
 	return (ret);
 }
 
