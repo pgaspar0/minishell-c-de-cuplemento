@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 08:00:27 by pgaspar           #+#    #+#             */
-/*   Updated: 2024/12/07 14:12:37 by pgaspar          ###   ########.fr       */
+/*   Updated: 2024/12/07 17:22:44 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,21 +32,34 @@ void	pipex(char **tokens, char **envp)
 	original_fd[1] = dup(1);
 	while (tokens[i])
 	{
-		// printf("Token: %s\n", tokens[i]);
 		command = ft_split(tokens[i], ' ');
-		/* for (int j = 0; command[j]; j++)
-			printf("Command: %s\n", command[j]); */
 		if (tokens[i + 1] && !ft_strcmp(tokens[i + 1], "|"))
 		{
 			i++;
-			// printf("pipe\n");
 			pipe_it(command, envp);
 		}
 		else if (tokens[i + 1] && !ft_strcmp(tokens[i + 1], ">"))
 		{
 			i += 2;
-			// printf("redir\n");
-			right_redir(command, envp, tokens[i]);
+			right_redir(command, envp, tokens[i], 0);
+		}
+		else if (tokens[i + 1] && !ft_strcmp(tokens[i + 1], "<"))
+		{
+			i += 2;
+			left_redir(command, envp, tokens[i]);
+		}
+		else if (tokens[i + 1] && !ft_strcmp(tokens[i + 1], ">>"))
+		{
+			i += 2;
+			right_redir(command, envp, tokens[i], 1);
+		}
+		else if (tokens[i + 1] && !ft_strcmp(tokens[i + 1], "<<"))
+		{
+			i += 2;
+			here_doc(tokens[i]);
+			dup2(original_fd[1], 1);
+			close(original_fd[1]);
+			just_execute(command, envp);
 		}
 		else
 		{

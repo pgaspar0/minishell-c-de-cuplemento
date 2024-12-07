@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hfuncs.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gamekiller2111 <gamekiller2111@student.    +#+  +:+       +#+        */
+/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 19:05:09 by pgaspar           #+#    #+#             */
-/*   Updated: 2024/12/05 22:36:44 by gamekiller2      ###   ########.fr       */
+/*   Updated: 2024/12/07 16:22:23 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void	cuta_the_second(char **command, char **envp, int fd)
 }
 
 //executa o comando pegando como input o ficheiro do fd e manda o output para um lado da pipe
-void	cuta_the_first(char **command, char **envp, int *pipe_fd, int fd)
+/* void	cuta_the_first(char **command, char **envp, int *pipe_fd, int fd)
 {
 	char	*caminho;
 	char	*path;
@@ -123,5 +123,26 @@ void	cuta_the_first(char **command, char **envp, int *pipe_fd, int fd)
 	close(fd);
 	close(pipe_fd[0]);
 	close(pipe_fd[1]);
+	execve(caminho, command, envp);
+} */
+
+void	cuta_the_first(char **command, char **envp, int fd)
+{
+	char	*caminho;
+	char	*path;
+	char	**path_copy;
+
+	path = getenv("PATH");
+	path_copy = ft_split(path, ':');
+	caminho = get_caminho(path_copy, command);
+	if (!caminho)
+	{
+		perror("Error");
+		free_matrix(path_copy);
+		free_matrix(command);
+		exit(1);
+	}
+	dup2(fd, 0);
+	close(fd);
 	execve(caminho, command, envp);
 }
