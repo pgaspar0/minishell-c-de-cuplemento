@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gamekiller2111 <gamekiller2111@student.    +#+  +:+       +#+        */
+/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 08:00:27 by pgaspar           #+#    #+#             */
-/*   Updated: 2024/12/05 22:20:27 by gamekiller2      ###   ########.fr       */
+/*   Updated: 2024/12/07 14:12:37 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,12 @@ void	pipex(char **tokens, char **envp)
 			i++;
 			// printf("pipe\n");
 			pipe_it(command, envp);
+		}
+		else if (tokens[i + 1] && !ft_strcmp(tokens[i + 1], ">"))
+		{
+			i += 2;
+			// printf("redir\n");
+			right_redir(command, envp, tokens[i]);
 		}
 		else
 		{

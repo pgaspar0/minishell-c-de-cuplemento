@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hfuncs2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gamekiller2111 <gamekiller2111@student.    +#+  +:+       +#+        */
+/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 11:44:07 by pgaspar           #+#    #+#             */
-/*   Updated: 2024/12/05 22:35:35 by gamekiller2      ###   ########.fr       */
+/*   Updated: 2024/12/06 11:39:25 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,22 @@ void	pipe_it(char **command, char **envp)
 		close(pipe_fd[0]);
 		waitpid(fpid, NULL, 0);
 	}
+}
+
+void	right_redir(char **command, char **envp, char *file)
+{
+	int	fd;
+	int	fpid;
+
+	fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (fd == -1)
+	{
+		perror("Error");
+		return ;
+	}
+	fpid = fork();
+	if (fpid == 0)
+		cuta_the_second(command, envp, fd);
+	else
+		waitpid(fpid, NULL, 0);
 }
