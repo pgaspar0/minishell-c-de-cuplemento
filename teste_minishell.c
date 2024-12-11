@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 16:05:25 by pgaspar           #+#    #+#             */
-/*   Updated: 2024/12/10 11:14:29 by pgaspar          ###   ########.fr       */
+/*   Updated: 2024/12/11 19:10:48 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,6 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-typedef struct s_redirection
-{
-	char					*file;
-	int						type;
-	struct s_redirection	*next;
-}							t_redirection;
-
-typedef struct s_command
-{
-	char					**args;
-	t_redirection			*redirs;
-	struct s_command		*next;
-}							t_command;
 
 int							open_file(const char *filename, int flags,
 								int mode);
@@ -46,7 +33,7 @@ void						execute_commands(t_command *cmd_list, char **envp);
 void						free_redirections(t_redirection *redir);
 void						free_commands(t_command *cmd);
 void						here_doc(char *delimiter);
-void						skip_quotes(const char **str, char quote);
+void						skip_quotes(const char *input, size_t *index, char quote);
 bool						is_special_char(char c);
 bool						validate_syntax(char **tokens);
 char						*get_caminho(char **path_copy, char **command);
@@ -103,48 +90,54 @@ bool	is_special_char(char c)
 	return (c == '|' || c == '<' || c == '>');
 }
 
-void	skip_quotes(const char **str, char quote)
+void skip_quotes(const char *input, size_t *index, char quote)
 {
-	(*str)++;
-	while (**str && **str != quote)
-		(*str)++;
-	if (**str == quote)
-		(*str)++;
+    (*index)++;
+    while (input[*index] && input[*index] != quote)
+        (*index)++;
+    if (input[*index] == quote)
+        (*index)++;
 }
 
-char	**tokenize(const char *input)
+char **tokenize(const char *input)
 {
-	size_t		token_count;
-	const char	*start;
+    char        **tokens;
+    size_t      token_count;
+    size_t      start;
+    size_t      i;
 
-	char **tokens = malloc(sizeof(char *) * 1024); // Adjust size as needed
-	token_count = 0;
-	while (*input)
-	{
-		while (*input && ft_isspace(*input)) // Skip whitespace
-			input++;
-		if (*input == '\0')
-			break ;
-		start = input;
-		if (*input == '\'' || *input == '"')
-		{
-			skip_quotes(&input, *input);
-		}
-		else if (is_special_char(*input))
-		{
-			input++;
-			if ((*start == '<' || *start == '>') && *input == *start)
-				input++; // Handle << or >>
-		}
-		else
-		{
-			while (*input && !ft_isspace(*input) && !is_special_char(*input))
-				input++;
-		}
-		tokens[token_count++] = ft_substr(start, 0, input - start);
-	}
-	tokens[token_count] = NULL;
-	return (tokens);
+    tokens = malloc(sizeof(char *) * 1024); // Adjust size as needed
+    if (!tokens)
+        return (NULL);
+    token_count = 0;
+    i = 0;
+    while (input[i])
+    {
+        while (input[i] && ft_isspace(input[i])) // Skip whitespace
+            i++;
+        if (input[i] == '\0')
+            break;
+        start = i;
+        if (input[i] == '\'' || input[i] == '"')
+        {
+            skip_quotes(input, &i, input[i]);
+        }
+        else if (is_special_char(input[i]))
+        {
+            i++;
+            if ((input[start] == '<' || input[start] == '>') && input[i] == input[start])
+                i++; // Handle << or >>
+        }
+        else
+        {
+            while (input[i] && !ft_isspace(input[i]) && !is_special_char(input[i]))
+                i++;
+        }
+		// printf("Token: %s\n", ft_substr(input, start, i - start));
+        tokens[token_count++] = ft_substr(input, start, i - start);
+    }
+    tokens[token_count] = NULL;
+    return (tokens);
 }
 
 bool	validate_syntax(char **tokens)
