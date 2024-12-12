@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   teste_minishell.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gamekiller2111 <gamekiller2111@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 16:05:25 by pgaspar           #+#    #+#             */
-/*   Updated: 2024/12/11 19:10:48 by pgaspar          ###   ########.fr       */
+/*   Updated: 2024/12/12 07:54:49 by gamekiller2      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void skip_quotes(const char *input, size_t *index, char quote)
         (*index)++;
 }
 
-char **tokenize(const char *input)
+/* char **tokenize(const char *input)
 {
     char        **tokens;
     size_t      token_count;
@@ -108,7 +108,7 @@ char **tokenize(const char *input)
 
     tokens = malloc(sizeof(char *) * 1024); // Adjust size as needed
     if (!tokens)
-        return (NULL);
+        return NULL;
     token_count = 0;
     i = 0;
     while (input[i])
@@ -133,11 +133,54 @@ char **tokenize(const char *input)
             while (input[i] && !ft_isspace(input[i]) && !is_special_char(input[i]))
                 i++;
         }
-		// printf("Token: %s\n", ft_substr(input, start, i - start));
+		printf("Token: %s\n", ft_substr(input, start, i - start));
         tokens[token_count++] = ft_substr(input, start, i - start);
     }
     tokens[token_count] = NULL;
-    return (tokens);
+    return tokens;
+} */
+char **tokenize(const char *input)
+{
+    char        **tokens;
+    size_t      token_count;
+    size_t      start;
+    size_t      i;
+    bool        quoted;
+
+    tokens = malloc(sizeof(char *) * 1024); // Adjust size as needed
+    if (!tokens)
+        return NULL;
+    token_count = 0;
+    i = 0;
+    while (input[i])
+    {
+        while (input[i] && ft_isspace(input[i])) // Skip whitespace
+            i++;
+        if (input[i] == '\0')
+            break;
+        start = i;
+        quoted = (input[i] == '\'' || input[i] == '"');
+        if (quoted)
+        {
+            skip_quotes(input, &i, input[i]);
+            tokens[token_count++] = ft_substr(input, start + 1, i - start - 2); // Remove quotes
+        }
+        else if (is_special_char(input[i]))
+        {
+            i++;
+            if ((input[start] == '<' || input[start] == '>') && input[i] == input[start])
+                i++; // Handle << or >>
+            tokens[token_count++] = ft_substr(input, start, i - start);
+        }
+        else
+        {
+            while (input[i] && !ft_isspace(input[i]) && !is_special_char(input[i]))
+                i++;
+            tokens[token_count++] = ft_substr(input, start, i - start);
+        }
+    }
+    tokens[token_count] = NULL;
+    return tokens;
 }
 
 bool	validate_syntax(char **tokens)
@@ -382,13 +425,13 @@ void	free_commands(t_command *cmd)
 
 int	main(int argc, char **argv, char **envp)
 {
-	char		*input;
+	/* char		*input;
 	char		**tokens;
-	t_command	*commands;
+	t_command	*commands; */
 
 	(void)argc;
 	(void)argv;
-	while (1)
+	/* while (1)
 	{
 		input = readline("minishell> ");
 		if (!input)
@@ -399,6 +442,10 @@ int	main(int argc, char **argv, char **envp)
 		if (*input)
 			add_history(input);
 		tokens = tokenize(input);
+        printf("\n[DEBUG] Tokens:\n");
+		for (int i = 0; tokens[i]; i++) {
+            printf("  Token %d: %s\n", i, tokens[i]);
+        }
 		if (!validate_syntax(tokens))
 		{
 			fprintf(stderr, "Syntax error\n");
@@ -407,12 +454,24 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		}
 		commands = parse_commands(tokens);
+		printf("\n[DEBUG] Parsed Commands:\n");
+        for (t_command *cmd = commands; cmd; cmd = cmd->next) {
+            printf("  Command args: ");
+            for (int i = 0; cmd->args[i]; i++) {
+                printf("%s ", cmd->args[i]);
+            }
+            printf("\n  Redirections:\n");
+            for (t_redirection *redir = cmd->redirs; redir; redir = redir->next) {
+                printf("    Type: %d, File: %s\n", redir->type, redir->file);
+            }
+        }
 		free_matrix(tokens);
 		// Execute parsed commands
 		execute_commands(commands, envp);
 		// Free memory used for commands
 		free_commands(commands);
 		free(input);
-	}
+	} */
+	shell_loop(envp);
 	return (0);
 }
