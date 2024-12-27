@@ -6,7 +6,7 @@
 /*   By: gamekiller2111 <gamekiller2111@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 16:05:25 by pgaspar           #+#    #+#             */
-/*   Updated: 2024/12/12 07:54:49 by gamekiller2      ###   ########.fr       */
+/*   Updated: 2024/12/27 17:09:05 by gamekiller2      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int							open_file(const char *filename, int flags,
 void						execute_single_command(t_command *cmd, char **envp,
 								int in_fd, int out_fd);
 t_command					*parse_commands(char **tokens);
+void                        handle_redirections(t_redirection *redirs);
 void						shell_loop(char **envp);
 void						execute_commands(t_command *cmd_list, char **envp);
 void						free_redirections(t_redirection *redir);
@@ -226,6 +227,8 @@ t_command	*parse_commands(char **tokens)
 			{
 				redir = malloc(sizeof(t_redirection));
 				redir->type = (tokens[i][0] == '>') + (tokens[i][1] == '>');
+                if (tokens[i][0] == '<' && tokens[i][1] == '<')
+                    redir->type = 3;
 				redir->file = ft_strdup(tokens[++i]);
 				redir->next = current->redirs;
 				current->redirs = redir;
@@ -236,11 +239,22 @@ t_command	*parse_commands(char **tokens)
 			}
 			i++;
 		}
+        //printf("Chega aqui no parse_commands!\n");
 		current->args[arg_count] = NULL;
 		if (tokens[i] && tokens[i][0] == '|')
 		{
-			current->next = malloc(sizeof(t_command));
+			/* current->next = malloc(sizeof(t_command));
 			current = current->next;
+			i++; */
+            current->next = malloc(sizeof(t_command));
+			if (!current->next)
+				return (NULL); // Tratamento de erro de malloc
+			current = current->next;
+			current->args = malloc(sizeof(char *) * 1024);
+			if (!current->args)
+				return (NULL); // Tratamento de erro de malloc
+			current->redirs = NULL;
+			current->next = NULL;
 			i++;
 		}
 	}
@@ -253,7 +267,8 @@ void	shell_loop(char **envp)
     char **tokens;
     t_command *commands;
 
-    while (1) {
+    while (1) 
+    {
         input = readline("minishell> ");
         if (!input) {
             printf("Exiting minishell...\n");
@@ -262,10 +277,10 @@ void	shell_loop(char **envp)
 
         add_history(input);
         tokens = tokenize(input);
-        printf("\n[DEBUG] Tokens:\n");
+        /* printf("\n[DEBUG] Tokens:\n");
         for (int i = 0; tokens[i]; i++) {
             printf("  Token %d: %s\n", i, tokens[i]);
-        }
+        } */
 
         if (!validate_syntax(tokens)) {
             printf("Syntax error\n");
@@ -274,8 +289,9 @@ void	shell_loop(char **envp)
             continue;
         }
 
+        //printf("\nChega aqui antes do parse_commands!\n");
         commands = parse_commands(tokens);
-        printf("\n[DEBUG] Parsed Commands:\n");
+        /* printf("\n[DEBUG] Parsed Commands:\n");
         for (t_command *cmd = commands; cmd; cmd = cmd->next) {
             printf("  Command args: ");
             for (int i = 0; cmd->args[i]; i++) {
@@ -285,14 +301,14 @@ void	shell_loop(char **envp)
             for (t_redirection *redir = cmd->redirs; redir; redir = redir->next) {
                 printf("    Type: %d, File: %s\n", redir->type, redir->file);
             }
-        }
+        } */
 
         free_matrix(tokens);
 
-        printf("\n[DEBUG] Executing Commands...\n");
+        //printf("\n[DEBUG] Executing Commands...\n");
         execute_commands(commands, envp);
 
-        printf("\n[DEBUG] Cleaning up...\n");
+        //printf("\n[DEBUG] Cleaning up...\n");
         free_commands(commands);
         free(input);
     }
@@ -311,11 +327,68 @@ int	open_file(const char *filename, int flags, int mode)
 	return (fd);
 }
 
-// Execute a single command with redirections and pipes
-void	execute_single_command(t_command *cmd, char **envp, int in_fd,
-		int out_fd)
+void handle_redirections(t_redirection *redirs)
 {
-	int pipe_fd[2];
+    for (t_redirection *redir = redirs; redir; redir = redir->next) {
+        int fd;
+        if (redir->type == 0) { // Input redirection: <
+            fd = open_file(redir->file, O_RDONLY, 0);
+            // printf("[DEBUG] Redirect input from: %s\n", redir->file);
+            dup2(fd, 0); // Redirect stdin
+        } else if (redir->type == 1) { // Output redirection: >
+            fd = open_file(redir->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+            // printf("[DEBUG] Redirect output to: %s\n", redir->file);
+            dup2(fd, 1); // Redirect stdout
+        } else if (redir->type == 2) { // Append redirection: >>
+            fd = open_file(redir->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+            // printf("[DEBUG] Append output to: %s\n", redir->file);
+            dup2(fd, 1); // Redirect stdout
+        } else if (redir->type == 3) { // Heredoc redirection: <<
+            // printf("[DEBUG] Starting heredoc with delimiter: %s\n", redir->file);
+            here_doc(redir->file);
+            continue;
+        }
+        close(fd); // Close the file descriptor after redirection
+    }
+}
+
+/* void handle_redirections(t_redirection *redirs) {
+    t_redirection *last_input = NULL;
+    t_redirection *last_output = NULL;
+
+    // Find the last input and output redirections
+    for (t_redirection *redir = redirs; redir; redir = redir->next) {
+        if (redir->type == 0) // Input: <
+            last_input = redir;
+        else if (redir->type == 1 || redir->type == 2) // Output: > or >>
+            last_output = redir;
+    }
+
+    // Apply input redirection
+    if (last_input) {
+        int fd = open_file(last_input->file, O_RDONLY, 0);
+        printf("[DEBUG] Redirect input from: %s\n", last_input->file);
+        dup2(fd, 0); // Redirect stdin
+        close(fd);
+    }
+
+    // Apply output redirection
+    if (last_output) {
+        int fd;
+        if (last_output->type == 1) { // >
+            fd = open_file(last_output->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+        } else if (last_output->type == 2) { // >>
+            fd = open_file(last_output->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+        }
+        printf("[DEBUG] Redirect output to: %s\n", last_output->file);
+        dup2(fd, 1); // Redirect stdout
+        close(fd);
+    }
+} */
+
+// Execute a single command with redirections and pipes
+void execute_single_command(t_command *cmd, char **envp, int in_fd, int out_fd) {
+    int pipe_fd[2];
     pid_t pid;
 
     if (cmd->next && pipe(pipe_fd) == -1) {
@@ -323,10 +396,10 @@ void	execute_single_command(t_command *cmd, char **envp, int in_fd,
         exit(1);
     }
 
-    printf("\n[DEBUG] Forking for command:\n");
+    /* printf("\n[DEBUG] Forking for command:\n");
     for (int i = 0; cmd->args[i]; i++) {
         printf("  Arg %d: %s\n", i, cmd->args[i]);
-    }
+    } */
 
     pid = fork();
     if (pid == -1) {
@@ -349,28 +422,11 @@ void	execute_single_command(t_command *cmd, char **envp, int in_fd,
             close(out_fd);
         }
 
-        printf("[DEBUG] Applying Redirections...\n");
-        for (t_redirection *redir = cmd->redirs; redir; redir = redir->next) {
-            int fd;
-            if (redir->type == 0) { // Input redirection: <
-                fd = open_file(redir->file, O_RDONLY, 0);
-                printf("[DEBUG] Redirect input from: %s\n", redir->file);
-            } else if (redir->type == 1) { // Output redirection: >
-                fd = open_file(redir->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-                printf("[DEBUG] Redirect output to: %s\n", redir->file);
-            } else if (redir->type == 2) { // Append redirection: >>
-                fd = open_file(redir->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
-                printf("[DEBUG] Append output to: %s\n", redir->file);
-            } else if (redir->type == 3) { // Heredoc redirection: <<
-                printf("[DEBUG] Starting heredoc with delimiter: %s\n", redir->file);
-                here_doc(redir->file);
-                continue;
-            }
-            dup2(fd, (redir->type == 0) ? 0 : 1); // Redirect input or output
-            close(fd);
-        }
+        // Handle redirections using the refactored function
+        //printf("[DEBUG] Applying Redirections...\n");
+        handle_redirections(cmd->redirs);
 
-        printf("[DEBUG] Executing command: %s\n", cmd->args[0]);
+        //printf("[DEBUG] Executing command: %s\n", cmd->args[0]);
         execve(get_caminho(ft_split(getenv("PATH"), ':'), cmd->args), cmd->args, envp);
         perror("Execve error");
         exit(1);
