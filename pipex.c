@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gamekiller2111 <gamekiller2111@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 14:47:55 by pgaspar           #+#    #+#             */
-/*   Updated: 2024/12/07 17:24:32 by pgaspar          ###   ########.fr       */
+/*   Updated: 2024/12/28 20:38:07 by gamekiller2      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	cuta(char **command, char **envp)
 	close(pipe_fd[0]);
 } */
 
-void	here_doc(char *delimiter)
+int	here_doc(char *delimiter)
 {
 	int		pipe_fd[2];
 	char	*line;
@@ -77,6 +77,7 @@ void	here_doc(char *delimiter)
 	close(pipe_fd[1]);
 	dup2(pipe_fd[0], 0);
 	close(pipe_fd[0]);
+	return (0);
 }
 
 /* void	keeping_up_main(char *av[], int *fd, int *i, int ac)

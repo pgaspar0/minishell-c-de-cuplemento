@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gamekiller2111 <gamekiller2111@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 14:49:03 by pgaspar           #+#    #+#             */
-/*   Updated: 2024/12/07 17:23:10 by pgaspar          ###   ########.fr       */
+/*   Updated: 2024/12/28 23:22:11 by gamekiller2      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-void	here_doc(char *delimiter);
+// int     here_doc(char *delimiter);
 void	cuta(char **command, char **envp);
 void	forka(char **command, char **envp);
 void	pipe_it(char **command, char **envp);
