@@ -4,6 +4,56 @@
 #include <string.h>
 #include <stdbool.h>
 
+int is_builtin_command2(char **args)
+{
+    if (strcmp(args[0], "export") == 0)
+    {
+        if (!args[1])
+            return 1;
+    }
+    else if (strcmp(args[0], "unset") == 0)
+    {
+        if (!args[1])
+            return 1;
+    }
+    else if (strcmp(args[0], "env") == 0)
+    {
+        if (!args[1])
+            return 1;
+    }
+    else if (strcmp(args[0], "exit") == 0)
+    {
+        if (!args[1])
+            return 1;
+    }
+    return (0);
+}
+
+int is_builtin_command(char **args)
+{
+    if (!args || !args[0])
+        return 0;
+    if (strcmp(args[0], "echo") == 0)
+    {
+        if (args[1] && strcmp(args[1], "-n") == 0)
+            return 1;
+    }
+    else if (strcmp(args[0], "cd") == 0)
+    {
+        if (args[1] && !args[2])
+            return 1;
+    }
+    else if (strcmp(args[0], "pwd") == 0)
+    {
+        if (!args[1])
+            return 1;
+    }
+    else
+       return (is_builtin_command2(args));
+    return 0;
+}
+
+
 // static size_t	ft_toklen(const char *s, char c)
 // {
 // 	size_t	ret;
@@ -55,16 +105,16 @@
 
 void echo_command(char **args) {
     bool suppress_newline = false;
-    int start_index = 1;  // Start after the "echo" command
+    int start_index = 1;
 
     if (args[start_index] && strcmp(args[start_index], "-n") == 0) {
         suppress_newline = true;
-        start_index++;  // Skip "-n"
+        start_index++;
     }
     for (int i = start_index; args[i] != NULL; i++) {
         printf("%s", args[i]);
         if (args[i + 1] != NULL) {
-            printf(" ");  // Add a space between arguments
+            printf(" ");
         }
     }
     // if (!suppress_newline) {
@@ -102,6 +152,8 @@ int main(int argc, char **argv) {
     //printf("%s\n",argv[2]);
     // Example 1: echo "Hello World"
     //char **example1;
+    if (!(argc > 2))
+        return 0;
     if (strcmp(argv[2], "-n") == 0)
     {
         //example1 = split(argv[3]);
