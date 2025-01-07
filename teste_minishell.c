@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 16:05:25 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/07 12:57:59 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/07 16:06:56 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,18 @@ char		**tokenize(const char *input);
 	*env = new_var;
 } */
 
-void	ft_env(void)
+void	ft_env(t_env *env)
 {
 	while (env)
 	{
-		if (env->value)
-			printf("%s=%s\n", env->name, env->value);
+		if (env->key)
+		{
+			printf("%s=", env->key);
+			if (env->value)
+				printf("%s\n", env->value);
+			else
+				printf("\n");
+		}
 		env = env->next;
 	}
 }
@@ -442,6 +448,7 @@ void	shell_loop(char **envp)
 	t_command	*commands;
 
 	envs = init_env(envp);
+	ft_env(envs);
 	while (1)
 	{
 		input = readline("minishell> ");
@@ -469,9 +476,6 @@ void	shell_loop(char **envp)
 
 int	main(int argc, char **argv, char **envp)
 {
-	int	i;
-
-	i = 0;
 	(void)argc;
 	(void)argv;
 	shell_loop(envp);
