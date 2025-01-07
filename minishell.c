@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 08:00:27 by pgaspar           #+#    #+#             */
-/*   Updated: 2024/12/07 17:22:44 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/07 12:43:47 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	pipex(char **tokens, char **envp)
 		else if (tokens[i + 1] && !ft_strcmp(tokens[i + 1], "<<"))
 		{
 			i += 2;
-			here_doc(tokens[i]);
+			// here_doc(tokens[i]);
 			dup2(original_fd[1], 1);
 			close(original_fd[1]);
 			just_execute(command, envp);
