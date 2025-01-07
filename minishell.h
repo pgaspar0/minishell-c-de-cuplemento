@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 08:01:11 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/07 11:50:37 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/07 19:47:51 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@
 
 typedef struct s_env
 {
-	char					*key;
-	char					*value;
-	struct s_env			*next;
+	char					*key; //USER
+	char					*value; //jorcarva
+	struct s_env			*next; //USER=jorcarva
 }							t_env;
 
 typedef struct s_redirection
