@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 16:05:25 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/07 16:06:56 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/08 18:48:21 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,36 +39,101 @@ bool		validate_syntax(char **tokens);
 char		*get_caminho(char **path_copy, char **command);
 char		**tokenize(const char *input);
 
-/* void	export_builtin(t_env_var **env, char *arg)
+/* void	update_env(t_env **env, char *key, char *value)
 {
-	char		*equal_sign;
-	char		*name;
-	char		*value;
-	t_env_var	*current;
-	t_env_var	*new_var;
+	t_env	*current;
+	t_env	*new_node;
+	t_env	*current;
+	t_env	*new_node;
 
-	equal_sign = ft_strchr(arg, '=');
-	name = equal_sign ? ft_substr(arg, 0, equal_sign - arg) : ft_strdup(arg);
-	value = equal_sign ? ft_strdup(equal_sign + 1) : NULL;
 	current = *env;
 	while (current)
 	{
-		if (ft_strcmp(current->name, name) == 0)
+		if (ft_strcmp(current->key, key) == 0)
 		{
 			free(current->value);
-			current->value = value; // Atualiza o valor se já existe
-			free(name);
+			current->value = ft_strdup(value);
 			return ;
 		}
 		current = current->next;
 	}
-	// Adiciona uma nova variável se não existe
-	new_var = malloc(sizeof(t_env_var));
-	new_var->name = name;
-	new_var->value = value;
-	new_var->next = *env;
-	*env = new_var;
+	new_node = malloc(sizeof(t_env));
+	if (!new_node)
+		return ;
+	new_node->key = ft_strdup(key);
+	new_node->value = ft_strdup(value);
+	new_node->next = *env;
+	*env = new_node;
 } */
+void	update_env(t_env **env, char *key, char *value)
+{
+	current = *env;
+	while (current)
+	{
+		if (ft_strcmp(current->key, key) == 0)
+		{
+			if (value) // Atualiza apenas se um novo valor for fornecido
+			{
+				free(current->value);
+				current->value = ft_strdup(value);
+			}
+			return ;
+		}
+		current = current->next;
+	}
+	new_node = malloc(sizeof(t_env));
+	if (!new_node)
+		return ;
+	new_node->key = ft_strdup(key);
+	new_node->value = value ? ft_strdup(value) : NULL; // Permite valor nulo
+	new_node->next = *env;
+	*env = new_node;
+}
+
+int	is_valid_identifier(char *key)
+{
+	int	i;
+
+	if (!key || !ft_isalpha(key[0]) || key[0] == '_')
+		return (0);
+	i = 1;
+	while (key[i])
+	{
+		if (!ft_isalnum(key[i]) && key[i] != '_')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+void	ft_export(t_env **env, char *var)
+{
+	char	*equal;
+	char	*key;
+	char	*value;
+
+	equal = ft_strchr(var, '=');
+	if (!equal)
+	{
+		key = ft_strdup(var);
+		value = NULL;
+	}
+	else
+	{
+		key = ft_substr(var, 0, equal - var);
+		value = ft_strdup(equal + 1);
+	}
+	if (!is_valid_identifier(key))
+	{
+		printf("export: `%s': not a valid identifier\n", key);
+		free(key);
+		free(value);
+		return ;
+	}
+	update_env(env, key, value);
+	free(key);
+	free(value);
+}
 
 void	ft_env(t_env *env)
 {
