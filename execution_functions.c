@@ -3,25 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   execution_functions.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:28:31 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/09 16:15:23 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/01/09 19:57:04 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	execute_commands(t_command *cmd_list, char **envp)
+void	execute_commands(t_command *cmd_list, t_env **envs)
 {
 	if (!cmd_list)
 		return ;
 	// int original_stdout_fd = dup(STDOUT_FILENO);
 	// execute_single_command(cmd_list, envp, 0, 1, original_stdout_fd);
-	execute_commands_iterative(cmd_list, envp);
+	execute_commands_iterative(cmd_list, envs);
 }
-void	execute_commands_iterative(t_command *cmd_list, char **envp)
+void	execute_commands_iterative(t_command *cmd_list, t_env **envs)
 {
+	char **env_matrix;
 	int pipe_fd[2];
 	pid_t pid;
 	t_command *current;
@@ -58,13 +59,16 @@ void	execute_commands_iterative(t_command *cmd_list, char **envp)
 			handle_redirections(current->redirs, STDOUT_FILENO);
 			if (is_builtin_command(current->args))
 			{
+				execute_builtin(current->args, envs);
 				exit(0);
 			}
 			else
 			{
+				env_matrix = env_to_matrix(*envs);
 				execve(get_caminho(ft_split(getenv("PATH"), ':'), current->args),
-				current->args, envp);
+				current->args, env_matrix);
 				perror("Execve error");
+				free_matrix(env_matrix);
 				exit(1);
 			}
 		}

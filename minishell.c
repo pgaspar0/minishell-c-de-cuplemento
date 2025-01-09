@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 08:00:27 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/09 12:50:25 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/09 19:55:32 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	shell_loop(char **envp)
 	t_command	*commands;
 
 	envs = init_env(envp);
-	ft_env(envs);
 	while (1)
 	{
 		input = readline("minishell> ");
@@ -49,7 +48,7 @@ void	shell_loop(char **envp)
 		}
 		commands = parse_commands(tokens);
 		free_matrix(tokens);
-		execute_commands(commands, envp);
+		execute_commands(commands, &envs);
 		free_commands(commands);
 		free(input);
 	}

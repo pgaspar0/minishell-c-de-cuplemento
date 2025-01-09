@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 08:01:11 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/09 16:15:09 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/01/09 19:56:44 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,19 +63,21 @@ void						handle_redirections(t_redirection *redirs,
 								int original_stdout_fd);
 void						free_redirections(t_redirection *redir);
 void						free_commands(t_command *cmd);
+void						ft_pwd(void);
+void						execute_builtin(char **args, t_env **envs);
 void						skip_quotes(const char *input, size_t *index,
 								char quote);
 void						ft_env(t_env *env);
 void						ft_export(t_env **env, char *var);
 void						update_env(t_env **env, char *key, char *value);
-void						execute_commands(t_command *cmd_list, char **envp);
-void						execute_commands_iterative(t_command *cmd_list,
-								char **envp);
+void						execute_commands(t_command *cmd_list, t_env **envs);
+void						execute_commands_iterative(t_command *cmd_list, t_env **envs);
 
 char						*get_caminho(char **path_copy, char **command);
 char						*mat_concat(char **mat);
 char						**ft_parse(const char *s);
 char						**ft_parse2(const char *s);
+char						**env_to_matrix(t_env *env_list);
 char						**tokenize(const char *input);
 
 #endif

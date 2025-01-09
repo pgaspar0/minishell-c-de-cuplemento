@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:36:36 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/09 12:52:29 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/09 19:50:48 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,12 @@ void	update_env(t_env **env, char *key, char *value)
 	{
 		if (ft_strcmp(current->key, key) == 0)
 		{
-			// Atualiza o valor existente
 			free(current->value);
 			current->value = ft_strdup(value);
 			return ;
 		}
 		current = current->next;
 	}
-	// Adiciona nova variável, pois não foi encontrada
 	new_node = malloc(sizeof(t_env));
 	if (!new_node)
 		return ;

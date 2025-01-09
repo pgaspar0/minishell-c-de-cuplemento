@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:23:10 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/09 12:25:35 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/09 19:46:25 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 t_env	*init_env(char **envp)
 {
-	t_env *head;
-	t_env *new_node;
-	t_env *current;
-	char *equal;
-	int i;
+	t_env	*head;
+	t_env	*new_node;
+	t_env	*current;
+	char	*equal;
+	int		i;
 
 	i = 0;
 	head = NULL;
@@ -38,4 +38,46 @@ t_env	*init_env(char **envp)
 		i++;
 	}
 	return (head);
+}
+
+char	**env_to_matrix(t_env *env_list)
+{
+	t_env	*current;
+	char	**env_matrix;
+	char	*temp;
+	int		count;
+	int		i;
+
+	count = 0;
+	current = env_list;
+	while (current)
+	{
+		count++;
+		current = current->next;
+	}
+	env_matrix = malloc((count + 1) * sizeof(char *));
+	if (!env_matrix)
+		return (NULL);
+	i = 0;
+	current = env_list;
+	while (current)
+	{
+		if (current->value)
+		{
+			temp = ft_strjoin(current->key, "=");
+			env_matrix[i] = ft_strjoin(temp, current->value);
+			free(temp);
+			if (!env_matrix[i])
+			{
+				while (i-- > 0)
+					free(env_matrix[i]);
+				free(env_matrix);
+				return (NULL);
+			}
+			i++;
+		}
+		current = current->next;
+	}
+	env_matrix[i] = NULL;
+	return (env_matrix);
 }

@@ -124,19 +124,19 @@ int is_builtin_command(char **args)
     // }
 } */
 
-// void execute_pwd(void)
-// {
-//     char *cwd;
+void ft_pwd(void)
+{
+    char *cwd;
 
-//     cwd = getcwd(NULL, 0);
-//     if (cwd == NULL)
-//     {
-//         perror("pwd");
-//         return;
-//     }
-//     printf("%s\n", cwd);
-//     free(cwd);
-// }
+    cwd = getcwd(NULL, 0);
+    if (cwd == NULL)
+    {
+        perror("pwd");
+        return;
+    }
+    printf("%s\n", cwd);
+    free(cwd);
+}
 
 // int main(int argc, char **argv)
 // {
