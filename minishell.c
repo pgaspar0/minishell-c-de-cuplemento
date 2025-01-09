@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 08:00:27 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/07 12:43:47 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/09 12:50:25 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,96 +21,46 @@ void	handle_sigint(int sig)
 	rl_redisplay();
 }
 
-void	pipex(char **tokens, char **envp)
+void	shell_loop(char **envp)
 {
-	int		i;
-	int		original_fd[2];
-	char	**command;
+	t_env		*envs;
+	char		*input;
+	char		**tokens;
+	t_command	*commands;
 
-	i = 0;
-	original_fd[0] = dup(0);
-	original_fd[1] = dup(1);
-	while (tokens[i])
+	envs = init_env(envp);
+	ft_env(envs);
+	while (1)
 	{
-		command = ft_split(tokens[i], ' ');
-		if (tokens[i + 1] && !ft_strcmp(tokens[i + 1], "|"))
+		input = readline("minishell> ");
+		if (!input)
 		{
-			i++;
-			pipe_it(command, envp);
+			printf("Exiting minishell...\n");
+			break ;
 		}
-		else if (tokens[i + 1] && !ft_strcmp(tokens[i + 1], ">"))
+		add_history(input);
+		tokens = tokenize(input);
+		if (!validate_syntax(tokens))
 		{
-			i += 2;
-			right_redir(command, envp, tokens[i], 0);
+			printf("Syntax error\n");
+			free_matrix(tokens);
+			free(input);
+			continue ;
 		}
-		else if (tokens[i + 1] && !ft_strcmp(tokens[i + 1], "<"))
-		{
-			i += 2;
-			left_redir(command, envp, tokens[i]);
-		}
-		else if (tokens[i + 1] && !ft_strcmp(tokens[i + 1], ">>"))
-		{
-			i += 2;
-			right_redir(command, envp, tokens[i], 1);
-		}
-		else if (tokens[i + 1] && !ft_strcmp(tokens[i + 1], "<<"))
-		{
-			i += 2;
-			// here_doc(tokens[i]);
-			dup2(original_fd[1], 1);
-			close(original_fd[1]);
-			just_execute(command, envp);
-		}
-		else
-		{
-			dup2(original_fd[1], 1);
-			close(original_fd[1]);
-			just_execute(command, envp);
-		}
-		free_matrix(command);
-		i++;
+		commands = parse_commands(tokens);
+		free_matrix(tokens);
+		execute_commands(commands, envp);
+		free_commands(commands);
+		free(input);
 	}
-	dup2(original_fd[0], 0);
-	close(original_fd[0]);
 }
 
-void	faz_tudo(char *str, char **envp)
-{
-	char	**tokens;
-	char	**final_tokens;
-	char	*concat;
-
-	tokens = ft_parse(str);
-	concat = mat_concat(tokens);
-	final_tokens = ft_parse2(concat);
-	/* printf("Concat: %s\n", concat);
-	for (int i = 0; tokens[i]; i++)
-		printf("Token: %s\n", tokens[i]);
-	for (int i = 0; final_tokens[i]; i++)
-		printf("Final token: %s\n", final_tokens[i]); */
-	pipex(final_tokens, envp);
-	// free_matrix(tokens);
-	free(concat);
-	// free_matrix(final_tokens);
-}
 int	main(int ac, char **av, char **envp)
 {
-	char	*str;
-
 	(void)ac;
 	(void)av;
 	signal(3, SIG_IGN);
 	signal(SIGINT, handle_sigint);
-	while (1)
-	{
-		str = readline("minishell>>> ");
-		if (!str)
-		{
-			free(str);
-			exit(0);
-		}
-		faz_tudo(str, envp);
-		free(str);
-	}
+	shell_loop(envp);
 	return (0);
 }

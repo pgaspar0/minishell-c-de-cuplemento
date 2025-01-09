@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 16:05:25 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/08 19:30:49 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/09 12:40:44 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-int			here_doc(char *delimiter, int original_stdout_fd);
+/* int			here_doc(char *delimiter, int original_stdout_fd);
 int			open_file(const char *filename, int flags, int mode);
 void		execute_single_command(t_command *cmd, char **envp, int in_fd,
 				int out_fd, int original_stdout_fd);
@@ -37,7 +37,7 @@ void		skip_quotes(const char *input, size_t *index, char quote);
 bool		is_special_char(char c);
 bool		validate_syntax(char **tokens);
 char		*get_caminho(char **path_copy, char **command);
-char		**tokenize(const char *input);
+char		**tokenize(const char *input); */
 
 /* void	update_env(t_env **env, char *key, char *value)
 {
@@ -65,7 +65,7 @@ char		**tokenize(const char *input);
 	new_node->next = *env;
 	*env = new_node;
 } */
-void	update_env(t_env **env, char *key, char *value)
+/* void	update_env(t_env **env, char *key, char *value)
 {
 	current = *env;
 	while (current)
@@ -88,9 +88,9 @@ void	update_env(t_env **env, char *key, char *value)
 	new_node->value = value ? ft_strdup(value) : NULL; // Permite valor nulo
 	new_node->next = *env;
 	*env = new_node;
-}
+} */
 
-int	is_valid_identifier(char *key)
+/* int	is_valid_identifier(char *key)
 {
 	int	i;
 
@@ -104,9 +104,9 @@ int	is_valid_identifier(char *key)
 		i++;
 	}
 	return (1);
-}
+} */
 
-void	ft_export(t_env **env, char *var)
+/* void	ft_export(t_env **env, char *var)
 {
 	char	*equal;
 	char	*key;
@@ -133,9 +133,9 @@ void	ft_export(t_env **env, char *var)
 	update_env(env, key, value);
 	free(key);
 	free(value);
-}
+} */
 
-void	ft_env(t_env *env)
+/* void	ft_env(t_env *env)
 {
 	while (env)
 	{
@@ -149,8 +149,8 @@ void	ft_env(t_env *env)
 		}
 		env = env->next;
 	}
-}
-int	here_doc(char *delimiter, int original_stdout_fd)
+} */
+/* int	here_doc(char *delimiter, int original_stdout_fd)
 {
 	int		pipe_fd[2];
 	char	*line;
@@ -178,9 +178,9 @@ int	here_doc(char *delimiter, int original_stdout_fd)
 	free(line);
 	close(pipe_fd[1]);
 	return (pipe_fd[0]);
-}
+} */
 
-char	*get_caminho(char **path_copy, char **command)
+/* char	*get_caminho(char **path_copy, char **command)
 {
 	int		i;
 	int		status;
@@ -200,23 +200,23 @@ char	*get_caminho(char **path_copy, char **command)
 		i++;
 	}
 	return (NULL);
-}
+} */
 
-bool	is_special_char(char c)
+/* bool	is_special_char(char c)
 {
 	return (c == '|' || c == '<' || c == '>');
-}
+} */
 
-void	skip_quotes(const char *input, size_t *index, char quote)
+/* void	skip_quotes(const char *input, size_t *index, char quote)
 {
 	(*index)++;
 	while (input[*index] && input[*index] != quote)
 		(*index)++;
 	if (input[*index] == quote)
 		(*index)++;
-}
+} */
 
-char	**tokenize(const char *input)
+/* char	**tokenize(const char *input)
 {
 	char	**tokens;
 	size_t	token_count;
@@ -260,9 +260,9 @@ char	**tokenize(const char *input)
 	}
 	tokens[token_count] = NULL;
 	return (tokens);
-}
+} */
 
-bool	validate_syntax(char **tokens)
+/* bool	validate_syntax(char **tokens)
 {
 	for (int i = 0; tokens[i]; i++)
 	{
@@ -276,9 +276,9 @@ bool	validate_syntax(char **tokens)
 		}
 	}
 	return (true);
-}
+} */
 
-t_command	*parse_commands(char **tokens)
+/* t_command	*parse_commands(char **tokens)
 {
 	t_command		*head;
 	t_command		*current;
@@ -342,9 +342,9 @@ t_command	*parse_commands(char **tokens)
 		}
 	}
 	return (head);
-}
+} */
 
-int	open_file(const char *filename, int flags, int mode)
+/* int	open_file(const char *filename, int flags, int mode)
 {
 	int	fd;
 
@@ -355,9 +355,9 @@ int	open_file(const char *filename, int flags, int mode)
 		exit(1);
 	}
 	return (fd);
-}
+} */
 
-void	handle_redirections(t_redirection *redirs, int original_stdout_fd)
+/* void	handle_redirections(t_redirection *redirs, int original_stdout_fd)
 {
 	int	fd;
 
@@ -385,9 +385,9 @@ void	handle_redirections(t_redirection *redirs, int original_stdout_fd)
 		}
 		close(fd);
 	}
-}
+} */
 
-void	execute_commands_iterative(t_command *cmd_list, char **envp)
+/* void	execute_commands_iterative(t_command *cmd_list, char **envp)
 {
 	int			pipe_fd[2];
 	pid_t		pid;
@@ -450,9 +450,9 @@ void	execute_commands(t_command *cmd_list, char **envp)
 	// int original_stdout_fd = dup(STDOUT_FILENO);
 	// execute_single_command(cmd_list, envp, 0, 1, original_stdout_fd);
 	execute_commands_iterative(cmd_list, envp);
-}
+} */
 
-void	free_redirections(t_redirection *redir)
+/* void	free_redirections(t_redirection *redir)
 {
 	t_redirection	*temp;
 
@@ -477,8 +477,8 @@ void	free_commands(t_command *cmd)
 		free_redirections(temp->redirs);
 		free(temp);
 	}
-}
-t_env	*init_env(char **envp)
+} */
+/* t_env	*init_env(char **envp)
 {
 	t_env	*head;
 	t_env	*new_node;
@@ -504,8 +504,8 @@ t_env	*init_env(char **envp)
 		i++;
 	}
 	return (head);
-}
-void	shell_loop(char **envp)
+} */
+/* void	shell_loop(char **envp)
 {
 	t_env		*envs;
 	char		*input;
@@ -537,12 +537,12 @@ void	shell_loop(char **envp)
 		free_commands(commands);
 		free(input);
 	}
-}
+} */
 
-int	main(int argc, char **argv, char **envp)
+/* int	main(int argc, char **argv, char **envp)
 {
 	(void)argc;
 	(void)argv;
 	shell_loop(envp);
 	return (0);
-}
+} */
