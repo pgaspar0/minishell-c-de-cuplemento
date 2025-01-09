@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_functions.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:28:31 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/09 12:29:03 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/09 16:15:23 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,17 @@ void	execute_commands_iterative(t_command *cmd_list, char **envp)
 				close(pipe_fd[1]);
 			}
 			handle_redirections(current->redirs, STDOUT_FILENO);
-			execve(get_caminho(ft_split(getenv("PATH"), ':'), current->args),
+			if (is_builtin_command(current->args))
+			{
+				exit(0);
+			}
+			else
+			{
+				execve(get_caminho(ft_split(getenv("PATH"), ':'), current->args),
 				current->args, envp);
-			perror("Execve error");
-			exit(1);
+				perror("Execve error");
+				exit(1);
+			}
 		}
 		else
 		{ // Processo pai

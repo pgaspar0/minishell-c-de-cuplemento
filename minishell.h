@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 08:01:11 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/09 12:54:46 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/09 16:15:09 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ bool						is_special_char(char c);
 int							open_file(const char *filename, int flags,
 								int mode);
 int							is_valid_identifier(char *key);
+int							is_builtin_command(char **args);
 int							here_doc(char *delimiter, int original_stdout_fd);
 
 void						handle_redirections(t_redirection *redirs,

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:32:27 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/09 12:33:22 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/09 15:45:16 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_command	*parse_commands(char **tokens)
 	t_redirection *redir;
 	size_t arg_count;
 
-	t_redirection *last_redir; // Ponteiro para o último redirecionamento
+	t_redirection *last_redir;
 	head = NULL;
 	current = NULL;
 	for (int i = 0; tokens[i];)
@@ -29,7 +29,7 @@ t_command	*parse_commands(char **tokens)
 			current = malloc(sizeof(t_command));
 			current->args = malloc(sizeof(char *) * 1024);
 			current->redirs = NULL;
-			last_redir = NULL; // Inicialize como NULL
+			last_redir = NULL;
 			current->next = NULL;
 			if (!head)
 				head = current;
@@ -45,13 +45,11 @@ t_command	*parse_commands(char **tokens)
 					redir->type = 3;
 				redir->file = ft_strdup(tokens[++i]);
 				redir->next = NULL;
-				// Adicione ao final usando last_redir
 				if (!last_redir)
-					current->redirs = redir; // Primeiro redirecionamento
+					current->redirs = redir;
 				else
-					last_redir->next = redir; // Próximo redirecionamento
+					last_redir->next = redir;
 				last_redir = redir;
-				// Atualize o ponteiro para o último redirecionamento
 			}
 			else
 			{
@@ -70,7 +68,7 @@ t_command	*parse_commands(char **tokens)
 			if (!current->args)
 				return (NULL);
 			current->redirs = NULL;
-			last_redir = NULL; // Redefina para o novo comando
+			last_redir = NULL;
 			current->next = NULL;
 			i++;
 		}

@@ -8,23 +8,23 @@ int is_builtin_command2(char **args)
 {
     if (strcmp(args[0], "export") == 0)
     {
-        if (!args[1])
-            return 1;
+        // if (!args[1])
+        return 1;
     }
     else if (strcmp(args[0], "unset") == 0)
     {
-        if (!args[1])
-            return 1;
+        // if (!args[1])
+        return 1;
     }
     else if (strcmp(args[0], "env") == 0)
     {
-        if (!args[1])
-            return 1;
+        // if (!args[1])
+        return 1;
     }
     else if (strcmp(args[0], "exit") == 0)
     {
-        if (!args[1])
-            return 1;
+        // if (!args[1])
+        return 1;
     }
     return (0);
 }
@@ -35,18 +35,20 @@ int is_builtin_command(char **args)
         return 0;
     if (strcmp(args[0], "echo") == 0)
     {
-        if (args[1] && strcmp(args[1], "-n") == 0)
-            return 1;
+        return 1;
+        // if (args[1] && strcmp(args[1], "-n") == 0)
+        //     return 1;
+        // else
     }
     else if (strcmp(args[0], "cd") == 0)
     {
-        if (args[1] && !args[2])
-            return 1;
+        //if (args[1] && !args[2])
+        return 1;
     }
     else if (strcmp(args[0], "pwd") == 0)
     {
-        if (!args[1])
-            return 1;
+        //if (!args[1])
+        return 1;
     }
     else
        return (is_builtin_command2(args));
@@ -103,7 +105,7 @@ int is_builtin_command(char **args)
 // 	return (ptr);
 // }
 
-void echo_command(char **args) {
+/* void echo_command(char **args) {
     bool suppress_newline = false;
     int start_index = 1;
 
@@ -120,7 +122,7 @@ void echo_command(char **args) {
     // if (!suppress_newline) {
     //     printf("\n");
     // }
-}
+} */
 
 // void execute_pwd(void)
 // {
@@ -147,7 +149,7 @@ void echo_command(char **args) {
 //     return 0;
 // }
 
-int main(int argc, char **argv) {
+/* int main(int argc, char **argv) {
     
     //printf("%s\n",argv[2]);
     // Example 1: echo "Hello World"
@@ -158,14 +160,16 @@ int main(int argc, char **argv) {
     {
         //example1 = split(argv[3]);
         printf("Output of \"echo -n\": ");
+        echo_command(argv+1);
     }
     else
     {
         //example1 = split(argv[2]);
         printf("Output of \"echo\": ");
+        echo_command(argv+1);
+        printf("\n");
     }
-    echo_command(argv+1);
 
     return 0;
-}
+} */
 
