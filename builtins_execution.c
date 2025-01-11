@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_execution.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 18:47:33 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/11 13:15:48 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/11 14:54:31 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 void	execute_builtin(char **args, t_env **envs)
 {
-	/* if (ft_strcmp(args[0], "echo") == 0)
+	if (ft_strcmp(args[0], "echo") == 0)
 		ft_echo(args);
-	else if (ft_strcmp(args[0], "cd") == 0)
-		ft_cd(args, envp);
-	else if (ft_strcmp(args[0], "pwd") == 0) */
-	if (ft_strcmp(args[0], "pwd") == 0)
+	//else if (ft_strcmp(args[0], "cd") == 0)
+	//	ft_cd(args, envp);
+	//else if (ft_strcmp(args[0], "pwd") == 0) */
+	else if (ft_strcmp(args[0], "pwd") == 0)
 		ft_pwd();
 	else if (ft_strcmp(args[0], "env") == 0)
 		ft_env(*envs);

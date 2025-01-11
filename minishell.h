@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 08:01:11 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/09 19:56:44 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/11 14:53:28 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void						handle_redirections(t_redirection *redirs,
 void						free_redirections(t_redirection *redir);
 void						free_commands(t_command *cmd);
 void						ft_pwd(void);
+void						ft_echo(char **args);
 void						execute_builtin(char **args, t_env **envs);
 void						skip_quotes(const char *input, size_t *index,
 								char quote);
