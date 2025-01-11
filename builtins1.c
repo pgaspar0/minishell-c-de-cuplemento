@@ -106,18 +106,20 @@ int	is_builtin_command(char **args)
 
 static int	is_only_n(char *word)
 {
-    int i;
+	int	i;
 
-    i = 1;
-    if (!word || *word == '\0') 
-        return 0;
-    while(word[i])
-    {
-        if (word[i] != 'n')
-            return 0;
-        i++;
-    }
-    return (1);
+	i = 0;
+	if (!word || *word == '\0')
+		return (0);
+	if(word[i++] != '-')
+        return (0);
+    while (word[i])
+	{
+		if (word[i] != 'n')
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
 void	ft_echo(char **args)
@@ -127,7 +129,8 @@ void	ft_echo(char **args)
 
 	suppress_newline = false;
 	start_index = 1;
-	if (args[start_index] && (strcmp(args[start_index], "-n") == 0 || is_only_n(args[start_index]) == 1))
+	if (args[start_index] && (strcmp(args[start_index], "-n") == 0
+			|| is_only_n(args[start_index]) == 1))
 	{
 		suppress_newline = true;
 		start_index++;
