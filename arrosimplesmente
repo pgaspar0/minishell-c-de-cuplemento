@@ -1,4 +1,0 @@
--rw-r--r-- 1 jorcarva 2023_luanda  2241 Jan 10 19:09 env_vars_builtins.c
--rw-r--r-- 1 jorcarva 2023_luanda  3400 Jan 10 19:50 env_vars_builtins.o
--rw-r--r-- 1 jorcarva 2023_luanda  2082 Jan 10 19:09 env_vars.c
--rw-r--r-- 1 jorcarva 2023_luanda  2616 Jan 10 19:50 env_vars.o

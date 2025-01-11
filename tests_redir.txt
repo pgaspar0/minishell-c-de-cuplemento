@@ -1,6 +1,0 @@
-3. Testing and Debugging
-Once implemented, test thoroughly with cases like:
-
-ls -l > a > b > c (output only in c).
-ls -l > a > b >> c (output appended to c).
-ls -l > a > b | grep txt > c (pipeline with redirection).
