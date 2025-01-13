@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:28:31 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/11 18:27:07 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/13 11:19:36 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,7 +182,7 @@ void	execute_commands(t_command *cmd_list, t_env **envs)
     }
 } */
 
-void execute_commands_iterative(t_command *cmd_list, t_env **envs)
+/* void execute_commands_iterative(t_command *cmd_list, t_env **envs)
 {
     char **env_matrix;
     int pipe_fd[2];
@@ -275,4 +275,96 @@ void execute_commands_iterative(t_command *cmd_list, t_env **envs)
 
         current = current->next;
     }
+} */
+
+void execute_commands_iterative(t_command *cmd_list, t_env **envs)
+{
+    char        **env_matrix;
+    int         pipe_fd[2];
+    pid_t       pid;
+    t_command   *current;
+    int         in_fd = STDIN_FILENO;
+
+    current = cmd_list;
+    while (current)
+    {
+        // Cria um pipe se houver um próximo comando
+        if (current->next && pipe(pipe_fd) == -1)
+        {
+            perror("Pipe error");
+            exit(EXIT_FAILURE);
+        }
+
+        // Se o comando for uma builtin
+        if (is_builtin_command(current->args))
+        {
+            // Redireciona entrada, se necessário
+            if (in_fd != STDIN_FILENO)
+            {
+                dup2(in_fd, STDIN_FILENO);
+                close(in_fd);
+            }
+
+            // Redireciona saída para o próximo pipe, se necessário
+            if (current->next)
+            {
+                dup2(pipe_fd[1], STDOUT_FILENO);
+                close(pipe_fd[1]);
+                close(pipe_fd[0]);
+            }
+
+            // Executa a builtin e continua para o próximo comando
+            execute_builtin(current->args, envs);
+        }
+        else
+        {
+            // Processo externo: Cria fork
+            pid = fork();
+            if (pid == -1)
+            {
+                perror("Fork error");
+                exit(EXIT_FAILURE);
+            }
+            if (pid == 0) // Processo filho
+            {
+                // Redireciona entrada, se necessário
+                if (in_fd != STDIN_FILENO)
+                {
+                    dup2(in_fd, STDIN_FILENO);
+                    close(in_fd);
+                }
+
+                // Redireciona saída para o próximo pipe, se necessário
+                if (current->next)
+                {
+                    dup2(pipe_fd[1], STDOUT_FILENO);
+                    close(pipe_fd[0]);
+                    close(pipe_fd[1]);
+                }
+
+                // Executa o comando externo
+                env_matrix = env_to_matrix(*envs);
+                execve(get_caminho(ft_split(getenv("PATH"), ':'), current->args), current->args, env_matrix);
+                perror("Execve error");
+                free_matrix(env_matrix);
+                exit(EXIT_FAILURE);
+            }
+            else // Processo pai
+            {
+                waitpid(pid, NULL, 0);
+            }
+        }
+
+        // Atualiza o in_fd para o próximo comando
+        if (in_fd != STDIN_FILENO)
+            close(in_fd);
+        if (current->next)
+        {
+            close(pipe_fd[1]); // Fecha o lado de escrita do pipe
+            in_fd = pipe_fd[0]; // Lado de leitura para o próximo comando
+        }
+
+        current = current->next; // Vai para o próximo comando
+    }
 }
+
