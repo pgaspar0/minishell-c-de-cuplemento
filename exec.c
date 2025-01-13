@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 10:47:49 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/13 11:18:33 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/13 18:14:24 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,45 +29,62 @@ void	execute_commands_iterative(t_command *cmd_list, t_env **envs)
 			perror("Pipe error");
 			exit(1);
 		}
-		if (in_fd != 0)
+		pid = fork();
+		if (pid == -1)
 		{
-			dup2(in_fd, 0);
-			close(in_fd);
+			perror("Fork error");
+			exit(1);
 		}
-		if (current->next)
+		if (!current->next)
 		{
-			dup2(pipe_fd[1], 1);
-			close(pipe_fd[0]);
-			close(pipe_fd[1]);
-		}
-		handle_redirections(current->redirs, STDOUT_FILENO);
-		if (is_builtin_command(current->args))
-		{
-			execute_builtin(current->args, envs);
 			if (in_fd != 0)
+			{
+				dup2(in_fd, 0);
 				close(in_fd);
+			}
 			if (current->next)
 			{
+				dup2(pipe_fd[1], 1);
+				close(pipe_fd[0]);
 				close(pipe_fd[1]);
-				in_fd = pipe_fd[0];
+			}
+			handle_redirections(current->redirs, STDOUT_FILENO);
+			if (is_builtin_command(current->args))
+			{
+				execute_builtin(current->args, envs);
+				exit(0);
 			}
 		}
 		else
 		{
-			pid = fork();
-			if (pid == -1)
-			{
-				perror("Fork error");
-				exit(1);
-			}
 			if (pid == 0)
 			{
-				env_matrix = env_to_matrix(*envs);
-				execve(get_caminho(ft_split(getenv("PATH"), ':'),
-						current->args), current->args, env_matrix);
-				perror("Execve error");
-				free_matrix(env_matrix);
-				exit(1);
+				if (in_fd != 0)
+				{
+					dup2(in_fd, 0);
+					close(in_fd);
+				}
+				if (current->next)
+				{
+					dup2(pipe_fd[1], 1);
+					close(pipe_fd[0]);
+					close(pipe_fd[1]);
+				}
+				handle_redirections(current->redirs, STDOUT_FILENO);
+				if (is_builtin_command(current->args))
+				{
+					execute_builtin(current->args, envs);
+					exit(0);
+				}
+				else
+				{
+					env_matrix = env_to_matrix(*envs);
+					execve(get_caminho(ft_split(getenv("PATH"), ':'),
+							current->args), current->args, env_matrix);
+					perror("Execve error");
+					free_matrix(env_matrix);
+					exit(1);
+				}
 			}
 			else
 			{
