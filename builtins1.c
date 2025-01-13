@@ -111,9 +111,9 @@ static int	is_only_n(char *word)
 	i = 0;
 	if (!word || *word == '\0')
 		return (0);
-	if(word[i++] != '-')
-        return (0);
-    while (word[i])
+	if (word[i++] != '-')
+		return (0);
+	while (word[i])
 	{
 		if (word[i] != 'n')
 			return (0);
@@ -121,6 +121,17 @@ static int	is_only_n(char *word)
 	}
 	return (1);
 }
+
+// static void	many_n(char *word)
+// {
+//     int i;
+
+//     i = 0;
+//     while (word[i])
+//     {
+        
+//     }
+// }
 
 void	ft_echo(char **args)
 {
@@ -161,6 +172,70 @@ void	ft_pwd(void)
 	}
 	printf("%s\n", cwd);
 	free(cwd);
+}
+
+#include <errno.h>
+
+// Função para mudar de diretório
+void my_cd(const char *path) {
+    char *home_dir;
+
+    // Caso o caminho seja NULL ou "~", muda para o diretório inicial
+    if (path == NULL || strcmp(path, "~") == 0) {
+        home_dir = getenv("HOME");
+        if (!home_dir) {
+            printf("Erro: Variável HOME não está definida.\n");
+            return;
+        }
+        path = home_dir;
+    }
+
+    // Tenta mudar para o diretório especificado
+    if (chdir(path) != 0) {
+        // Exibe uma mensagem de erro detalhada
+        fprintf(stderr, "Erro ao mudar para o diretório '%s': %s\n", path, strerror(errno));
+        return;
+    }
+}
+
+// Função para mudar de diretório
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <errno.h>
+
+// Função que simula o comando "cd"
+void ft_cd(char **input_path) {
+    char *path = NULL;
+
+    // Verifica se o argumento para o diretório foi fornecido
+    if (input_path[1] == NULL) {
+        // Se não houver argumento, muda para o diretório inicial
+        path = getenv("HOME");
+        if (path == NULL) {
+            fprintf(stderr, "Erro: Variável HOME não está definida.\n");
+            return;
+        }
+    } else {
+        // Usa o argumento fornecido como caminho
+        path = input_path[1];
+    }
+
+    // Tenta mudar para o diretório especificado
+    if (chdir(path) != 0) {
+        fprintf(stderr, "Erro ao mudar para o diretório '%s': %s\n", path, strerror(errno));
+        return;
+    }
+
+    // Exibe o diretório atual após a mudança (opcional)
+    char *current_dir = getcwd(NULL, 0);
+    if (current_dir) {
+        printf("Diretório atual: %s\n", current_dir);
+        free(current_dir);
+    } else {
+        perror("getcwd");
+    }
 }
 
 // int main(int argc, char **argv)
