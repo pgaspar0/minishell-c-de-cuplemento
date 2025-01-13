@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 08:00:27 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/09 19:55:32 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/13 17:44:33 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	shell_loop(char **envp)
 
 int	main(int ac, char **av, char **envp)
 {
+	// printf("%d",ac);
 	(void)ac;
 	(void)av;
 	signal(3, SIG_IGN);
