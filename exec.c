@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 10:47:49 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/13 18:14:24 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/14 12:24:49 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,34 +29,18 @@ void	execute_commands_iterative(t_command *cmd_list, t_env **envs)
 			perror("Pipe error");
 			exit(1);
 		}
-		pid = fork();
-		if (pid == -1)
+		if (is_builtin_command(current->args) && !current->next)
 		{
-			perror("Fork error");
-			exit(1);
-		}
-		if (!current->next)
-		{
-			if (in_fd != 0)
-			{
-				dup2(in_fd, 0);
-				close(in_fd);
-			}
-			if (current->next)
-			{
-				dup2(pipe_fd[1], 1);
-				close(pipe_fd[0]);
-				close(pipe_fd[1]);
-			}
-			handle_redirections(current->redirs, STDOUT_FILENO);
-			if (is_builtin_command(current->args))
-			{
-				execute_builtin(current->args, envs);
-				exit(0);
-			}
+			execute_builtin(current->args, envs);
 		}
 		else
 		{
+			pid = fork();
+			if (pid == -1)
+			{
+				perror("Fork error");
+				exit(1);
+			}
 			if (pid == 0)
 			{
 				if (in_fd != 0)
