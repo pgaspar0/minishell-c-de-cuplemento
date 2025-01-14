@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 08:01:11 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/14 18:44:38 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/01/14 19:07:58 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void						execute_builtin(char **args, t_env **envs);
 void						skip_quotes(const char *input, size_t *index,
 								char quote);
 void						ft_env(t_env *env);
+void						update_exit_status(t_env **envs, int status);
 void						ft_export(t_env **env, char *var);
 void						update_env(t_env **env, char *key, char *value);
 void						execute_commands(t_command *cmd_list, t_env **envs);
