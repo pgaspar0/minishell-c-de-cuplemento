@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:28:31 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/14 19:05:20 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/14 19:13:19 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ void	execute_commands_iterative(t_command *cmd_list, t_env **envs)
 	int			in_fd;
 
 	in_fd = 0;
+	status = 0;
 	current = cmd_list;
     if (is_builtin_command(current->args) && !current->next)
 	{
@@ -162,7 +163,7 @@ void	execute_commands_iterative(t_command *cmd_list, t_env **envs)
 		}
 		else
 		{
-			waitpid(pid, NULL, 0);
+			waitpid(pid, &status, 0);
 			update_exit_status(envs, status);
 			if (in_fd != 0)
 				close(in_fd);
