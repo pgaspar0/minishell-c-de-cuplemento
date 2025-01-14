@@ -197,24 +197,15 @@ void my_cd(const char *path) {
         return;
     }
 }
-
+ 
 // Função para mudar de diretório
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <errno.h>
-
-// Função que simula o comando "cd"
 void ft_cd(char **input_path) {
     char *path = NULL;
 
-    // Verifica se o argumento para o diretório foi fornecido
-    if (input_path[1] == NULL) {
-        // Se não houver argumento, muda para o diretório inicial
-        path = getenv("HOME");
+	if (input_path[1] == NULL || (input_path[1][0] == '~' && input_path[1][1] == '\0')) { // Verifica se o argumento para o diretório foi fornecido
+        path = getenv("HOME"); // Se não houver argumento, muda para o diretório inicial
         if (path == NULL) {
-            fprintf(stderr, "Erro: Variável HOME não está definida.\n");
+            printf("Error: path HOME not specified.\n");
             return;
         }
     } else {
@@ -224,7 +215,7 @@ void ft_cd(char **input_path) {
 
     // Tenta mudar para o diretório especificado
     if (chdir(path) != 0) {
-        fprintf(stderr, "Erro ao mudar para o diretório '%s': %s\n", path, strerror(errno));
+        printf("Error: No such file or directory.\n");
         return;
     }
 
