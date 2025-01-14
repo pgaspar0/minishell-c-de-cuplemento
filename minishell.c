@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 08:00:27 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/13 17:44:33 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/01/14 12:00:03 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,15 @@ void	handle_sigint(int sig)
 
 void	shell_loop(char **envp)
 {
+	int			g_status;
 	t_env		*envs;
 	char		*input;
 	char		**tokens;
 	t_command	*commands;
 
+	g_status = 0;
 	envs = init_env(envp);
+	update_env(&envs, "?", "0");
 	while (1)
 	{
 		input = readline("minishell> ");
@@ -48,7 +51,7 @@ void	shell_loop(char **envp)
 		}
 		commands = parse_commands(tokens);
 		free_matrix(tokens);
-		execute_commands(commands, &envs);
+		execute_commands(commands, &envs, &g_status);
 		free_commands(commands);
 		free(input);
 	}

@@ -6,19 +6,19 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:28:31 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/13 19:10:35 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/14 12:00:40 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	execute_commands(t_command *cmd_list, t_env **envs)
+void	execute_commands(t_command *cmd_list, t_env **envs, int *g_status)
 {
 	if (!cmd_list)
 		return ;
 	// int original_stdout_fd = dup(STDOUT_FILENO);
 	// execute_single_command(cmd_list, envp, 0, 1, original_stdout_fd);
-	execute_commands_iterative(cmd_list, envs);
+	execute_commands_iterative(cmd_list, envs, g_status);
 }
 /* void	execute_commands_iterative(t_command *cmd_list, t_env **envs)
 {
@@ -272,11 +272,12 @@ void	execute_commands(t_command *cmd_list, t_env **envs)
     }
 } */
 
-void execute_commands_iterative(t_command *cmd_list, t_env **envs)
+void execute_commands_iterative(t_command *cmd_list, t_env **envs, int *g_status)
 {
     char        **env_matrix;
     int         pipe_fd[2];
     pid_t       pid;
+    int     status;
     t_command   *current;
 
     int in_fd = 0;
@@ -341,7 +342,8 @@ void execute_commands_iterative(t_command *cmd_list, t_env **envs)
         }
         else // Processo pai
         {
-            waitpid(pid, NULL, 0); // Espera o processo filho terminar
+            waitpid(pid, &status, 0); // Espera o processo filho terminar
+            update_status(envs, status, g_status);
             if (in_fd != 0) // Fecha o lado de leitura do pipe anterior
                 close(in_fd);
             if (current->next) // Atualiza o in_fd para o próximo comando
