@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:28:31 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/14 12:47:24 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/14 19:05:20 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ void	execute_commands_iterative(t_command *cmd_list, t_env **envs)
 	int			pipe_fd[2];
 	pid_t		pid;
 	t_command	*current;
+	int			status;
 	int			in_fd;
 
 	in_fd = 0;
@@ -162,6 +163,7 @@ void	execute_commands_iterative(t_command *cmd_list, t_env **envs)
 		else
 		{
 			waitpid(pid, NULL, 0);
+			update_exit_status(envs, status);
 			if (in_fd != 0)
 				close(in_fd);
 			if (current->next)
