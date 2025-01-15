@@ -222,7 +222,7 @@ void ft_cd(char **input_path) {
     // Exibe o diretório atual após a mudança (opcional)
     char *current_dir = getcwd(NULL, 0);
     if (current_dir) {
-        printf("Diretório atual: %s\n", current_dir);
+        //printf("Diretório atual: %s\n", current_dir);
         free(current_dir);
     } else {
         perror("getcwd");
