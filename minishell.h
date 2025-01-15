@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 08:01:11 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/15 18:46:33 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/15 20:52:29 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ int							g_int(int n);
 int							g_status_changer(int n);
 int							is_builtin_command(char **args);
 int							here_doc(char *delimiter, int original_stdout_fd);
+int 						is_dquotes(const char *input);
+int							contains_dollar_sign(const char *input);
 
 void						handle_redirections(t_redirection *redirs,
 								int original_stdout_fd);
@@ -86,6 +88,7 @@ char						*mat_concat(char **mat);
 char						**ft_parse(const char *s);
 char						**ft_parse2(const char *s);
 char						**env_to_matrix(t_env *env_list);
-char						**tokenize(const char *input);
+char 						**tokenize(const char *input);
+char					    *ft_expansion(const char *input);
 
 #endif
