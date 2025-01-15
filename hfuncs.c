@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 19:05:09 by pgaspar           #+#    #+#             */
-/*   Updated: 2024/12/07 16:22:23 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/15 11:39:27 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,13 @@ char	*get_caminho(char **path_copy, char **command)
 	char	*caminho;
 
 	i = 0;
+	//verificar se o veio um caminho absoluto e retornar direito
+	if (command[0][0] == '/')
+	{
+		status = access(command[0], X_OK | F_OK);
+		if (status == 0)
+			return (command[0]);
+	}
 	while (path_copy[i])
 	{
 		temp = ft_strjoin(path_copy[i], "/");

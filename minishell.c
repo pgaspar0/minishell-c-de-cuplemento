@@ -6,19 +6,25 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 08:00:27 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/14 19:05:33 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/15 19:04:20 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int	g_exit_status = 0;
+
 void	handle_sigint(int sig)
 {
 	(void)sig;
+	g_status_changer(130);
 	write(1, "\n", 1);
 	rl_on_new_line();
-	rl_replace_line("", 1);
-	rl_redisplay();
+	if (g_int(-1) == 0)
+	{
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
 }
 
 void	shell_loop(char **envp)

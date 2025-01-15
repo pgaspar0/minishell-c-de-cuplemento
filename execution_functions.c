@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:28:31 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/14 19:13:19 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/15 18:51:37 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ void	execute_commands_iterative(t_command *cmd_list, t_env **envs)
 			perror("Pipe error");
 			exit(1);
 		}
+		g_int(1);
 		pid = fork();
 		if (pid == -1)
 		{
@@ -154,11 +155,9 @@ void	execute_commands_iterative(t_command *cmd_list, t_env **envs)
 			else
 			{
 				env_matrix = env_to_matrix(*envs);
-				execve(get_caminho(ft_split(getenv("PATH"), ':'),
-						current->args), current->args, env_matrix);
-				perror("Execve error");
+				cuta(current->args, env_matrix);
 				free_matrix(env_matrix);
-				exit(1);
+				exit(0);
 			}
 		}
 		else
@@ -173,6 +172,7 @@ void	execute_commands_iterative(t_command *cmd_list, t_env **envs)
 				in_fd = pipe_fd[0];
 			}
 		}
+		g_int(0);
 		current = current->next;
 	}
 }

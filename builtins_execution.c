@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 18:47:33 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/13 19:10:29 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/15 18:39:54 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,16 @@ void	execute_builtin(char **args, t_env **envs)
 		else
 			printf("Error: too many arguments\n");
 	}
-	//else if (ft_strcmp(args[0], "pwd") == 0) */
+	// else if (ft_strcmp(args[0], "pwd") == 0) */
 	else if (ft_strcmp(args[0], "pwd") == 0)
 		ft_pwd();
 	else if (ft_strcmp(args[0], "env") == 0)
+	{
+		update_exit_status(envs, g_status_changer(-1));
 		ft_env(*envs);
-    else if (ft_strcmp(args[0], "export") == 0)
-		ft_export(envs, args[1]);	
+	}
+	else if (ft_strcmp(args[0], "export") == 0)
+		ft_export(envs, args[1]);
 	/*
 	else if (ft_strcmp(args[0], "unset") == 0)
 		ft_unset(args, envp);

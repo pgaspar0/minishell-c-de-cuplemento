@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 08:01:11 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/14 19:07:58 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/15 18:46:33 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define MINISHELL_H
 
 # include "./libft/libft.h"
-//# include "pipex.h"
+# include "pipex.h"
 # include <fcntl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
@@ -26,6 +26,8 @@
 # include <sys/wait.h>
 # include <unistd.h>
 # include <errno.h>
+
+extern int g_exit_status;
 
 typedef struct s_env
 {
@@ -57,6 +59,8 @@ bool						is_special_char(char c);
 int							open_file(const char *filename, int flags,
 								int mode);
 int							is_valid_identifier(char *key);
+int							g_int(int n);
+int							g_status_changer(int n);
 int							is_builtin_command(char **args);
 int							here_doc(char *delimiter, int original_stdout_fd);
 

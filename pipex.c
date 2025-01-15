@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 14:47:55 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/09 12:56:15 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/15 11:34:13 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,17 @@ void	cuta(char **command, char **envp)
 	{
 		perror("Error");
 		free_matrix(path_copy);
-		exit(1);
+		exit(127);
 	}
 	execve(caminho, command, envp);
+	perror("Error");
+	exit(1);
 }
 
 /* void	here_doc(char *delimiter)
 {
+	int		pipe_fd[2];
+	char	*line;
 	int		pipe_fd[2];
 	char	*line;
 
@@ -54,12 +58,8 @@ void	cuta(char **command, char **envp)
 	dup2(pipe_fd[0], 0);
 	close(pipe_fd[0]);
 } */
-
 /* int	here_doc(char *delimiter)
 {
-	int		pipe_fd[2];
-	char	*line;
-
 	if (pipe(pipe_fd) == -1)
 	{
 		perror("Error");
@@ -79,7 +79,6 @@ void	cuta(char **command, char **envp)
 	close(pipe_fd[0]);
 	return (0);
 } */
-
 /* void	keeping_up_main(char *av[], int *fd, int *i, int ac)
 {
 	if (!ft_strcmp(av[1], "here_doc"))
