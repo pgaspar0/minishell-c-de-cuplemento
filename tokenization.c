@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenization.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:31:19 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/15 20:53:19 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/01/16 11:18:13 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ char	**tokenize(const char *input)
 	size_t i;
 	bool quoted;
 
-	if(contains_dollar_sign(input))
-		ft_expansion(input);
+	/* if(contains_dollar_sign(input))
+		ft_expansion(input); */
 	tokens = malloc(sizeof(char *) * 1024);
 	if (!tokens)
 		return (NULL);

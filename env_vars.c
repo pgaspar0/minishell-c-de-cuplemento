@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:23:10 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/09 19:46:25 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/16 11:44:13 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,26 +40,12 @@ t_env	*init_env(char **envp)
 	return (head);
 }
 
-char	**env_to_matrix(t_env *env_list)
+static int	env_to_matrix_loop(t_env *current, char **env_matrix)
 {
-	t_env	*current;
-	char	**env_matrix;
-	char	*temp;
-	int		count;
 	int		i;
+	char	*temp;
 
-	count = 0;
-	current = env_list;
-	while (current)
-	{
-		count++;
-		current = current->next;
-	}
-	env_matrix = malloc((count + 1) * sizeof(char *));
-	if (!env_matrix)
-		return (NULL);
 	i = 0;
-	current = env_list;
 	while (current)
 	{
 		if (current->value)
@@ -72,12 +58,34 @@ char	**env_to_matrix(t_env *env_list)
 				while (i-- > 0)
 					free(env_matrix[i]);
 				free(env_matrix);
-				return (NULL);
+				return (-1);
 			}
 			i++;
 		}
 		current = current->next;
 	}
 	env_matrix[i] = NULL;
+	return (0);
+}
+
+char	**env_to_matrix(t_env *env_list)
+{
+	t_env	*current;
+	char	**env_matrix;
+	int		count;
+
+	count = 0;
+	current = env_list;
+	while (current)
+	{
+		count++;
+		current = current->next;
+	}
+	env_matrix = malloc((count + 1) * sizeof(char *));
+	if (!env_matrix)
+		return (NULL);
+	current = env_list;
+	if (env_to_matrix_loop(current, env_matrix) == -1)
+		return (NULL);
 	return (env_matrix);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 19:33:16 by jorcarva          #+#    #+#             */
-/*   Updated: 2025/01/15 21:00:54 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/01/16 11:18:20 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,24 +45,24 @@ int contains_dollar_sign(const char *input) {
     return 0;
 }
 
-// char    *ft_expansion(const char *input)
-// {
-//     int i;
-//     int j;
+/* char    *ft_expansion(const char *input)
+{
+    int i;
+    int j;
     
-//     i = 0;
-//     j = 0;
-//     if(is_dquotes(input) == 0)
-//         return (input);
-//     while(input[i])
-//     {
-//         if(input[i] == '$')
-//         {
-//             j = i;
-//             break;
-//         }
-//         i++;
-//     }
-//     if(input[j] == '$' && input[j+1] != '$')
+    i = 0;
+    j = 0;
+    if(is_dquotes(input) == 0)
+        return (input);
+    while(input[i])
+    {
+        if(input[i] == '$')
+        {
+            j = i;
+            break;
+        }
+        i++;
+    }
+    if(input[j] == '$' && input[j+1] != '$')
         
-// }
+} */
