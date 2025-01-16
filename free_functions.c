@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:26:17 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/09 12:26:38 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/16 11:50:20 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	free_redirections(t_redirection *redir)
 
 void	free_commands(t_command *cmd)
 {
-	t_command *temp;
+	t_command	*temp;
 
 	while (cmd)
 	{

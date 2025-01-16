@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:36:36 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/09 19:50:48 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/16 11:28:00 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,9 @@ void	update_env(t_env **env, char *key, char *value)
 
 void	ft_export(t_env **env, char *var)
 {
-	char *equal;
-	char *key;
-	char *value;
+	char	*equal;
+	char	*key;
+	char	*value;
 
 	equal = ft_strchr(var, '=');
 	if (!equal)

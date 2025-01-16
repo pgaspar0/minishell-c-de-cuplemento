@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 08:01:11 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/15 20:52:29 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/01/16 12:26:31 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "./libft/libft.h"
 # include "pipex.h"
+# include <errno.h>
 # include <fcntl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
@@ -25,9 +26,8 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
-# include <errno.h>
 
-extern int g_exit_status;
+extern int					g_exit_status;
 
 typedef struct s_env
 {
@@ -63,7 +63,7 @@ int							g_int(int n);
 int							g_status_changer(int n);
 int							is_builtin_command(char **args);
 int							here_doc(char *delimiter, int original_stdout_fd);
-int 						is_dquotes(const char *input);
+int							is_dquotes(const char *input);
 int							contains_dollar_sign(const char *input);
 
 void						handle_redirections(t_redirection *redirs,
@@ -72,7 +72,7 @@ void						free_redirections(t_redirection *redir);
 void						free_commands(t_command *cmd);
 void						ft_pwd(void);
 void						ft_echo(char **args);
-void ft_cd(char **input_path);
+void						ft_cd(char **input_path);
 void						execute_builtin(char **args, t_env **envs);
 void						skip_quotes(const char *input, size_t *index,
 								char quote);
@@ -81,14 +81,14 @@ void						update_exit_status(t_env **envs, int status);
 void						ft_export(t_env **env, char *var);
 void						update_env(t_env **env, char *key, char *value);
 void						execute_commands(t_command *cmd_list, t_env **envs);
-void						execute_commands_iterative(t_command *cmd_list, t_env **envs);
-
+void						execute_commands_iterative(t_command *cmd_list,
+								t_env **envs);
 char						*get_caminho(char **path_copy, char **command);
 char						*mat_concat(char **mat);
 char						**ft_parse(const char *s);
 char						**ft_parse2(const char *s);
 char						**env_to_matrix(t_env *env_list);
-char 						**tokenize(const char *input);
-char					    *ft_expansion(const char *input);
+char						**tokenize(const char *input);
+// char						 *ft_expansion(const char *input);
 
 #endif

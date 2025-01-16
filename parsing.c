@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:32:27 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/09 15:45:16 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/01/16 12:31:37 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 t_command	*parse_commands(char **tokens)
 {
-	t_command *head;
-	t_command *current;
-	t_redirection *redir;
-	size_t arg_count;
+	t_command		*head;
+	t_command		*current;
+	t_redirection	*last_redir;
+	t_redirection	*redir;
+	size_t			arg_count;
 
-	t_redirection *last_redir;
 	head = NULL;
 	current = NULL;
 	for (int i = 0; tokens[i];)

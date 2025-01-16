@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 19:05:09 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/15 11:39:27 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/16 11:52:37 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,8 @@ void	cuta_the_second(char **command, char **envp, int fd)
 	execve(caminho, command, envp);
 }
 
-//executa o comando pegando como input o ficheiro do fd e manda o output para um lado da pipe
+//executa o comando pegando como input o ficheiro do fd 
+//e manda o output para um lado da pipe
 /* void	cuta_the_first(char **command, char **envp, int *pipe_fd, int fd)
 {
 	char	*caminho;

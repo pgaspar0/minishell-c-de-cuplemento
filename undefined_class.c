@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:39:31 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/09 12:58:26 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/16 12:38:11 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,10 @@ void	skip_quotes(const char *input, size_t *index, char quote)
 
 bool	validate_syntax(char **tokens)
 {
-	for (int i = 0; tokens[i]; i++)
+	int	i;
+
+	i = 0;
+	while (tokens[i])
 	{
 		if (is_special_char(tokens[i][0]))
 		{
@@ -38,13 +41,14 @@ bool	validate_syntax(char **tokens)
 			if (i == 0 || !tokens[i + 1] || is_special_char(tokens[i + 1][0]))
 				return (false);
 		}
+		i++;
 	}
 	return (true);
 }
 
 int	open_file(const char *filename, int flags, int mode)
 {
-	int fd;
+	int	fd;
 
 	fd = open(filename, flags, mode);
 	if (fd == -1)

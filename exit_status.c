@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 11:58:02 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/15 19:12:18 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/16 11:48:49 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	g_status_changer(int n)
 {
 	static int	status = 0;
+
 	if (n != -1)
 		status = n;
 	return (status);
@@ -23,6 +24,7 @@ int	g_status_changer(int n)
 int	g_int(int n)
 {
 	static int	status_int = 0;
+
 	if (n != -1)
 		status_int = n;
 	return (status_int);
