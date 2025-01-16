@@ -6,7 +6,7 @@
 /*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:31:19 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/15 20:53:19 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/01/16 13:54:30 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,15 @@
 char	**tokenize(const char *input)
 {
 	char **tokens;
+	//char *new_input;
 	size_t token_count;
 	size_t start;
 	size_t i;
 	bool quoted;
 
-	if(contains_dollar_sign(input))
-		ft_expansion(input);
+	 if(contains_dollar_sign(input) && is_dquotes(input))
+		printf("teste : %s\n",ft_strdup(ft_expansion(input)));
+	//printf("%s",new_input);
 	tokens = malloc(sizeof(char *) * 1024);
 	if (!tokens)
 		return (NULL);
