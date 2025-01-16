@@ -6,22 +6,28 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 18:47:33 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/16 11:23:47 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/16 20:07:49 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	execute_builtin(char **args, t_env **envs)
+int	execute_builtin(char **args, t_env **envs)
 {
+	int ret;
+
+	ret = 0;
 	if (ft_strcmp(args[0], "echo") == 0)
 		ft_echo(args);
 	else if (ft_strcmp(args[0], "cd") == 0)
 	{
 		if (!args[2])
-			ft_cd(args);
+			ret = ft_cd(args);
 		else
+		{
+			ret = 1;
 			printf("Error: too many arguments\n");
+		}
 	}
 	else if (ft_strcmp(args[0], "pwd") == 0)
 		ft_pwd();
@@ -37,4 +43,5 @@ void	execute_builtin(char **args, t_env **envs)
 		ft_unset(args, envp);
 	else if (ft_strcmp(args[0], "exit") == 0)
 		ft_exit(args); */
+	return (ret);
 }
