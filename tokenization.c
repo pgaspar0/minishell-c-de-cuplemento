@@ -6,13 +6,13 @@
 /*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:31:19 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/16 18:48:53 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/01/16 18:55:01 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**tokenize(const char *input)
+char	**tokenize(const char *input, t_env *envs)
 {
 	char **tokens;
 	//char *new_input;
@@ -22,7 +22,7 @@ char	**tokenize(const char *input)
 	bool quoted;
 
 	 if(contains_dollar_sign(input) && is_dquotes(input))
-		printf("teste : %s\n",ft_strdup(ft_expansion(input)));
+		printf("teste : %s\n",ft_strdup(ft_expansion(input, envs)));
 	//printf("%s",new_input);
 	tokens = malloc(sizeof(char *) * 1024);
 	if (!tokens)
