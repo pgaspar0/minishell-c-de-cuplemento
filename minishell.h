@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 08:01:11 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/16 19:12:45 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/16 20:09:43 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ char						*mat_concat(char **mat);
 char						**ft_parse(const char *s);
 char						**ft_parse2(const char *s);
 char						**env_to_matrix(t_env *env_list);
-char						**tokenize(const char *input);
-// char						 *ft_expansion(const char *input);
+char						**tokenize(const char *input, t_env *envs);
+ char						 *ft_expansion(const char *input, t_env *envs);
 
 #endif

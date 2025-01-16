@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 08:00:27 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/16 12:41:44 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/16 18:53:30 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	shell_loop(char **envp)
 		if (!input)
 			break ;
 		add_history(input);
-		tokens = tokenize(input);
+		tokens = tokenize(input, envs);
 		if (!validate_syntax(tokens))
 		{
 			printf("Syntax error\n");
