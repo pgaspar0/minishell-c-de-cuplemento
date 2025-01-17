@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 08:01:11 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/16 20:09:43 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/17 17:15:56 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,12 @@ int							is_dquotes(const char *input);
 int							contains_dollar_sign(const char *input);
 int							execute_builtin(char **args, t_env **envs);
 int							ft_cd(char **input_path);
+int							ft_pwd(void);
 
 void						handle_redirections(t_redirection *redirs,
 								int original_stdout_fd);
 void						free_redirections(t_redirection *redir);
 void						free_commands(t_command *cmd);
-void						ft_pwd(void);
 void						ft_echo(char **args);
 void						skip_quotes(const char *input, size_t *index,
 								char quote);

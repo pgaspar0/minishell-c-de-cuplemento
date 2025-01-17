@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 18:47:33 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/16 20:07:49 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/17 17:16:07 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	execute_builtin(char **args, t_env **envs)
 		}
 	}
 	else if (ft_strcmp(args[0], "pwd") == 0)
-		ft_pwd();
+		ret = ft_pwd();
 	else if (ft_strcmp(args[0], "env") == 0)
 	{
 		update_exit_status(envs, g_status_changer(-1));

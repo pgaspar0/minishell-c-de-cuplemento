@@ -7,25 +7,13 @@
 int	is_builtin_command2(char **args)
 {
 	if (strcmp(args[0], "export") == 0)
-	{
-		// if (!args[1])
 		return (1);
-	}
 	else if (strcmp(args[0], "unset") == 0)
-	{
-		// if (!args[1])
 		return (1);
-	}
 	else if (strcmp(args[0], "env") == 0)
-	{
-		// if (!args[1])
 		return (1);
-	}
 	else if (strcmp(args[0], "exit") == 0)
-	{
-		// if (!args[1])
 		return (1);
-	}
 	return (0);
 }
 
@@ -34,22 +22,11 @@ int	is_builtin_command(char **args)
 	if (!args || !args[0])
 		return (0);
 	if (strcmp(args[0], "echo") == 0)
-	{
 		return (1);
-		// if (args[1] && strcmp(args[1], "-n") == 0)
-		//     return (1);
-		// else
-	}
 	else if (strcmp(args[0], "cd") == 0)
-	{
-		// if (args[1] && !args[2])
 		return (1);
-	}
 	else if (strcmp(args[0], "pwd") == 0)
-	{
-		// if (!args[1])
 		return (1);
-	}
 	else
 		return (is_builtin_command2(args));
 	return (0);
@@ -160,7 +137,7 @@ void	ft_echo(char **args)
 	}
 }
 
-void	ft_pwd(void)
+int	ft_pwd(void)
 {
 	char	*cwd;
 
@@ -168,10 +145,11 @@ void	ft_pwd(void)
 	if (cwd == NULL)
 	{
 		perror("pwd");
-		return ;
+		return(1);
 	}
 	printf("%s\n", cwd);
 	free(cwd);
+	return(0);
 }
 
 #include <errno.h>

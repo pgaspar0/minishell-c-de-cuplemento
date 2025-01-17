@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:28:31 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/16 11:47:30 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/17 17:29:07 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	execute_commands_iterative(t_command *cmd_list, t_env **envs)
 	int			pipe_fd[2];
 	pid_t		pid;
 	t_command	*current;
+	int			ret;
 	int			status;
 	int			in_fd;
 
@@ -34,7 +35,8 @@ void	execute_commands_iterative(t_command *cmd_list, t_env **envs)
     if (is_builtin_command(current->args) && !current->next)
 	{
         handle_redirections(current->redirs, STDOUT_FILENO);
-		execute_builtin(current->args, envs);
+		ret = execute_builtin(current->args, envs);
+		update_exit_status(envs, g_status_changer(ret));
         return ;
 	}
 	while (current)
@@ -67,8 +69,8 @@ void	execute_commands_iterative(t_command *cmd_list, t_env **envs)
 			handle_redirections(current->redirs, STDOUT_FILENO);
 			if (is_builtin_command(current->args))
 			{
-				execute_builtin(current->args, envs);
-				exit(0);
+				ret = execute_builtin(current->args, envs);
+				exit(ret);
 			}
 			else
 			{
@@ -94,5 +96,3 @@ void	execute_commands_iterative(t_command *cmd_list, t_env **envs)
 		current = current->next;
 	}
 }
-
-
