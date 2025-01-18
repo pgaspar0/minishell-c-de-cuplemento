@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 18:47:33 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/17 17:16:07 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/18 14:23:02 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,14 @@ int	execute_builtin(char **args, t_env **envs)
 		ft_env(*envs);
 	}
 	else if (ft_strcmp(args[0], "export") == 0)
-		ft_export(envs, args[1]);
-	/*
+		ft_export_multiple(envs, args);
 	else if (ft_strcmp(args[0], "unset") == 0)
-		ft_unset(args, envp);
+	{	
+		if (!args[1])
+			return (0);
+		ft_unset_multiple(envs, args);
+	}
 	else if (ft_strcmp(args[0], "exit") == 0)
-		ft_exit(args); */
+		ft_exit(envs, args, NULL);
 	return (ret);
 }

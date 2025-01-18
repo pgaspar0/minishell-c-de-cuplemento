@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 08:01:11 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/17 17:15:56 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/18 14:09:32 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,10 @@ int							is_builtin_command(char **args);
 int							here_doc(char *delimiter, int original_stdout_fd);
 int							is_dquotes(const char *input);
 int							contains_dollar_sign(const char *input);
+int							exit_func(char *exit_code);
 int							execute_builtin(char **args, t_env **envs);
+int							is_nbr(const char *str);
+int							ft_exit(t_env **env, char **args, char *exit_code);
 int							ft_cd(char **input_path);
 int							ft_pwd(void);
 
@@ -73,7 +76,11 @@ void						handle_redirections(t_redirection *redirs,
 								int original_stdout_fd);
 void						free_redirections(t_redirection *redir);
 void						free_commands(t_command *cmd);
+void						ft_export_multiple(t_env **env, char **args);
+void						ft_unset_multiple(t_env **env, char **args);
+void						ft_unset(t_env **env, char *var);
 void						ft_echo(char **args);
+void						print_error(char *arg);
 void						skip_quotes(const char *input, size_t *index,
 								char quote);
 void						ft_env(t_env *env);
@@ -89,6 +96,6 @@ char						**ft_parse(const char *s);
 char						**ft_parse2(const char *s);
 char						**env_to_matrix(t_env *env_list);
 char						**tokenize(const char *input, t_env *envs);
- char						 *ft_expansion(const char *input, t_env *envs);
+char						*ft_expansion(const char *input, t_env *envs);
 
 #endif
