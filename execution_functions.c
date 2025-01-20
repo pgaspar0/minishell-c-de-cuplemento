@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:28:31 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/17 17:29:07 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/20 07:14:53 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	execute_commands_iterative(t_command *cmd_list, t_env **envs)
 	t_command	*current;
 	int			ret;
 	int			status;
+	int			saved_stdout;
 	int			in_fd;
 
 	in_fd = 0;
@@ -34,8 +35,11 @@ void	execute_commands_iterative(t_command *cmd_list, t_env **envs)
 	current = cmd_list;
     if (is_builtin_command(current->args) && !current->next)
 	{
+		saved_stdout = dup(STDOUT_FILENO);
         handle_redirections(current->redirs, STDOUT_FILENO);
 		ret = execute_builtin(current->args, envs);
+		dup2(saved_stdout, STDOUT_FILENO);
+		close(saved_stdout);
 		update_exit_status(envs, g_status_changer(ret));
         return ;
 	}
