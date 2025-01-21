@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 08:00:27 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/17 17:35:26 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/18 11:46:53 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	shell_loop(char **envp)
 		commands = parse_commands(tokens);
 		free_matrix(tokens);
 		execute_commands(commands, &envs);
-		printf("exit status: %d\n", g_status_changer(-1));
+		//printf("exit status: %d\n", g_status_changer(-1));
 		free_commands(commands);
 		free(input);
 	}
