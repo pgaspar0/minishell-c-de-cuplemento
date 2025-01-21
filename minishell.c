@@ -6,7 +6,7 @@
 /*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 08:00:27 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/18 11:46:53 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/01/21 16:31:22 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,33 +29,29 @@ void	handle_sigint(int sig)
 
 void	shell_loop(char **envp)
 {
-	t_env		*envs;
-	char		*input;
-	char		**tokens;
-	t_command	*commands;
+	t_shell		shell;
 
-	envs = init_env(envp);
-	update_env(&envs, "?", "0");
+	shell.envs = init_env(envp);
+	update_env(&shell.envs, "?", "0");
 	while (1)
 	{
-		input = readline("minishell> ");
-		if (!input)
+		shell.input = readline("minishell> ");
+		if (!shell.input)
 			break ;
-		add_history(input);
-		tokens = tokenize(input, envs);
-		if (!validate_syntax(tokens))
+		add_history(shell.input);
+		shell.tokens = tokenize(shell.input, shell.envs);
+		if (!validate_syntax(shell.tokens))
 		{
 			printf("Syntax error\n");
-			free_matrix(tokens);
-			free(input);
+			free_matrix(shell.tokens);
+			free(shell.input);
 			continue ;
 		}
-		commands = parse_commands(tokens);
-		free_matrix(tokens);
-		execute_commands(commands, &envs);
-		//printf("exit status: %d\n", g_status_changer(-1));
-		free_commands(commands);
-		free(input);
+		shell.commands = parse_commands(shell.tokens);
+		free_matrix(shell.tokens);
+		execute_commands(&shell);
+		free_commands(shell.commands);
+		free(shell.input);
 	}
 }
 
