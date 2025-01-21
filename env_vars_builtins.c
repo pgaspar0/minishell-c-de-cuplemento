@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:36:36 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/18 12:53:43 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/21 07:36:19 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,12 @@ void	ft_unset(t_env **env, char *var)
 			free(current->key);
 			free(current->value);
 			free(current);
-			break;
+			break ;
 		}
 		prev = current;
 		current = current->next;
 	}
 }
-
 
 void	ft_env(t_env *env)
 {

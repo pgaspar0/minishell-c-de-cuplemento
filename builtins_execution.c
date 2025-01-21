@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 18:47:33 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/20 07:03:03 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/21 07:33:07 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	execute_builtin(char **args, t_env **envs)
 {
-	int ret;
+	int	ret;
 
 	ret = 0;
 	if (ft_strcmp(args[0], "echo") == 0)

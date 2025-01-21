@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:33:59 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/09 12:35:08 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/21 09:58:26 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,32 +42,42 @@ int	here_doc(char *delimiter, int original_stdout_fd)
 	return (pipe_fd[0]);
 }
 
+// separate the if statements into a function
+
+void	redir_type(t_redirection *redir, int *fd, int original_stdout_fd)
+{
+	if (redir->type == 0)
+	{
+		*fd = open_file(redir->file, O_RDONLY, 0);
+		dup2(*fd, 0);
+	}
+	else if (redir->type == 1)
+	{
+		*fd = open_file(redir->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		dup2(*fd, 1);
+	}
+	else if (redir->type == 2)
+	{
+		*fd = open_file(redir->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		dup2(*fd, 1);
+	}
+	else if (redir->type == 3)
+	{
+		*fd = here_doc(redir->file, original_stdout_fd);
+		dup2(*fd, 0);
+	}
+}
+
 void	handle_redirections(t_redirection *redirs, int original_stdout_fd)
 {
-	int	fd;
+	int				fd;
+	t_redirection	*redir;
 
-	for (t_redirection *redir = redirs; redir; redir = redir->next)
+	redir = redirs;
+	while (redir)
 	{
-		if (redir->type == 0)
-		{
-			fd = open_file(redir->file, O_RDONLY, 0);
-			dup2(fd, 0);
-		}
-		else if (redir->type == 1)
-		{
-			fd = open_file(redir->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-			dup2(fd, 1);
-		}
-		else if (redir->type == 2)
-		{
-			fd = open_file(redir->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
-			dup2(fd, 1);
-		}
-		else if (redir->type == 3)
-		{
-			fd = here_doc(redir->file, original_stdout_fd);
-			dup2(fd, 0);
-		}
+		redir_type(redir, &fd, original_stdout_fd);
 		close(fd);
+		redir = redir->next;
 	}
 }

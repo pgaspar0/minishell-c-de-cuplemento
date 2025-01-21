@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 13:41:54 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/18 14:27:32 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/21 09:33:34 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	ft_exit(t_env **env, char **args, char *exit_code)
 	if (!args[1])
 	{
 		update_env(env, "?", "0");
-        exit(0);	
+		exit(0);
 	}
 	if (!is_nbr(args[1]) || (ft_atol(args[1]) < INT_MIN
 			|| ft_atol(args[1]) > INT_MAX))
@@ -89,6 +89,5 @@ int	ft_exit(t_env **env, char **args, char *exit_code)
 	g_exit_status = ft_atoi(exit_code);
 	update_env(env, "?", exit_code);
 	free(exit_code);
-	// return (1);
-    exit(g_exit_status);
+	exit(g_exit_status);
 }

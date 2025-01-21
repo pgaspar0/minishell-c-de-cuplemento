@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 08:01:11 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/18 14:09:32 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/21 09:29:49 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,17 @@ typedef struct s_command
 	struct s_command		*next;
 }							t_command;
 
+typedef struct s_shell
+{
+	int						exit_status;
+	int						ret;
+	t_env					*envs;
+	char					*input;
+	char					**env_matrix;
+	char					**tokens;
+	t_command				*commands;
+}							t_shell;
+
 t_env						*init_env(char **envp);
 t_command					*parse_commands(char **tokens);
 
@@ -87,9 +98,8 @@ void						ft_env(t_env *env);
 void						update_exit_status(t_env **envs, int status);
 void						ft_export(t_env **env, char *var);
 void						update_env(t_env **env, char *key, char *value);
-void						execute_commands(t_command *cmd_list, t_env **envs);
-void						execute_commands_iterative(t_command *cmd_list,
-								t_env **envs);
+void						execute_commands(t_shell *t_shell);
+void						execute_commands_iterative(t_shell *shell);
 char						*get_caminho(char **path_copy, char **command);
 char						*mat_concat(char **mat);
 char						**ft_parse(const char *s);
