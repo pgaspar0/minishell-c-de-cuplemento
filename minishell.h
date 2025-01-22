@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 08:01:11 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/21 09:29:49 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/22 08:19:04 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,24 @@ typedef struct s_command
 	t_redirection			*redirs;
 	struct s_command		*next;
 }							t_command;
+
+typedef struct s_parser
+{
+	t_command				*head;
+	t_command				*current;
+	t_redirection			*last_redir;
+	t_redirection			*redir;
+	size_t					arg_count;
+}							t_parser;
+
+typedef struct s_tokenizer
+{
+	char					*new_input;
+	char					**tokens;
+	size_t					token_count;
+	size_t					start;
+	bool					quoted;
+}							t_tokenizer;
 
 typedef struct s_shell
 {
