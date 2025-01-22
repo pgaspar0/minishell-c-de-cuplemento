@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:31:19 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/22 08:30:29 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/22 16:22:51 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,16 @@ void	do_tokenize(t_tokenizer *tk, size_t *i)
 	}
 }
 
-char	**tokenize(const char *input, t_env *envs)
+char	**tokenize(t_shell *shell)
 {
 	t_tokenizer	tk;
 	size_t		i;
 
-	if (contains_dollar_sign(input) && is_dquotes(input) && ft_expansion(input,
-			envs))
-		tk.new_input = ft_expansion(input, envs);
+	if (contains_dollar_sign(shell->input) && is_dquotes(shell->input) && ft_expansion(shell->input,
+			shell->envs))
+		tk.new_input = ft_expansion(shell->input, shell->envs);
 	else
-		tk.new_input = ft_strdup(input);
+		tk.new_input = ft_strdup(shell->input);
 	tk.tokens = malloc(sizeof(char *) * 1024);
 	if (!tk.tokens)
 		return (NULL);

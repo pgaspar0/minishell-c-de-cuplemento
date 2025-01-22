@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 08:00:27 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/21 16:31:22 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/01/22 16:58:22 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	g_exit_status = 0;
 
 void	handle_sigint(int sig)
 {
@@ -35,11 +33,11 @@ void	shell_loop(char **envp)
 	update_env(&shell.envs, "?", "0");
 	while (1)
 	{
-		shell.input = readline("minishell> ");
+		shell.input = readline("beshe> ");
 		if (!shell.input)
 			break ;
 		add_history(shell.input);
-		shell.tokens = tokenize(shell.input, shell.envs);
+		shell.tokens = tokenize(&shell);
 		if (!validate_syntax(shell.tokens))
 		{
 			printf("Syntax error\n");

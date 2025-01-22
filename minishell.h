@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 08:01:11 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/22 08:19:04 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/22 16:27:11 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
-
-extern int					g_exit_status;
 
 typedef struct s_env
 {
@@ -123,7 +121,7 @@ char						*mat_concat(char **mat);
 char						**ft_parse(const char *s);
 char						**ft_parse2(const char *s);
 char						**env_to_matrix(t_env *env_list);
-char						**tokenize(const char *input, t_env *envs);
+char						**tokenize(t_shell *shell);
 char						*ft_expansion(const char *input, t_env *envs);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 13:41:54 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/21 09:33:34 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/22 16:27:00 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,8 @@ int	ft_exit(t_env **env, char **args, char *exit_code)
 		return (0);
 	}
 	exit_code = ft_itoa(exit_func(args[1]));
-	g_exit_status = ft_atoi(exit_code);
+	g_status_changer(ft_atoi(exit_code));
 	update_env(env, "?", exit_code);
 	free(exit_code);
-	exit(g_exit_status);
+	exit(g_status_changer(-1));
 }
