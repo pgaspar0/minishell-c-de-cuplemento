@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 08:01:11 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/22 16:27:11 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/23 16:26:37 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ int							is_nbr(const char *str);
 int							ft_exit(t_env **env, char **args, char *exit_code);
 int							ft_cd(char **input_path);
 int							ft_pwd(void);
+int							has_squotes(const char *str);
 
 void						handle_redirections(t_redirection *redirs,
 								int original_stdout_fd);
