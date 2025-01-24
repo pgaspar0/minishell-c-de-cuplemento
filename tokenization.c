@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:31:19 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/22 16:22:51 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/24 15:51:56 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	**tokenize(t_shell *shell)
 		tk.new_input = ft_expansion(shell->input, shell->envs);
 	else
 		tk.new_input = ft_strdup(shell->input);
-	tk.tokens = malloc(sizeof(char *) * 1024);
+	tk.tokens = ft_calloc(sizeof(char *), 1000000);
 	if (!tk.tokens)
 		return (NULL);
 	tk.token_count = 0;

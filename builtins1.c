@@ -176,12 +176,12 @@ void my_cd(const char *path) {
     }
 }
  
-int ft_cd(char **input_path) {
+int ft_cd(char **input_path, t_env *envs) {
     char *path = NULL;
 
 	if (input_path[1] == NULL || (input_path[1][0] == '~' && input_path[1][1] == '\0')) 
 	{
-        path = getenv("HOME");
+        path = ft_getenv("HOME", envs);
         if (path == NULL) {
             printf("Error: path HOME not specified.\n");
             return (1);

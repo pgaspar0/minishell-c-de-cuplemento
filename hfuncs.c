@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 19:05:09 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/21 09:34:22 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/24 13:18:02 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	forka(char **command, char **envp)
 	} */
 	fpid = fork();
 	if (fpid == 0)
-		cuta(command, envp);
+		executa(command, envp);
 	else
 	{
 		/* dup2(pipe_fd[0], 0);
@@ -49,7 +49,7 @@ char	*get_caminho(char **path_copy, char **command)
 		if (status == 0)
 			return (command[0]);
 	}
-	while (path_copy[i])
+	while (path_copy && path_copy[i])
 	{
 		temp = ft_strjoin(path_copy[i], "/");
 		caminho = ft_strjoin(temp, command[0]);

@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 11:58:02 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/16 11:48:49 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/23 14:59:50 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,6 @@ void	update_exit_status(t_env **envs, int status)
 	else
 		g_status_changer(1);
 	status_str = ft_itoa(g_status_changer(-1));
-	update_env(envs, "?", status_str);
+	update_env(envs, "?", status_str, 2);
 	free(status_str);
 }

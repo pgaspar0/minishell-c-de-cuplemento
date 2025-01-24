@@ -6,13 +6,13 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 14:47:55 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/15 11:34:13 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/23 19:10:57 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	cuta(char **command, char **envp)
+void	executa(char **command, char **envp)
 {
 	char	*caminho;
 	char	*path;

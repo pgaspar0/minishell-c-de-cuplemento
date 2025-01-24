@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:28:31 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/21 09:30:36 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/24 15:38:39 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,13 @@ void	execute_commands(t_shell *shell)
 	execute_commands_iterative(shell);
 }
 
-void	case_builtin_alone(t_command *current, t_env **envs)
+void	case_builtin_alone(t_command *current, t_env **envs, t_shell *shell)
 {
 	int	ret;
-	int	saved_stdout;
 
-	saved_stdout = dup(STDOUT_FILENO);
-	handle_redirections(current->redirs, STDOUT_FILENO);
+	handle_redirections(current->redirs, shell);
 	ret = execute_builtin(current->args, envs);
-	dup2(saved_stdout, STDOUT_FILENO);
-	close(saved_stdout);
+	dup2(shell->original_stdout_fd, STDOUT_FILENO);
 	update_exit_status(envs, g_status_changer(ret));
 }
 
@@ -45,7 +42,7 @@ void	execute_child(t_command *current, int *pipe_fd, int *in_fd, t_shell *shell)
 		close(pipe_fd[0]);
 		close(pipe_fd[1]);
 	}
-	handle_redirections(current->redirs, STDOUT_FILENO);
+	handle_redirections(current->redirs, shell);
 	if (is_builtin_command(current->args))
 	{
 		shell->ret = execute_builtin(current->args, &shell->envs);
@@ -54,7 +51,7 @@ void	execute_child(t_command *current, int *pipe_fd, int *in_fd, t_shell *shell)
 	else
 	{
 		shell->env_matrix = env_to_matrix(shell->envs);
-		cuta(current->args, shell->env_matrix);
+		cuta(current->args, shell->env_matrix, shell->envs);
 		free_matrix(shell->env_matrix);
 		exit(0);
 	}
@@ -99,7 +96,7 @@ void	execute_commands_iterative(t_shell *shell)
 	current = shell->commands;
 	if (is_builtin_command(current->args) && !current->next)
 	{
-		case_builtin_alone(current, &shell->envs);
+		case_builtin_alone(current, &shell->envs, shell);
 		return ;
 	}
 	while (current)

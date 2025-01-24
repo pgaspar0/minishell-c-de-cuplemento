@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:32:27 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/22 07:50:42 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/24 15:51:53 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	init_parser(t_parser *parser)
 {
 	parser->current = malloc(sizeof(t_command));
-	parser->current->args = malloc(sizeof(char *) * 1024);
+	parser->current->args = ft_calloc(sizeof(char *), 1000000);
 	parser->current->redirs = NULL;
 	parser->last_redir = NULL;
 	parser->current->next = NULL;
@@ -54,7 +54,7 @@ int	handle_pipes(t_parser *parser, int *i)
 	if (!parser->current->next)
 		return (0);
 	parser->current = parser->current->next;
-	parser->current->args = malloc(sizeof(char *) * 1024);
+	parser->current->args = ft_calloc(sizeof(char *), 1000000);
 	if (!parser->current->args)
 		return (0);
 	parser->current->redirs = NULL;

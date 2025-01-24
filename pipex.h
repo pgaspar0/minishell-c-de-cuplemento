@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 14:49:03 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/09 12:55:50 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/23 19:10:25 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include <unistd.h>
 
 // int     here_doc(char *delimiter);
-void	cuta(char **command, char **envp);
+void	executa(char **command, char **envp);
 void	forka(char **command, char **envp);
 void	pipe_it(char **command, char **envp);
 void	just_execute(char **command, char **envp);

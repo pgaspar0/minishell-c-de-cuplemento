@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 18:47:33 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/21 07:33:07 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/23 19:44:44 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	execute_builtin(char **args, t_env **envs)
 	else if (ft_strcmp(args[0], "cd") == 0)
 	{
 		if (!args[2])
-			ret = ft_cd(args);
+			ret = ft_cd(args, *envs);
 		else
 		{
 			ret = 1;
@@ -37,7 +37,12 @@ int	execute_builtin(char **args, t_env **envs)
 		ft_env(*envs);
 	}
 	else if (ft_strcmp(args[0], "export") == 0)
-		ft_export_multiple(envs, args);
+	{
+		if (!args[1])
+			ft_export_no(envs);
+		else
+			ft_export_multiple(envs, args);
+	}
 	else if (ft_strcmp(args[0], "unset") == 0)
 	{	
 		if (!args[1])

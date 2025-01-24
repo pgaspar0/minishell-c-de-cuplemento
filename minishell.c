@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 08:00:27 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/22 16:58:22 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/24 15:28:42 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,9 @@ void	shell_loop(char **envp)
 {
 	t_shell		shell;
 
+	shell.original_stdout_fd = dup(STDOUT_FILENO);
 	shell.envs = init_env(envp);
-	update_env(&shell.envs, "?", "0");
+	update_env(&shell.envs, "?", "0", 2);
 	while (1)
 	{
 		shell.input = readline("beshe> ");

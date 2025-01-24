@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:23:10 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/16 11:44:13 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/24 15:47:50 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ t_env	*init_env(char **envp)
 		new_node = malloc(sizeof(t_env));
 		new_node->key = ft_substr(envp[i], 0, equal - envp[i]);
 		new_node->value = ft_strdup(equal + 1);
+		new_node->flag = 0;
 		new_node->next = NULL;
 		if (!head)
 			head = new_node;
@@ -81,7 +82,7 @@ char	**env_to_matrix(t_env *env_list)
 		count++;
 		current = current->next;
 	}
-	env_matrix = malloc((count + 1) * sizeof(char *));
+	env_matrix = ft_calloc(sizeof(char *), (count + 1));
 	if (!env_matrix)
 		return (NULL);
 	current = env_list;

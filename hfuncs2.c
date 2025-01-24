@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 11:44:07 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/16 11:51:16 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/23 19:11:34 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	just_execute(char **command, char **envp)
 
 	fpid = fork();
 	if (fpid == 0)
-		cuta(command, envp);
+		executa(command, envp);
 	else
 		waitpid(fpid, NULL, 0);
 }
