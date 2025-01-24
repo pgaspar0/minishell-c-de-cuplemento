@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:31:19 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/24 15:51:56 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/24 16:31:11 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ char	**tokenize(t_shell *shell)
 	t_tokenizer	tk;
 	size_t		i;
 
-	if (contains_dollar_sign(shell->input) && is_dquotes(shell->input) && ft_expansion(shell->input,
-			shell->envs))
+	if (contains_dollar_sign(shell->input) && ft_expansion(shell->input,
+			shell->envs)) // && has_squotes(shell->input) == 0
 		tk.new_input = ft_expansion(shell->input, shell->envs);
 	else
 		tk.new_input = ft_strdup(shell->input);

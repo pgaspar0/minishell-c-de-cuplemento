@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 08:01:11 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/24 15:39:09 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/24 16:31:26 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ int							is_nbr(const char *str);
 int							ft_exit(t_env **env, char **args, char *exit_code);
 int							ft_cd(char **input_path, t_env *envs);
 int							ft_pwd(void);
+int							has_squotes(const char *str);
 
 void						handle_redirections(t_redirection *redirs,
 								t_shell *shell);
