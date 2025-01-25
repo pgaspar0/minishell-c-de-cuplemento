@@ -6,7 +6,7 @@
 /*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 19:33:16 by jorcarva          #+#    #+#             */
-/*   Updated: 2025/01/24 08:52:23 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/01/25 13:14:39 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,6 +182,7 @@ char    *ft_expansion(const char *input, t_env *envs)
     char    *new_input;
 
     new_input = ft_strdup(input);
+    printf("tem single quotes or not: %d",has_squotes(input));
     i = count_dsign(input);
     if(i--)
         new_input = ft_expansion2(input, envs);
