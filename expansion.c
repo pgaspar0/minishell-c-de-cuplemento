@@ -6,7 +6,7 @@
 /*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 19:33:16 by jorcarva          #+#    #+#             */
-/*   Updated: 2025/01/23 20:59:13 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/01/24 08:52:23 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,8 +185,12 @@ char    *ft_expansion(const char *input, t_env *envs)
     i = count_dsign(input);
     if(i--)
         new_input = ft_expansion2(input, envs);
+    //printf("new input1: %s\n",new_input);
     while(i--)
+    {
         new_input = ft_expansion2(new_input, envs);
+        //printf("new input 2: %s\n",new_input);
+    }
     return(new_input);
 }
 
