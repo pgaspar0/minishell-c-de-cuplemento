@@ -6,7 +6,7 @@
 /*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 19:33:16 by jorcarva          #+#    #+#             */
-/*   Updated: 2025/01/27 19:27:22 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/01/27 20:03:36 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,21 +116,6 @@ char *extract_key(const char *input) {
     return key;
 }
 
-// char *replace_dsign(char *input)
-// {
-//     int i;
-
-//     i = 0;
-//     while(input[i])
-//     {
-//         if (input[i] == '$' && input[i+1] == '$')
-//         {
-//             while()
-//         }
-//         i++;
-//     }
-// }
-
 static int count_dsign(const char *input)
 {
     int count = 0;
@@ -207,8 +192,10 @@ char    *ft_expansion(const char *input, t_env *envs)
     int i;
     char    *new_input;
 
-    new_input = ft_strdup(input);
     //printf("tem single quotes or not: %d\n",has_squotes(input));
+    new_input = ft_strdup(input);
+    if (has_squotes(input))
+        return (new_input);
     i = count_dsign(input);
     //printf("Tem %d dollar signs\n",i);
     if(i--)
