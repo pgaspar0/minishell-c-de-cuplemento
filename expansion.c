@@ -6,7 +6,7 @@
 /*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 19:33:16 by jorcarva          #+#    #+#             */
-/*   Updated: 2025/01/25 13:14:39 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/01/27 19:27:22 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,17 +112,40 @@ char *extract_key(const char *input) {
         return NULL;
     strncpy(key, &input[i], j - i);
     key[j - i] = '\0';
-    printf("key: %s\n", key);
+    //printf("key: %s\n", key);
     return key;
 }
+
+// char *replace_dsign(char *input)
+// {
+//     int i;
+
+//     i = 0;
+//     while(input[i])
+//     {
+//         if (input[i] == '$' && input[i+1] == '$')
+//         {
+//             while()
+//         }
+//         i++;
+//     }
+// }
 
 static int count_dsign(const char *input)
 {
     int count = 0;
     while (*input) {
-        if (*input == '$') {
+        if (*input == '$' && *input + 1 == '$')
+        {
+                //printf("\ninput dentro do while que pula:%s\n",input);
+            while (*input == '$'){
+                input++;
+            }
+        }
+        else if (*input == '$' && *input + 1 != '$' && *input - 1 != '$') {
             const char *next = input + 1;
-            if (*next && *next != ' ' && *next != '\t' && *next != '$') {
+            //printf("next value: %s\n",next);
+            if (*next && *next != ' ' && *next != '\t' && *next != '$' && *next - 1 != '$' && *next + 1 != '$') {
                 count++;
             }
         }
@@ -140,7 +163,9 @@ int has_squotes(const char *str) {
         str++;
     }
     // Retorna 1 se a quantidade for par, 0 caso contrário
-    return (count % 2 == 0);
+    if(count != 0)
+        return (count % 2 == 0);
+    return (0);
 }
 
 static char    *ft_expansion2(const char *input, t_env *envs)
@@ -165,14 +190,15 @@ static char    *ft_expansion2(const char *input, t_env *envs)
         }
         i++;
     }
-    while(input[j] != ' ' && input[j] != '\t')
+    while(input[j] && input[j] != ' ' && input[j] != '\t')
         j++;
+    //printf("\033[1;31mChegou aqui, linha 170, file expansion.c\033[0m\n");
     key = (char *)malloc(sizeof(char) * (j - i + 1));
     i++;
     while(i != j)
         key[k++] = input[i++];
     key = replace_key(input, extract_key(input), envs);
-    printf("teste dentro da func: %s\n",key);
+    //printf("teste dentro da func ft_expansion2, 178: %s\n",key);
     return(key);
 }
 
@@ -182,14 +208,16 @@ char    *ft_expansion(const char *input, t_env *envs)
     char    *new_input;
 
     new_input = ft_strdup(input);
-    printf("tem single quotes or not: %d",has_squotes(input));
+    //printf("tem single quotes or not: %d\n",has_squotes(input));
     i = count_dsign(input);
+    //printf("Tem %d dollar signs\n",i);
     if(i--)
         new_input = ft_expansion2(input, envs);
     //printf("new input1: %s\n",new_input);
     while(i--)
     {
-        new_input = ft_expansion2(new_input, envs);
+        if (ft_expansion2(new_input, envs))
+            new_input = ft_expansion2(new_input, envs);
         //printf("new input 2: %s\n",new_input);
     }
     return(new_input);
