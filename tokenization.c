@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenization.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:31:19 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/24 16:31:11 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/28 20:36:22 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,11 @@ void	do_tokenize(t_tokenizer *tk, size_t *i)
 	}
 }
 
+// static void	print_new_input(const char *input)
+// {
+// 		printf("New input: %s\n", input);
+// }
+
 char	**tokenize(t_shell *shell)
 {
 	t_tokenizer	tk;
@@ -50,6 +55,7 @@ char	**tokenize(t_shell *shell)
 		tk.new_input = ft_expansion(shell->input, shell->envs);
 	else
 		tk.new_input = ft_strdup(shell->input);
+	//print_new_input(tk.new_input);
 	tk.tokens = ft_calloc(sizeof(char *), 1000000);
 	if (!tk.tokens)
 		return (NULL);
@@ -65,5 +71,9 @@ char	**tokenize(t_shell *shell)
 		do_tokenize(&tk, &i);
 	}
 	tk.tokens[tk.token_count] = NULL;
+	// for (size_t j = 0; j < tk.token_count; j++)
+	// {
+	// 	printf("Token %zu: %s\n", j, tk.tokens[j]);
+	// }
 	return (tk.tokens);
 }
