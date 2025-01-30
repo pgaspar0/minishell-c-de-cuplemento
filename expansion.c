@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 19:33:16 by jorcarva          #+#    #+#             */
-/*   Updated: 2025/01/30 16:42:18 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/30 16:54:34 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ static char *replace_key(const char *input, const char *key, t_env *envs)
         return NULL;
 
     new_len = ft_strlen(input) - ft_strlen(key) + ft_strlen(value);
+    //printf("tamanho do value: %i\n",new_len);
     new_str = (char *)malloc(sizeof(char) * (new_len + 1));
     if (!new_str)
         return NULL;
@@ -105,7 +106,7 @@ char *extract_key(const char *input) {
         return NULL;
     i++;
     j = i;
-    while (input[j] && input[j] != ' ' && input[j] != '\t' && input[j] != '"' && input[j] != '$' && input[j] != '\'')
+    while (input[j] && input[j] != ' ' && input[j] != '\t' && input[j] != '$' && input[j] != '"' && input[j] != '\'')
         j++;
     key = (char *)malloc(sizeof(char) * (j - i + 1));
     if (!key)
@@ -165,6 +166,7 @@ static char    *ft_expansion2(const char *input, t_env *envs)
     j = 0;
     k = 0;
     //printf("\ndquotes result : %d \n",is_dquotes(input));
+    printf("\033[1;31mChegou aqui, linha 170, file expansion.c\033[0m\n");
     while(input[i])
     {
         if(input[i] == '$')
@@ -205,7 +207,7 @@ char    *ft_expansion(const char *input, t_env *envs, int flag)
     {
         if (ft_expansion2(new_input, envs))
             new_input = ft_expansion2(new_input, envs);
-        //printf("new input 2: %s\n",new_input);
+        printf("new input 2: %s\n",new_input);
         i--;
     }
     // printf("%s\n", new_input);

@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 08:00:27 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/28 16:08:12 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/30 16:55:19 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	shell_loop(char **envp)
 			break ;
 		add_history(shell.input);
 		shell.tokens = tokenize(&shell);
-		if (!validate_syntax(shell.tokens))
+		if (!validate_syntax(shell.tokens) || shell.tokens == NULL)
 		{
 			printf("Syntax error\n");
 			free_matrix(shell.tokens);
