@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 19:33:16 by jorcarva          #+#    #+#             */
-/*   Updated: 2025/01/27 20:03:36 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/01/30 16:42:18 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,26 +187,28 @@ static char    *ft_expansion2(const char *input, t_env *envs)
     return(key);
 }
 
-char    *ft_expansion(const char *input, t_env *envs)
+char    *ft_expansion(const char *input, t_env *envs, int flag)
 {
     int i;
     char    *new_input;
 
     //printf("tem single quotes or not: %d\n",has_squotes(input));
     new_input = ft_strdup(input);
-    if (has_squotes(input))
+    if (has_squotes(input) && flag == 0)
         return (new_input);
     i = count_dsign(input);
     //printf("Tem %d dollar signs\n",i);
     if(i--)
         new_input = ft_expansion2(input, envs);
     //printf("new input1: %s\n",new_input);
-    while(i--)
+    while(i > 0)
     {
         if (ft_expansion2(new_input, envs))
             new_input = ft_expansion2(new_input, envs);
         //printf("new input 2: %s\n",new_input);
+        i--;
     }
+    // printf("%s\n", new_input);
     return(new_input);
 }
 

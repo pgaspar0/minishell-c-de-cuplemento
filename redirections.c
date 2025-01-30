@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:33:59 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/24 15:34:10 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/30 16:25:17 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ int	here_doc(char *delimiter, t_shell *shell)
 	}
 	saved_stdout = dup(STDOUT_FILENO);
 	dup2(shell->original_stdout_fd, STDOUT_FILENO);
-	line = readline("heredoc> ");
+	line = ft_expansion(readline("heredoc> "), shell->envs, 1);
 	while (line && ft_strncmp(delimiter, line, ft_strlen(delimiter)))
 	{
 		ft_putstr_fd(line, pipe_fd[1]);
 		ft_putchar_fd('\n', pipe_fd[1]);
 		free(line);
-		line = readline("heredoc> ");
+		line = ft_expansion(readline("heredoc> "), shell->envs, 1);
 	}
 	free(line);
 	close(pipe_fd[1]);

@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 19:08:50 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/24 13:19:07 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/28 14:59:25 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,11 @@ void	cuta(char **command, char **envp, t_env *envs)
 	char	*path;
 	char	**path_copy;
 
+	if (!command || !command[0] || ft_strlen(command[0]) == 0)
+	{
+		print_error_message(command);
+		exit(127);
+	}
 	path = ft_getenv("PATH", envs);
 	path_copy = ft_split(path, ':');
 	caminho = get_caminho(path_copy, command);

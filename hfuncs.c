@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 19:05:09 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/24 13:18:02 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/30 14:32:03 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,13 @@ char	*get_caminho(char **path_copy, char **command)
 	char	*caminho;
 
 	i = 0;
-	if (command[0][0] == '/')
+	if (command[0][0] == '/' || (command[0][0] == '.' && command[0][1] == '/'))
 	{
 		status = access(command[0], X_OK | F_OK);
 		if (status == 0)
 			return (command[0]);
+		else
+			return(NULL);
 	}
 	while (path_copy && path_copy[i])
 	{

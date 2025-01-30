@@ -6,31 +6,11 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 13:41:54 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/23 14:58:28 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/30 16:48:52 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/* int	try_exit(t_shell *shell, t_env *env)
-{
-	char	**cmds;
-
-	cmds = ft_split_masgo(shell->input, ' ');
-	if (ft_strcmp("exit", cmds[0]) == 0)
-	{
-		if (ft_exit(cmds, NULL, shell, env))
-		{
-			free_all_s(cmds);
-			handle_exit(shell, env);
-			return (1);
-		}
-		free_all_s(cmds);
-		return (-1);
-	}
-	free_all_s(cmds);
-	return (0);
-} */
 
 int	is_nbr(const char *str)
 {
@@ -77,13 +57,13 @@ int	ft_exit(t_env **env, char **args, char *exit_code)
 	{
 		print_error(args[1]);
 		update_env(env, "?", "2", 2);
-		return (1);
+		exit(2);
 	}
 	if (args[2])
 	{
 		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
 		update_env(env, "?", "1", 2);
-		return (0);
+		return (1);
 	}
 	exit_code = ft_itoa(exit_func(args[1]));
 	g_status_changer(ft_atoi(exit_code));

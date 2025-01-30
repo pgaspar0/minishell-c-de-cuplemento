@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 08:00:27 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/24 15:28:42 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/28 16:08:12 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	main(int ac, char **av, char **envp)
 {
 	(void)ac;
 	(void)av;
-	signal(3, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, handle_sigint);
 	shell_loop(envp);
 	return (0);
