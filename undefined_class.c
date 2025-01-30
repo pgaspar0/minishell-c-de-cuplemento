@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   undefined_class.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:39:31 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/16 12:38:11 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/30 08:34:27 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ bool	validate_syntax(char **tokens)
 	int	i;
 
 	i = 0;
+	if (!tokens)
+		return (false);
 	while (tokens[i])
 	{
 		if (is_special_char(tokens[i][0]))

@@ -6,7 +6,7 @@
 /*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 08:00:27 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/29 20:46:15 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/01/30 08:35:09 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,8 @@ void	shell_loop(char **envp)
 		if (!shell.input)
 			break ;
 		add_history(shell.input);
-		// if (!tokenize(&shell))
-		// 	printf("Now it works...");	
 		shell.tokens = tokenize(&shell);
-		if (!validate_syntax(shell.tokens))
+		if (!validate_syntax(shell.tokens) || shell.tokens == NULL)
 		{
 			printf("Syntax error\n");
 			free_matrix(shell.tokens);

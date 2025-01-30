@@ -6,7 +6,7 @@
 /*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:31:19 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/29 20:44:56 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/01/30 08:33:16 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,32 +45,33 @@ static void	print_new_input(const char *input)
 		printf("New input: %s\n", input);
 }
 
-// static int are_quotes_balanced(const char *str) {
-//     int single_quote = 0;  // Controle para aspas simples
-//     int double_quote = 0;  // Controle para aspas duplas
+static int are_quotes_balanced(const char *str) {
+    int single_quote = 0;  // Controle para aspas simples
+    int double_quote = 0;  // Controle para aspas duplas
 
-//     while (*str) { // Percorre cada caractere da string
-//         if (*str == '\'' && double_quote == 0) // Se for uma aspa simples e NÃO estiver dentro de aspas duplas
-//             single_quote = !single_quote; // Alterna o estado (0 → 1 ou 1 → 0)
-//         else if (*str == '"' && single_quote == 0) // Se for uma aspa dupla e NÃO estiver dentro de aspas simples
-//             double_quote = !double_quote; // Alterna o estado (0 → 1 ou 1 → 0)
-//         str++; // Avança para o próximo caractere
-//     }
-
-//     // Se qualquer um for 1, há aspas não fechadas
-//     if (single_quote || double_quote)
-//         return 0; // Erro: aspas não balanceadas
-    
-//     return 1; // Ok: todas as aspas estão balanceadas
-// }
+    while (*str) { // Percorre cada caractere da string
+        if (*str == '\'' && double_quote == 0) // Se for uma aspa simples e NÃO estiver dentro de aspas duplas
+            single_quote = !single_quote; // Alterna o estado (0 → 1 ou 1 → 0)
+        else if (*str == '"' && single_quote == 0) // Se for uma aspa dupla e NÃO estiver dentro de aspas simples
+            double_quote = !double_quote; // Alterna o estado (0 → 1 ou 1 → 0)
+        str++; // Avança para o próximo caractere
+    }
+    // Se qualquer um for 1, há aspas não fechadas
+    if (single_quote || double_quote)
+        return 0; // Erro: aspas não balanceadas
+    return 1; // Ok: todas as aspas estão balanceadas
+}
 
 char	**tokenize(t_shell *shell)
 {
 	t_tokenizer	tk;
 	size_t		i;
 
-	// if(are_quotes_balanced(shell->input) == 0)
-	// 	return(NULL);
+	if(are_quotes_balanced(shell->input) == 0)
+	{
+		//printf("Error: Unclosed quotes\n");
+		return (NULL);
+	}
 	if (contains_dollar_sign(shell->input) && ft_expansion(shell->input,
 			shell->envs)) // && has_squotes(shell->input) == 0
 		tk.new_input = ft_expansion(shell->input, shell->envs);
