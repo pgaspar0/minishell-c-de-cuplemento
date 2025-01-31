@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 19:33:16 by jorcarva          #+#    #+#             */
-/*   Updated: 2025/01/30 16:58:54 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/31 19:13:16 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,7 @@ static char    *ft_expansion2(const char *input, t_env *envs)
     j = 0;
     k = 0;
     //printf("\ndquotes result : %d \n",is_dquotes(input));
-    // printf("\033[1;31mChegou aqui, linha 170, file expansion.c\033[0m\n");
+    //// printf("\033[1;31mChegou aqui, linha 170, file expansion.c\033[0m\n");
     while(input[i])
     {
         if(input[i] == '$')
@@ -207,65 +207,9 @@ char    *ft_expansion(const char *input, t_env *envs, int flag)
     {
         if (ft_expansion2(new_input, envs))
             new_input = ft_expansion2(new_input, envs);
-        // printf("new input 2: %s\n",new_input);
+        //// printf("new input 2: %s\n",new_input);
         i--;
     }
     // printf("%s\n", new_input);
     return(new_input);
 }
-
-// char *ft_expansion(const char *input, t_env *envs)
-// {
-//     char *result;
-//     char *key;
-//     char *expanded_str;
-//     int i = 0, k = 0;
-//     int result_len = 0;
-
-//     if (!input)
-//         return NULL;
-
-//     result = (char *)malloc(sizeof(char) * (ft_strlen(input) + 1));
-//     if (!result)
-//         return NULL;
-
-//     while (input[i])
-//     {
-//         if (input[i] == '$')
-//         {
-//             key = extract_key(&input[i]);
-//             if (key)
-//             {
-//                 expanded_str = replace_key(input, key, envs);
-//                 if (expanded_str)
-//                 {
-//                     result_len += ft_strlen(expanded_str);
-//                     result = (char *)realloc(result, result_len + 1);
-//                     if (!result)
-//                     {
-//                         free(key);
-//                         free(expanded_str);
-//                         return NULL;
-//                     }
-//                     strcpy(&result[k], expanded_str);
-//                     k += ft_strlen(expanded_str);
-//                     i += ft_strlen(key) + 1;
-//                     free(expanded_str);
-//                 }
-//                 else
-//                 {
-//                     free(key);
-//                     free(result);
-//                     return NULL;
-//                 }
-//                 free(key);
-//             }
-//         }
-//         else
-//         {
-//             result[k++] = input[i++];
-//         }
-//     }
-//     result[k] = '\0';
-//     return result;
-// }
