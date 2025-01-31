@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 19:08:50 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/28 14:59:25 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/31 20:05:22 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,19 @@
 
 void	print_error_message(char **command)
 {
-	if (command[0][0] == '/')
+	struct stat path_stat;
+
+	ft_memset(&path_stat, 0, sizeof(struct stat));
+	if (!command || !command[0])
+		return;
+	stat(command[0], &path_stat);
+	if (S_ISDIR(path_stat.st_mode))
+	{
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(command[0], 2);
+		ft_putstr_fd(": Is a directory\n", 2);
+	}
+	else if (command[0][0] == '/')
 	{
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(command[0], 2);

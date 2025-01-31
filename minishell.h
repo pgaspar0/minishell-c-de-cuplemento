@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 08:01:11 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/31 17:56:47 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/31 19:47:16 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "pipex.h"
 # include <errno.h>
 # include <fcntl.h>
+# include <sys/stat.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
