@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 19:33:16 by jorcarva          #+#    #+#             */
-/*   Updated: 2025/01/31 19:13:16 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/31 20:06:54 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int is_env_var(t_env *envs, char *key)
     return 0;
 }
 
-static char *replace_key(const char *input, const char *key, t_env *envs)
+static char * replace_key(const char *input, const char *key, t_env *envs)
 {
     char *new_str;
     char *value = NULL;
@@ -55,7 +55,7 @@ static char *replace_key(const char *input, const char *key, t_env *envs)
     int new_len;
 
     // Find the value corresponding to the key in the envs list
-    while (envs)
+    while (envs && envs->key && key)
     {
         if (strcmp(envs->key, key) == 0)
         {
@@ -117,28 +117,28 @@ char *extract_key(const char *input) {
     return key;
 }
 
-static int count_dsign(const char *input)
-{
-    int count = 0;
-    while (*input) {
-        if (*input == '$' && *input + 1 == '$')
-        {
-                //printf("\ninput dentro do while que pula:%s\n",input);
-            while (*input == '$'){
-                input++;
-            }
-        }
-        else if (*input == '$' && *input + 1 != '$' && *input - 1 != '$') {
-            const char *next = input + 1;
-            //printf("next value: %s\n",next);
-            if (*next && *next != ' ' && *next != '\t' && *next != '$' && *next - 1 != '$' && *next + 1 != '$') {
-                count++;
-            }
-        }
-        input++;
-    }
-    return count;
-}
+// static int count_dsign(const char *input)
+// {
+//     int count = 0;
+//     while (*input) {
+//         if (*input == '$' && *input + 1 == '$')
+//         {
+//                 //printf("\ninput dentro do while que pula:%s\n",input);
+//             while (*input == '$'){
+//                 input++;
+//             }
+//         }
+//         else if (*input == '$' && *input + 1 != '$' && *input - 1 != '$') {
+//             const char *next = input + 1;
+//             //printf("next value: %s\n",next);
+//             if (*next && *next != ' ' && *next != '\t' && *next != '$' && *next - 1 != '$' && *next + 1 != '$') {
+//                 count++;
+//             }
+//         }
+//         input++;
+//     }
+//     return count;
+// }
 
 int has_squotes(const char *str) {
     int count = 0;
@@ -154,29 +154,27 @@ int has_squotes(const char *str) {
     return (0);
 }
 
-static char    *ft_expansion2(const char *input, t_env *envs)
+    //ft_expansion2, após declaração
+    //printf("\ndquotes result : %d \n",is_dquotes(input));
+    // printf("\033[1;31mChegou aqui, linha 170, file expansion.c\033[0m\n");
+    // while(input[i])
+    // {
+    //     if(input[i] == '$')
+    //     {
+    //         //printf("%s",extract_key(input));
+    //         break;
+    //     }
+    //     i++;
+    // }
+
+static char    *ft_expansion2(const char *input, t_env *envs, int i)
 {
     char *key;
-    //char    *str;
-    int i;
     int j;
     int k;
     
-    i = 0;
-    j = 0;
     k = 0;
-    //printf("\ndquotes result : %d \n",is_dquotes(input));
-    //// printf("\033[1;31mChegou aqui, linha 170, file expansion.c\033[0m\n");
-    while(input[i])
-    {
-        if(input[i] == '$')
-        {
-            //printf("%s",extract_key(input));
-            j = i + 1;
-            break;
-        }
-        i++;
-    }
+    j = i + 1;
     while(input[j] && input[j] != ' ' && input[j] != '\t')
         j++;
     //printf("\033[1;31mChegou aqui, linha 170, file expansion.c\033[0m\n");
@@ -195,20 +193,20 @@ char    *ft_expansion(const char *input, t_env *envs, int flag)
     char    *new_input;
 
     //printf("tem single quotes or not: %d\n",has_squotes(input));
+    i = 0;
     new_input = ft_strdup(input);
     if (has_squotes(input) && flag == 0)
         return (new_input);
-    i = count_dsign(input);
+    //i = count_dsign(input);
     //printf("Tem %d dollar signs\n",i);
-    if(i--)
-        new_input = ft_expansion2(input, envs);
-    //printf("new input1: %s\n",new_input);
-    while(i > 0)
+    // if(i--)
+    //     new_input = ft_expansion2(input, envs, 0); //printf("new input1: %s\n",new_input);
+    while(input[i])
     {
-        if (ft_expansion2(new_input, envs))
-            new_input = ft_expansion2(new_input, envs);
-        //// printf("new input 2: %s\n",new_input);
-        i--;
+        if (ft_expansion2(new_input, envs, i) && input[i] == '$')
+            new_input = ft_expansion2(input, envs, i);
+        //printf("new input 2: %s\n",new_input);
+        i++;
     }
     // printf("%s\n", new_input);
     return(new_input);
