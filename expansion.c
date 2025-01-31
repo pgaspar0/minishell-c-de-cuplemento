@@ -6,11 +6,7 @@
 /*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 19:33:16 by jorcarva          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/01/31 20:06:54 by jorcarva         ###   ########.fr       */
-=======
-/*   Updated: 2025/01/31 19:41:00 by pgaspar          ###   ########.fr       */
->>>>>>> 8e6487b99590d5609e0be66cf947aade5a8c7f5b
+/*   Updated: 2025/01/31 20:19:41 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,7 +177,6 @@ static char    *ft_expansion2(const char *input, t_env *envs, int i)
     j = i + 1;
     while(input[j] && input[j] != ' ' && input[j] != '\t')
         j++;
-    //printf("\033[1;31mChegou aqui, linha 170, file expansion.c\033[0m\n");
     key = (char *)malloc(sizeof(char) * (j - i + 1));
     i++;
     while(i != j)
