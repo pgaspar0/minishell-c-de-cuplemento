@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 19:33:16 by jorcarva          #+#    #+#             */
-/*   Updated: 2025/01/30 16:54:34 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/30 16:58:54 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,7 @@ static char    *ft_expansion2(const char *input, t_env *envs)
     j = 0;
     k = 0;
     //printf("\ndquotes result : %d \n",is_dquotes(input));
-    printf("\033[1;31mChegou aqui, linha 170, file expansion.c\033[0m\n");
+    // printf("\033[1;31mChegou aqui, linha 170, file expansion.c\033[0m\n");
     while(input[i])
     {
         if(input[i] == '$')
@@ -207,7 +207,7 @@ char    *ft_expansion(const char *input, t_env *envs, int flag)
     {
         if (ft_expansion2(new_input, envs))
             new_input = ft_expansion2(new_input, envs);
-        printf("new input 2: %s\n",new_input);
+        // printf("new input 2: %s\n",new_input);
         i--;
     }
     // printf("%s\n", new_input);

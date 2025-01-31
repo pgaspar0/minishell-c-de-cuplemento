@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:28:31 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/24 15:38:39 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/30 17:28:36 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	case_builtin_alone(t_command *current, t_env **envs, t_shell *shell)
 
 void	execute_child(t_command *current, int *pipe_fd, int *in_fd, t_shell *shell)
 {
+	signal(SIGQUIT, handle_sigquit);
 	if (*in_fd != 0)
 	{
 		dup2(*in_fd, 0);

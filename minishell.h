@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 08:01:11 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/30 16:23:43 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/31 17:56:47 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,11 +115,14 @@ void						print_error(char *arg);
 void						skip_quotes(const char *input, size_t *index,
 								char quote);
 void						ft_env(t_env *env);
+void						handle_sigquit(int sig);
 void						ft_export_no(t_env **env);
 void						update_exit_status(t_env **envs, int status);
 void						ft_export(t_env **env, char *var);
 void						update_env(t_env **env, char *key, char *value,
 								int flag);
+void						free_all(t_shell *shell);
+void						free_envs(t_env *envs);
 void						execute_commands(t_shell *t_shell);
 void						execute_commands_iterative(t_shell *shell);
 
@@ -130,6 +133,7 @@ char						**ft_parse(const char *s);
 char						**ft_parse2(const char *s);
 char						**env_to_matrix(t_env *env_list);
 char						**tokenize(t_shell *shell);
-char						*ft_expansion(const char *input, t_env *envs, int flag);
+char						*ft_expansion(const char *input, t_env *envs,
+								int flag);
 
 #endif

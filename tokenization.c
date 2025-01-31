@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:31:19 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/30 16:56:09 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/31 18:31:40 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ void	do_tokenize(t_tokenizer *tk, size_t *i)
 	}
 }
 
-static void	print_new_input(const char *input)
+/* static void	print_new_input(const char *input)
 {
 		printf("New input: %s\n", input);
-}
+} */
 
 static int are_quotes_balanced(const char *str) {
     int single_quote = 0;  // Controle para aspas simples
@@ -77,10 +77,13 @@ char	**tokenize(t_shell *shell)
 		tk.new_input = ft_expansion(shell->input, shell->envs, 0);
 	else
 		tk.new_input = ft_strdup(shell->input);
-	print_new_input(tk.new_input);
+	// print_new_input(tk.new_input);
 	tk.tokens = ft_calloc(sizeof(char *), 1000000);
 	if (!tk.tokens)
+	{
+		free(tk.new_input);
 		return (NULL);
+	}
 	tk.token_count = 0;
 	i = 0;
 	while (tk.new_input[i])
@@ -93,9 +96,10 @@ char	**tokenize(t_shell *shell)
 		do_tokenize(&tk, &i);
 	}
 	tk.tokens[tk.token_count] = NULL;
-	for (size_t j = 0; j < tk.token_count; j++)
+	free(tk.new_input);
+	/* for (size_t j = 0; j < tk.token_count; j++)
 	{
 		printf("Token %zu: %s\n", j, tk.tokens[j]);
-	}
+	} */
 	return (tk.tokens);
 }

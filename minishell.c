@@ -6,11 +6,20 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 08:00:27 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/30 16:55:19 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/01/31 18:05:01 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	handle_sigquit(int sig)
+{
+	(void)sig;
+	write(1, "\n", 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+}
 
 void	handle_sigint(int sig)
 {
@@ -27,7 +36,7 @@ void	handle_sigint(int sig)
 
 void	shell_loop(char **envp)
 {
-	t_shell		shell;
+	t_shell	shell;
 
 	shell.original_stdout_fd = dup(STDOUT_FILENO);
 	shell.envs = init_env(envp);
@@ -52,6 +61,7 @@ void	shell_loop(char **envp)
 		free_commands(shell.commands);
 		free(shell.input);
 	}
+	free_envs(shell.envs);
 }
 
 int	main(int ac, char **av, char **envp)
