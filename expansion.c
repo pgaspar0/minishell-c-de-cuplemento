@@ -6,12 +6,11 @@
 /*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 19:33:16 by jorcarva          #+#    #+#             */
-/*   Updated: 2025/01/31 20:19:41 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/02/01 11:03:55 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 //#include <stddef.h>
 
 int is_dquotes(const char *input) {
@@ -47,51 +46,49 @@ int is_env_var(t_env *envs, char *key)
     return 0;
 }
 
-static char * replace_key(const char *input, const char *key, t_env *envs)
-{
-    char *new_str;
-    char *value = NULL;
-    int i = 0, j = 0, k = 0;
-    int new_len;
+// static char * replace_key(const char *input, const char *key, t_env *envs)
+// {
+//     char *new_str;
+//     char *value = NULL;
+//     int i = 0, j = 0, k = 0;
+//     int new_len;
 
-    // Find the value corresponding to the key in the envs list
-    while (envs && envs->key && key)
-    {
-        if (strcmp(envs->key, key) == 0)
-        {
-            value = envs->value;
-            //printf("value: %s\n", value);
-            break;
-        }
-        envs = envs->next;
-    }
+//     // Find the value corresponding to the key in the envs list
+//     while (envs && envs->key && key)
+//     {
+//         if (strcmp(envs->key, key) == 0)
+//         {
+//             value = envs->value;
+//             //printf("value: %s\n", value);
+//             break;
+//         }
+//         envs = envs->next;
+//     }
+//     if (!value)
+//         return NULL;
+//     new_len = ft_strlen(input) - ft_strlen(key) + ft_strlen(value);
+//     //printf("tamanho do value: %i\n",new_len);
+//     new_str = (char *)malloc(sizeof(char) * (new_len + 1));
+//     if (!new_str)
+//         return NULL;
 
-    if (!value)
-        return NULL;
-
-    new_len = ft_strlen(input) - ft_strlen(key) + ft_strlen(value);
-    //printf("tamanho do value: %i\n",new_len);
-    new_str = (char *)malloc(sizeof(char) * (new_len + 1));
-    if (!new_str)
-        return NULL;
-
-    while (input[i])
-    {
-        if (input[i] == '$' && strncmp(&input[i + 1], key, ft_strlen(key)) == 0)
-        {
-            i += ft_strlen(key) + 1;
-            while (value[k])
-                new_str[j++] = value[k++];
-        }
-        else
-        {
-            new_str[j++] = input[i++];
-        }
-    }
-    new_str[j] = '\0';
-    //printf("new_str: %s\n", new_str);
-    return new_str;
-}
+//     while (input[i])
+//     {
+//         if (input[i] == '$' && strncmp(&input[i + 1], key, ft_strlen(key)) == 0)
+//         {
+//             i += ft_strlen(key) + 1;
+//             while (value[k])
+//                 new_str[j++] = value[k++];
+//         }
+//         else
+//         {
+//             new_str[j++] = input[i++];
+//         }
+//     }
+//     new_str[j] = '\0';
+//     //printf("new_str: %s\n", new_str);
+//     return new_str;
+// }
 
 char *extract_key(const char *input) {
     char *key;
@@ -167,46 +164,92 @@ int has_squotes(const char *str) {
     //     i++;
     // }
 
-static char    *ft_expansion2(const char *input, t_env *envs, int i)
-{
-    char *key;
-    int j;
-    int k;
+// static char    *ft_expansion2(const char *input, t_env *envs, int i)
+// {
+//     char *key;
+//     int j;
+//     int k;
     
-    k = 0;
-    j = i + 1;
-    while(input[j] && input[j] != ' ' && input[j] != '\t')
-        j++;
-    key = (char *)malloc(sizeof(char) * (j - i + 1));
-    i++;
-    while(i != j)
-        key[k++] = input[i++];
-    key = replace_key(input, extract_key(input), envs);
-    //printf("teste dentro da func ft_expansion2, 178: %s\n",key);
-    return(key);
+//     k = 0;
+//     j = i + 1;
+//     while(input[j] && input[j] != ' ' && input[j] != '\t')
+//         j++;
+//     key = (char *)malloc(sizeof(char) * (j - i + 1));
+//     i++;
+//     while(i != j)
+//         key[k++] = input[i++];
+//     key = replace_key(input, extract_key(input), envs);
+//     //printf("teste dentro da func ft_expansion2, 178: %s\n",key);
+//     if (!key)
+//         return(free(key), NULL);
+//     return(key);
+// }
+
+//TESTANDO CORREÇÃO DO CODIGO ABAIXO:
+char *get_env_value(t_env *envs, const char *key)
+{
+    while (envs)
+    {
+        if (strcmp(envs->key, key) == 0)
+            return envs->value;
+        envs = envs->next;
+    }
+    return NULL;
 }
+
+char *expand_variable(char *input, int pos, t_env *envs)
+{
+    int i = pos + 1;
+    int key_len = 0;
+
+    while ((input[i] >= 'A' && input[i] <= 'Z') || 
+           (input[i] >= 'a' && input[i] <= 'z') || 
+           (input[i] >= '0' && input[i] <= '9') || 
+           input[i] == '_')
+    {
+        key_len++;
+        i++;
+    }
+    if (key_len == 0)
+        return input;
+    char *key = strndup(&input[pos + 1], key_len);
+    char *value = get_env_value(envs, key);
+    free(key);
+    if (!value)
+        return input;
+    int new_len = strlen(input) - key_len + strlen(value);
+    char *new_str = malloc(new_len + 1);
+    if (!new_str)
+        return NULL;
+    strncpy(new_str, input, pos);
+    strcpy(new_str + pos, value);
+    strcpy(new_str + pos + strlen(value), &input[pos + 1 + key_len]);
+    free(input);
+    return new_str;
+}
+
+char *expand_variables(char *input, t_env *envs) {
+    int i = 0;
+
+    while (input[i]) {
+        if (input[i] == '$') {
+            input = expand_variable(input, i, envs);
+        }
+        i++;
+    }
+    return input;
+}
+//CORREÇÃO DE CODIGO TESTADA ACIMA.
 
 char    *ft_expansion(const char *input, t_env *envs, int flag)
 {
-    int i;
     char    *new_input;
 
     //printf("tem single quotes or not: %d\n",has_squotes(input));
-    i = 0;
     new_input = ft_strdup(input);
     if (has_squotes(input) && flag == 0)
         return (new_input);
-    //i = count_dsign(input);
-    //printf("Tem %d dollar signs\n",i);
-    // if(i--)
-    //     new_input = ft_expansion2(input, envs, 0); //printf("new input1: %s\n",new_input);
-    while(input[i])
-    {
-        if (ft_expansion2(new_input, envs, i) && input[i] == '$')
-            new_input = ft_expansion2(input, envs, i);
-        //printf("new input 2: %s\n",new_input);
-        i++;
-    }
+    new_input = expand_variables(new_input, envs);
     // printf("%s\n", new_input);
     return(new_input);
 }
