@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gamekiller2111 <gamekiller2111@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 08:01:11 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/31 19:47:16 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/02/01 10:21:51 by gamekiller2      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ typedef struct s_shell
 	char					**env_matrix;
 	char					**tokens;
 	t_command				*commands;
+	t_command				*current;
 }							t_shell;
 
 t_env						*init_env(char **envp);
@@ -103,9 +104,8 @@ int							ft_cd(char **input_path, t_env *envs);
 int							ft_pwd(void);
 int							has_squotes(const char *str);
 
-void						handle_redirections(t_redirection *redirs,
-								t_shell *shell);
-void						cuta(char **command, char **envp, t_env *envs);
+void						handle_redirections(t_shell *shell);
+void						cuta(t_shell *shell);
 void						free_redirections(t_redirection *redir);
 void						free_commands(t_command *cmd);
 void						ft_export_multiple(t_env **env, char **args);

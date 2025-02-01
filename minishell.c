@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gamekiller2111 <gamekiller2111@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 08:00:27 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/31 18:05:01 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/02/01 10:02:50 by gamekiller2      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,6 @@ void	shell_loop(char **envp)
 		shell.commands = parse_commands(shell.tokens);
 		free_matrix(shell.tokens);
 		execute_commands(&shell);
-		free_commands(shell.commands);
-		free(shell.input);
 	}
 	free_envs(shell.envs);
 }
