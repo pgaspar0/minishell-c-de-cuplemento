@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_functions2.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gamekiller2111 <gamekiller2111@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 19:08:50 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/31 20:05:22 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/02/01 10:21:25 by gamekiller2      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,27 +39,27 @@ void	print_error_message(char **command)
 	}
 }
 
-void	cuta(char **command, char **envp, t_env *envs)
+void	cuta(t_shell *shell)
 {
 	char	*caminho;
 	char	*path;
 	char	**path_copy;
 
-	if (!command || !command[0] || ft_strlen(command[0]) == 0)
+	if (!shell->current->args || !shell->current->args[0] || ft_strlen(shell->current->args[0]) == 0)
 	{
-		print_error_message(command);
+		print_error_message(shell->current->args);
 		exit(127);
 	}
-	path = ft_getenv("PATH", envs);
+	path = ft_getenv("PATH", shell->envs);
 	path_copy = ft_split(path, ':');
-	caminho = get_caminho(path_copy, command);
+	caminho = get_caminho(path_copy, shell->current->args);
 	if (!caminho)
 	{
-		print_error_message(command);
+		print_error_message(shell->current->args);
 		free_matrix(path_copy);
 		exit(127);
 	}
-	execve(caminho, command, envp);
+	execve(caminho, shell->current->args, shell->env_matrix);
 	perror("Error");
 	exit(1);
 }

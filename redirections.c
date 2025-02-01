@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gamekiller2111 <gamekiller2111@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:33:59 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/30 16:25:17 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/02/01 10:14:24 by gamekiller2      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,12 @@ void	redir_type(t_redirection *redir, int *fd, t_shell *shell)
 	}
 }
 
-void	handle_redirections(t_redirection *redirs, t_shell *shell)
+void	handle_redirections(t_shell *shell)
 {
 	int				fd;
 	t_redirection	*redir;
 
-	redir = redirs;
+	redir = shell->current->redirs;
 	while (redir)
 	{
 		redir_type(redir, &fd, shell);
