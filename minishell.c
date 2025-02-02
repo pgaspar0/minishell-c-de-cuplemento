@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gamekiller2111 <gamekiller2111@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 08:00:27 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/02/01 11:41:36 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/02/02 09:36:24 by gamekiller2      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	shell_loop(char **envp)
 		free_matrix(shell.tokens);
 		execute_commands(&shell);
 	}
+	rl_clear_history();
 	free_envs(shell.envs);
 }
 
