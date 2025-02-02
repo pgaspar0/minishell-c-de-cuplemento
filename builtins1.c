@@ -6,7 +6,7 @@
 /*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 11:48:04 by jorcarva          #+#    #+#             */
-/*   Updated: 2025/02/01 11:48:05 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/02/02 09:59:45 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,34 +65,6 @@ int	is_builtin_command(char **args)
 // 	return (ret);
 // }
 
-// char	**split(const char *s, char c)
-// {
-// 	char	**ptr;
-// 	size_t	i;
-// 	size_t	len;
-
-// 	if (s == 0)
-// 		return (0);
-// 	i = 0;
-// 	ptr = malloc(sizeof(char *) * (ft_toklen(s, c) + 1));
-// 	if (ptr == 0)
-// 		return (0);
-// 	while (*s)
-// 	{
-// 		if (*s != c)
-// 		{
-// 			len = 0;
-// 			while (*s && *s != c && ++len)
-// 				++s;
-// 			ptr[i++] = ft_substr(s - len, 0, len);
-// 		}
-// 		else
-// 			++s;
-// 	}
-// 	ptr[i] = 0;
-// 	return (ptr);
-// }
-
 static int	is_only_n(char *word)
 {
 	int	i;
@@ -111,16 +83,19 @@ static int	is_only_n(char *word)
 	return (1);
 }
 
-// static void	many_n(char *word)
-// {
-//     int i;
-
-//     i = 0;
-//     while (word[i])
-//     {
-        
-//     }
-// }
+bool	identify_n(char **args, int *start_index)
+{
+	bool suppress_newline;
+	
+	suppress_newline = false;
+	while (args[*start_index] && (strcmp(args[*start_index], "-n") == 0
+			|| is_only_n(args[*start_index]) == 1))
+	{
+		suppress_newline = true;
+		(*start_index)++;
+	}
+	return suppress_newline;
+}
 
 void	ft_echo(char **args)
 {
@@ -129,12 +104,7 @@ void	ft_echo(char **args)
 
 	suppress_newline = false;
 	start_index = 1;
-	if (args[start_index] && (strcmp(args[start_index], "-n") == 0
-			|| is_only_n(args[start_index]) == 1))
-	{
-		suppress_newline = true;
-		start_index++;
-	}
+	suppress_newline = identify_n(args, &start_index);
 	for (int i = start_index; args[i] != NULL; i++)
 	{
 		printf("%s", args[i]);
@@ -148,6 +118,33 @@ void	ft_echo(char **args)
 		printf("\n");
 	}
 }
+
+// void	ft_echo(char **args)
+// {
+// 	bool	suppress_newline;
+// 	int		start_index;
+
+// 	suppress_newline = false;
+// 	start_index = 1;
+// 	if (args[start_index] && (strcmp(args[start_index], "-n") == 0
+// 			|| is_only_n(args[start_index]) == 1))
+// 	{
+// 		suppress_newline = true;
+// 		start_index++;
+// 	}
+// 	for (int i = start_index; args[i] != NULL; i++)
+// 	{
+// 		printf("%s", args[i]);
+// 		if (args[i + 1] != NULL)
+// 		{
+// 			printf(" ");
+// 		}
+// 	}
+// 	if (!suppress_newline)
+// 	{
+// 		printf("\n");
+// 	}
+// }
 
 int	ft_pwd(void)
 {
@@ -164,29 +161,26 @@ int	ft_pwd(void)
 	return(0);
 }
 
-#include <errno.h>
+// void my_cd(const char *path) {
+//     char *home_dir;
 
-// Função para mudar de diretório
-void my_cd(const char *path) {
-    char *home_dir;
+//     // Caso o caminho seja NULL ou "~", muda para o diretório inicial
+//     if (path == NULL || strcmp(path, "~") == 0) {
+//         home_dir = getenv("HOME");
+//         if (!home_dir) {
+//             printf("Erro: Variável HOME não está definida.\n");
+//             return;
+//         }
+//         path = home_dir;
+//     }
 
-    // Caso o caminho seja NULL ou "~", muda para o diretório inicial
-    if (path == NULL || strcmp(path, "~") == 0) {
-        home_dir = getenv("HOME");
-        if (!home_dir) {
-            printf("Erro: Variável HOME não está definida.\n");
-            return;
-        }
-        path = home_dir;
-    }
-
-    // Tenta mudar para o diretório especificado
-    if (chdir(path) != 0) {
-        // Exibe uma mensagem de erro detalhada
-        fprintf(stderr, "Erro ao mudar para o diretório '%s': %s\n", path, strerror(errno));
-        return;
-    }
-}
+//     // Tenta mudar para o diretório especificado
+//     if (chdir(path) != 0) {
+//         // Exibe uma mensagem de erro detalhada
+//         fprintf(stderr, "Erro ao mudar para o diretório '%s': %s\n", path, strerror(errno));
+//         return;
+//     }
+// }
  
 int ft_cd(char **input_path, t_env *envs) {
     char *path = NULL;
@@ -212,44 +206,3 @@ int ft_cd(char **input_path, t_env *envs) {
         perror("getcwd");
 	return (0);
 }
-
-// int main(int argc, char **argv)
-// {
-//     if(strcmp(argv[1], "echo"))
-//         echo_command(argv);
-//     if (argc == 2 && strcmp(argv[1], "pwd") == 0)
-//         execute_pwd();
-//     else
-//         printf("Usage: %s pwd\n", argv[0]);
-//     return (0);
-// }
-
-/* int main(int argc, char **argv) {
-
-	//printf("%s\n",argv[2]);
-	// Example 1: echo "Hello World"
-	//char **example1;
-	if (!(argc > 2))
-		return (0);
-	if (strcmp(argv[2], "-n") == 0)
-	{
-		//example1 = split(argv[3]);
-		printf("Output of \"echo -n\": ");
-		echo_command(argv+1);
-	}
-	else
-	{
-		//example1 = split(argv[2]);
-		printf("Output of \"echo\": ");
-		echo_command(argv+1);
-		printf("\n");
-	}
-
-	return (0);
-} */
-
-// void    ft_unset(t_env **envs, char *key_name)
-// {
-//     while()
-//     ;
-// }
