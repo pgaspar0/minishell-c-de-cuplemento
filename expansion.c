@@ -6,7 +6,7 @@
 /*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 19:33:16 by jorcarva          #+#    #+#             */
-/*   Updated: 2025/02/01 11:03:55 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/02/02 10:59:32 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,7 +205,7 @@ char *expand_variable(char *input, int pos, t_env *envs)
     while ((input[i] >= 'A' && input[i] <= 'Z') || 
            (input[i] >= 'a' && input[i] <= 'z') || 
            (input[i] >= '0' && input[i] <= '9') || 
-           input[i] == '_')
+           input[i] == '_' || input[i] == '?')
     {
         key_len++;
         i++;
