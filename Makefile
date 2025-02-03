@@ -1,7 +1,7 @@
 COMPILER = cc
 FLAGS = -Wall -Wextra -Werror -g 
 NAME = minishell
-SRCS = minishell.c builtins1.c expansion.c exit_status.c exit.c builtins_execution.c env_vars_builtins.c env_vars_builtins2.c env_vars_builtins3.c env_vars.c undefined_class.c free_functions.c parsing.c execution_functions.c execution_functions2.c tokenization.c redirections.c pipex.c hfuncs.c hfuncs2.c
+SRCS = minishell.c builtins1.c builtins2.c expansion.c expansion2.c exit_status.c exit.c builtins_execution.c env_vars_builtins.c env_vars_builtins2.c env_vars_builtins3.c env_vars.c undefined_class.c free_functions.c parsing.c execution_functions.c execution_functions2.c tokenization.c redirections.c pipex.c hfuncs.c hfuncs2.c
 OBJS = ${SRCS:.c=.o}
 
 .c.o:

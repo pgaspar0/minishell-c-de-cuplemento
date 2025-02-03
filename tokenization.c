@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenization.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:31:19 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/02/03 11:41:45 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/02/03 15:09:08 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,26 +40,38 @@ void	do_tokenize(t_tokenizer *tk, size_t *i)
 	}
 }
 
-/* static void	print_new_input(const char *input)
+static int	are_quotes_balanced(const char *str)
 {
-		printf("New input: %s\n", input);
-} */
+	int	single_quote;
+	int	double_quote;
 
-static int are_quotes_balanced(const char *str) {
-    int single_quote = 0;  // Controle para aspas simples
-    int double_quote = 0;  // Controle para aspas duplas
-
-    while (*str) { // Percorre cada caractere da string
-        if (*str == '\'' && double_quote == 0) // Se for uma aspa simples e NÃO estiver dentro de aspas duplas
-            single_quote = !single_quote; // Alterna o estado (0 → 1 ou 1 → 0)
-        else if (*str == '"' && single_quote == 0) // Se for uma aspa dupla e NÃO estiver dentro de aspas simples
-            double_quote = !double_quote; // Alterna o estado (0 → 1 ou 1 → 0)
-        str++; // Avança para o próximo caractere
-    }
-    // Se qualquer um for 1, há aspas não fechadas
-    if (single_quote || double_quote)
-        return 0; // Erro: aspas não balanceadas
-    return 1; // Ok: todas as aspas estão balanceadas
+	single_quote = 0;
+	double_quote = 0;
+	while (*str)
+	{
+		if (*str == '\'' && double_quote == 0)
+			single_quote = !single_quote;
+		else if (*str == '"' && single_quote == 0)
+			double_quote = !double_quote;
+		str++;
+	}
+	if (single_quote || double_quote)
+		return (0);
+	return (1);
+}
+int	tokenize2(t_tokenizer *tk, size_t i)
+{
+	i = 0;
+	while (tk->new_input[i])
+	{
+		while (tk->new_input[i] && ft_isspace(tk->new_input[i]))
+			i++;
+		if (tk->new_input[i] == '\0')
+			break ;
+		tk->start = i;
+		do_tokenize(&(*tk), &i);
+	}
+	return (i);
 }
 
 char	**tokenize(t_shell *shell)
@@ -68,10 +80,8 @@ char	**tokenize(t_shell *shell)
 	t_tokenizer	tk;
 	size_t		i;
 
-	if(are_quotes_balanced(shell->input) == 0)
-	{
+	if (are_quotes_balanced(shell->input) == 0)
 		return (NULL);
-	}
 	expansion_result = ft_expansion(shell->input, shell->envs, 0);
 	if (contains_dollar_sign(shell->input) && expansion_result)
 		tk.new_input = ft_strdup(expansion_result);
@@ -85,15 +95,7 @@ char	**tokenize(t_shell *shell)
 	}
 	tk.token_count = 0;
 	i = 0;
-	while (tk.new_input[i])
-	{
-		while (tk.new_input[i] && ft_isspace(tk.new_input[i]))
-			i++;
-		if (tk.new_input[i] == '\0')
-			break ;
-		tk.start = i;
-		do_tokenize(&tk, &i);
-	}
+	i = tokenize2(&tk, i);
 	tk.tokens[tk.token_count] = NULL;
 	free(tk.new_input);
 	free(expansion_result);

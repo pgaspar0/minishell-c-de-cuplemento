@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 08:01:11 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/02/03 13:54:53 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/02/03 14:48:20 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,10 +97,10 @@ int							here_doc(char *delimiter, t_shell *shell);
 int							is_dquotes(const char *input);
 int							contains_dollar_sign(const char *input);
 int							exit_func(char *exit_code);
-int							execute_builtin(t_shell *shell);
+int							execute_builtin(t_shell *shell, char **args);
 int							is_nbr(const char *str);
 int							ft_exit(t_env **env, char **args, char *exit_code, t_shell *shell);
-int							ft_cd(char **input_path, t_env *envs);
+int							ft_cd(char **input_path);//, t_env *envs);
 int							ft_pwd(void);
 int							has_squotes(const char *str);
 int							cuta(t_shell *shell);

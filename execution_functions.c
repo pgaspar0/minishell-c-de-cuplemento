@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_functions.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:28:31 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/02/03 13:47:04 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/02/03 14:37:15 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,13 @@ void	case_builtin_alone(t_command *current, t_env **envs, t_shell *shell)
 	int	ret;
 
 	handle_redirections(shell);
-	ret = execute_builtin(shell);
+	ret = execute_builtin(shell, current->args);
 	dup2(shell->original_stdout_fd, STDOUT_FILENO);
 	update_exit_status(envs, g_status_changer(ret));
 }
 
 void	execute_child(int *pipe_fd, int *in_fd, t_shell *shell)
 {
-	signal(SIGQUIT, handle_sigquit);
 	if (*in_fd != 0)
 	{
 		dup2(*in_fd, 0);
@@ -48,13 +47,15 @@ void	execute_child(int *pipe_fd, int *in_fd, t_shell *shell)
 	handle_redirections(shell);
 	if (is_builtin_command(shell->current->args))
 	{
-		shell->ret = execute_builtin(shell->current->args, &shell->envs);
+		shell->ret = execute_builtin(shell, shell->current->args);
 		exit(shell->ret);
 	}
 	else
 	{
 		shell->env_matrix = env_to_matrix(shell->envs);
 		shell->ret = cuta(shell);
+		free_commands(shell->commands);
+		free_envs(shell->envs);
 		free_matrix(shell->env_matrix);
 		exit(shell->ret);
 	}
@@ -66,6 +67,7 @@ void	fork_and_execute(int *pipe_fd, int *in_fd, t_shell *shell)
 	int		status;
 
 	g_int(1);
+	signal(SIGQUIT, sigquit);
 	pid = fork();
 	if (pid == -1)
 	{
@@ -86,6 +88,7 @@ void	fork_and_execute(int *pipe_fd, int *in_fd, t_shell *shell)
 			*in_fd = pipe_fd[0];
 		}
 	}
+	signal(SIGQUIT, SIG_IGN);
 	g_int(0);
 }
 
