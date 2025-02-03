@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 19:08:50 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/02/03 11:25:44 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/02/03 16:36:02 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 void	print_error_message(char **command)
 {
-	struct stat path_stat;
+	struct stat	path_stat;
 
 	ft_memset(&path_stat, 0, sizeof(struct stat));
 	if (!command || !command[0])
-		return;
+		return ;
 	stat(command[0], &path_stat);
 	if (S_ISDIR(path_stat.st_mode))
 	{
@@ -48,7 +48,7 @@ int	cuta(t_shell *shell)
 	if (!shell->current->args || !shell->current->args[0] || ft_strlen(shell->current->args[0]) == 0)
 	{
 		print_error_message(shell->current->args);
-		return(127);
+		return (127);
 	}
 	path = ft_getenv("PATH", shell->envs);
 	path_copy = ft_split(path, ':');
@@ -58,12 +58,12 @@ int	cuta(t_shell *shell)
 	{
 		print_error_message(shell->current->args);
 		free_matrix(path_copy);
-		return(127);
+		return (127);
 	}
 	if (execve(caminho, shell->current->args, shell->env_matrix) == -1)
 	{
 		perror("Error");
-		return(1);
+		return (1);
 	}
-	return(0);
+	return (0);
 }
