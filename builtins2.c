@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 14:50:46 by jorcarva          #+#    #+#             */
-/*   Updated: 2025/02/03 14:53:16 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/02/03 16:22:11 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ static int	is_only_n(char *word)
 
 bool	identify_n(char **args, int *start_index)
 {
-	bool suppress_newline;
-	
+	bool	suppress_newline;
+
 	suppress_newline = false;
 	while (args[*start_index] && (strcmp(args[*start_index], "-n") == 0
 			|| is_only_n(args[*start_index]) == 1))
@@ -41,24 +41,27 @@ bool	identify_n(char **args, int *start_index)
 		suppress_newline = true;
 		(*start_index)++;
 	}
-	return suppress_newline;
+	return (suppress_newline);
 }
 
 void	ft_echo(char **args)
 {
 	bool	suppress_newline;
 	int		start_index;
+	int		i;
 
 	suppress_newline = false;
 	start_index = 1;
 	suppress_newline = identify_n(args, &start_index);
-	for (int i = start_index; args[i] != NULL; i++)
+	i = start_index;
+	while (args[i] != NULL)
 	{
 		printf("%s", args[i]);
 		if (args[i + 1] != NULL)
 		{
 			printf(" ");
 		}
+		i++;
 	}
 	if (!suppress_newline)
 	{
@@ -74,26 +77,29 @@ int	ft_pwd(void)
 	if (cwd == NULL)
 	{
 		perror("pwd");
-		return(1);
+		return (1);
 	}
 	printf("%s\n", cwd);
 	free(cwd);
-	return(0);
+	return (0);
 }
- 
-int ft_cd(char **input_path)
-{
-    char *path = NULL;
 
+int	ft_cd(char **input_path)
+{
+	char	*current_dir;
+	char	*path;
+
+	path = NULL;
 	path = input_path[1];
-	if (chdir(path) != 0) {
-        perror("cd");
-        return (1);
-    }
-    char *current_dir = getcwd(NULL, 0);
-    if (current_dir)
-        free(current_dir);
+	if (chdir(path) != 0)
+	{
+		perror("cd");
+		return (1);
+	}
+	current_dir = getcwd(NULL, 0);
+	if (current_dir)
+		free(current_dir);
 	else
-        perror("getcwd");
+		perror("getcwd");
 	return (0);
 }
