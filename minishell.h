@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 08:01:11 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/02/03 14:48:20 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/02/03 16:10:54 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,15 @@
 # define MINISHELL_H
 
 # include "./libft/libft.h"
-# include "pipex.h"
 # include <errno.h>
 # include <fcntl.h>
-# include <sys/stat.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
 # include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
@@ -99,8 +98,9 @@ int							contains_dollar_sign(const char *input);
 int							exit_func(char *exit_code);
 int							execute_builtin(t_shell *shell, char **args);
 int							is_nbr(const char *str);
-int							ft_exit(t_env **env, char **args, char *exit_code, t_shell *shell);
-int							ft_cd(char **input_path);//, t_env *envs);
+int							ft_exit(t_env **env, char **args, char *exit_code,
+								t_shell *shell);
+int							ft_cd(char **input_path); //, t_env *envs);
 int							ft_pwd(void);
 int							has_squotes(const char *str);
 int							cuta(t_shell *shell);
@@ -127,6 +127,7 @@ void						free_envs(t_env *envs);
 void						execute_commands(t_shell *t_shell);
 void						execute_commands_iterative(t_shell *shell);
 
+char						*get_caminho(char **path_copy, char **command);
 char						*ft_getenv(const char *varname, t_env *env_list);
 char						*get_caminho(char **path_copy, char **command);
 char						*mat_concat(char **mat);
