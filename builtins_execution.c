@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_execution.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 18:47:33 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/02/03 15:55:52 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/02/03 16:03:11 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	execute_builtin(t_shell *shell, char **args)
 	}
 	else if (ft_strcmp(args[0], "pwd") == 0)
 		ret = ft_pwd();
-	else 
-		return(execute_builtin2(shell, args));
+	else
+		return (execute_builtin2(shell, args));
 	return (ret);
 }
