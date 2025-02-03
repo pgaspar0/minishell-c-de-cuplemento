@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmendes <nmendes@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 19:35:48 by nmendes           #+#    #+#             */
-/*   Updated: 2024/05/18 17:09:52 by nmendes          ###   ########.fr       */
+/*   Updated: 2025/02/03 12:14:34 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*ft_itoa(int n)
 	unsigned int	num;
 
 	i = num_size(n);
-	s = malloc(sizeof(char) * (i + 1));
+	s = ft_calloc(sizeof(char), (i + 1));
 	if (!s)
 		return (NULL);
 	if (n < 0)

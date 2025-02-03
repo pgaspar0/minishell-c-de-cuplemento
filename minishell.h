@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gamekiller2111 <gamekiller2111@student.    +#+  +:+       +#+        */
+/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 08:01:11 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/02/02 12:35:33 by gamekiller2      ###   ########.fr       */
+/*   Updated: 2025/02/03 13:54:53 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,9 @@ int							here_doc(char *delimiter, t_shell *shell);
 int							is_dquotes(const char *input);
 int							contains_dollar_sign(const char *input);
 int							exit_func(char *exit_code);
-int							execute_builtin(char **args, t_env **envs);
+int							execute_builtin(t_shell *shell);
 int							is_nbr(const char *str);
-int							ft_exit(t_env **env, char **args, char *exit_code);
+int							ft_exit(t_env **env, char **args, char *exit_code, t_shell *shell);
 int							ft_cd(char **input_path, t_env *envs);
 int							ft_pwd(void);
 int							has_squotes(const char *str);
@@ -116,7 +116,7 @@ void						print_error(char *arg);
 void						skip_quotes(const char *input, size_t *index,
 								char quote);
 void						ft_env(t_env *env);
-void						handle_sigquit(int sig);
+void						sigquit(int sig);
 void						ft_export_no(t_env **env);
 void						update_exit_status(t_env **envs, int status);
 void						ft_export(t_env **env, char *var);

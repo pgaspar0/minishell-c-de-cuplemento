@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_functions2.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gamekiller2111 <gamekiller2111@student.    +#+  +:+       +#+        */
+/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 19:08:50 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/02/02 12:35:16 by gamekiller2      ###   ########.fr       */
+/*   Updated: 2025/02/03 11:25:44 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int	cuta(t_shell *shell)
 	}
 	path = ft_getenv("PATH", shell->envs);
 	path_copy = ft_split(path, ':');
+	free(path);
 	caminho = get_caminho(path_copy, shell->current->args);
 	if (!caminho)
 	{
@@ -59,7 +60,7 @@ int	cuta(t_shell *shell)
 		free_matrix(path_copy);
 		return(127);
 	}
-	if (execve(caminho, shell->current->args, shell->env_matrix))
+	if (execve(caminho, shell->current->args, shell->env_matrix) == -1)
 	{
 		perror("Error");
 		return(1);

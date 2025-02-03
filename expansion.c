@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 19:33:16 by jorcarva          #+#    #+#             */
-/*   Updated: 2025/02/02 10:59:32 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/02/03 13:28:16 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,12 +186,15 @@ int has_squotes(const char *str) {
 // }
 
 //TESTANDO CORREÇÃO DO CODIGO ABAIXO:
-char *get_env_value(t_env *envs, const char *key)
+char *get_env_value(t_env *envs, const char *key, int *flag)
 {
     while (envs)
     {
         if (strcmp(envs->key, key) == 0)
+        {
+            *flag = 1;
             return envs->value;
+        }
         envs = envs->next;
     }
     return NULL;
@@ -199,6 +202,7 @@ char *get_env_value(t_env *envs, const char *key)
 
 char *expand_variable(char *input, int pos, t_env *envs)
 {
+    int flag;
     int i = pos + 1;
     int key_len = 0;
 
@@ -213,10 +217,13 @@ char *expand_variable(char *input, int pos, t_env *envs)
     if (key_len == 0)
         return input;
     char *key = strndup(&input[pos + 1], key_len);
-    char *value = get_env_value(envs, key);
+    flag = 0;
+    char *value = get_env_value(envs, key, &flag);
     free(key);
-    if (!value)
+    if (!value && flag == 0)
         return input;
+    else if (!value && flag == 1)
+        value = "";
     int new_len = strlen(input) - key_len + strlen(value);
     char *new_str = malloc(new_len + 1);
     if (!new_str)

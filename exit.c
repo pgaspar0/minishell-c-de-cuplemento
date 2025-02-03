@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 13:41:54 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/30 16:48:52 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/02/03 13:56:29 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,17 @@ void	print_error(char *arg)
 	ft_putstr_fd(": numeric argument required\n", 2);
 }
 
-int	ft_exit(t_env **env, char **args, char *exit_code)
+//int	ft_exit(t_shell *shell)
+int	ft_exit(t_env **env, char **args, char *exit_code, t_shell *shell)
 {
 	ft_putstr_fd("exit\n", 2);
 	if (!args[1])
 	{
 		update_env(env, "?", "0", 2);
+		free_commands(shell->commands);
+		free_envs(shell->envs);
+		free(shell->input);
+		free_matrix(shell->tokens);
 		exit(0);
 	}
 	if (!is_nbr(args[1]) || (ft_atol(args[1]) < INT_MIN
@@ -57,6 +62,10 @@ int	ft_exit(t_env **env, char **args, char *exit_code)
 	{
 		print_error(args[1]);
 		update_env(env, "?", "2", 2);
+		free_commands(shell->commands);
+		free_envs(shell->envs);
+		free(shell->input);
+		free_matrix(shell->tokens);
 		exit(2);
 	}
 	if (args[2])
@@ -69,5 +78,9 @@ int	ft_exit(t_env **env, char **args, char *exit_code)
 	g_status_changer(ft_atoi(exit_code));
 	update_env(env, "?", exit_code, 2);
 	free(exit_code);
+		free_commands(shell->commands);
+		free_envs(shell->envs);
+		free(shell->input);
+		free_matrix(shell->tokens);
 	exit(g_status_changer(-1));
 }

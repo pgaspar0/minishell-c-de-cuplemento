@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:31:19 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/31 18:31:40 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/02/03 11:41:45 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,20 +64,19 @@ static int are_quotes_balanced(const char *str) {
 
 char	**tokenize(t_shell *shell)
 {
+	char		*expansion_result;
 	t_tokenizer	tk;
 	size_t		i;
 
 	if(are_quotes_balanced(shell->input) == 0)
 	{
-		//printf("Error: Unclosed quotes\n");
 		return (NULL);
 	}
-	if (contains_dollar_sign(shell->input) && ft_expansion(shell->input,
-			shell->envs, 0)) // && has_squotes(shell->input) == 0
-		tk.new_input = ft_expansion(shell->input, shell->envs, 0);
+	expansion_result = ft_expansion(shell->input, shell->envs, 0);
+	if (contains_dollar_sign(shell->input) && expansion_result)
+		tk.new_input = ft_strdup(expansion_result);
 	else
 		tk.new_input = ft_strdup(shell->input);
-	// print_new_input(tk.new_input);
 	tk.tokens = ft_calloc(sizeof(char *), 1000000);
 	if (!tk.tokens)
 	{
@@ -97,9 +96,6 @@ char	**tokenize(t_shell *shell)
 	}
 	tk.tokens[tk.token_count] = NULL;
 	free(tk.new_input);
-	/* for (size_t j = 0; j < tk.token_count; j++)
-	{
-		printf("Token %zu: %s\n", j, tk.tokens[j]);
-	} */
+	free(expansion_result);
 	return (tk.tokens);
 }

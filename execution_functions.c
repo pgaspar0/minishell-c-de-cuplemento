@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_functions.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gamekiller2111 <gamekiller2111@student.    +#+  +:+       +#+        */
+/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:28:31 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/02/02 13:33:06 by gamekiller2      ###   ########.fr       */
+/*   Updated: 2025/02/03 13:47:04 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	case_builtin_alone(t_command *current, t_env **envs, t_shell *shell)
 	int	ret;
 
 	handle_redirections(shell);
-	ret = execute_builtin(current->args, envs);
+	ret = execute_builtin(shell);
 	dup2(shell->original_stdout_fd, STDOUT_FILENO);
 	update_exit_status(envs, g_status_changer(ret));
 }
