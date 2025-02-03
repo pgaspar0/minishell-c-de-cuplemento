@@ -6,7 +6,7 @@
 /*   By: gamekiller2111 <gamekiller2111@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 08:01:11 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/02/01 10:21:51 by gamekiller2      ###   ########.fr       */
+/*   Updated: 2025/02/02 12:35:33 by gamekiller2      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,9 +103,9 @@ int							ft_exit(t_env **env, char **args, char *exit_code);
 int							ft_cd(char **input_path, t_env *envs);
 int							ft_pwd(void);
 int							has_squotes(const char *str);
+int							cuta(t_shell *shell);
 
 void						handle_redirections(t_shell *shell);
-void						cuta(t_shell *shell);
 void						free_redirections(t_redirection *redir);
 void						free_commands(t_command *cmd);
 void						ft_export_multiple(t_env **env, char **args);

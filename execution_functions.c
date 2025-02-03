@@ -6,7 +6,7 @@
 /*   By: gamekiller2111 <gamekiller2111@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:28:31 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/02/01 10:21:53 by gamekiller2      ###   ########.fr       */
+/*   Updated: 2025/02/02 13:33:06 by gamekiller2      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,9 @@ void	execute_child(int *pipe_fd, int *in_fd, t_shell *shell)
 	else
 	{
 		shell->env_matrix = env_to_matrix(shell->envs);
-		cuta(shell);
+		shell->ret = cuta(shell);
 		free_matrix(shell->env_matrix);
-		exit(0);
+		exit(shell->ret);
 	}
 }
 
