@@ -6,7 +6,7 @@
 /*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 19:33:16 by jorcarva          #+#    #+#             */
-/*   Updated: 2025/02/03 15:54:27 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/02/03 16:12:19 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ char *expand_variable(char *input, int pos, t_env *envs)
     key_len = is_valid_char(input, i);
     if (key_len == 0)
         return input;
+    printf("Chegou aqui\n");
     char *key = strndup(&input[pos + 1], key_len);
     flag = 0;
     char *value = get_env_value(envs, key, &flag);
@@ -74,8 +75,10 @@ char *expand_variables(char *input, t_env *envs)
 
     if (!input)
         return (NULL);
-    while (input[i]) {
-        if (input[i] == '$') {
+    while (input[i])
+    {
+        if (input[i] == '$')
+        {
             input = expand_variable(input, i, envs);
         }
         i++;
@@ -90,7 +93,6 @@ char    *ft_expansion(const char *input, t_env *envs, int flag)
     new_input = ft_strdup(input);
     if (has_squotes(input) && flag == 0)
         return (new_input);
-    printf("Chegou aqui\n");
     new_input = expand_variables(new_input, envs);
     return(new_input);
 }
