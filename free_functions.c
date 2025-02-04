@@ -6,16 +6,11 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:26:17 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/31 17:58:33 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/02/03 19:03:19 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// function to free everything in shell struct if exists in the end of the program
-
-
-// function to free the envs list
 
 void	free_envs(t_env *envs)
 {

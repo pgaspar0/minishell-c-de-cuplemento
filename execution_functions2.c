@@ -6,7 +6,7 @@
 /*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 19:08:50 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/02/03 16:36:02 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/02/03 18:55:02 by pgaspar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,22 @@ void	print_error_message(char **command)
 	}
 }
 
+int	error_check(t_shell *shell)
+{
+	if (!shell->current->args || !shell->current->args[0])
+		return (1);
+	else if (ft_strlen(shell->current->args[0]) == 0)
+		return (1);
+	return (0);
+}
+
 int	cuta(t_shell *shell)
 {
 	char	*caminho;
 	char	*path;
 	char	**path_copy;
 
-	if (!shell->current->args || !shell->current->args[0] || ft_strlen(shell->current->args[0]) == 0)
+	if (error_check(shell))
 	{
 		print_error_message(shell->current->args);
 		return (127);
