@@ -3,40 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gamekiller2111 <gamekiller2111@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 08:00:27 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/02/03 12:57:02 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/02/04 22:14:18 by gamekiller2      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	sigquit(int sig)
-{
-	(void)sig;
-	g_status_changer(131);
-	write(2, "Quit (core dumped)\n", 19);
-	rl_on_new_line();
-	if (g_int(-1) == 0)
-	{
-		rl_replace_line("", 0);
-		rl_redisplay();
-	}
-}
-
-void	handle_sigint(int sig)
-{
-	(void)sig;
-	g_status_changer(130);
-	write(1, "\n", 1);
-	rl_on_new_line();
-	if (g_int(-1) == 0)
-	{
-		rl_replace_line("", 0);
-		rl_redisplay();
-	}
-}
 
 void	shell_loop(char **envp)
 {

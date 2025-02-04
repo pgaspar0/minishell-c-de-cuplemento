@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_matrix.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gamekiller2111 <gamekiller2111@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:11:53 by pgaspar           #+#    #+#             */
-/*   Updated: 2024/11/29 12:02:02 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/02/04 22:03:21 by gamekiller2      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	free_matrix(char **s)
 	while (s[i])
 	{
 		free(s[i]);
-		// s[i] = NULL;
 		i++;
 	}
 	free(s);

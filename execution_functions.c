@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_functions.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gamekiller2111 <gamekiller2111@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:28:31 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/02/03 14:37:15 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/02/04 22:13:15 by gamekiller2      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,7 @@ void	execute_child(int *pipe_fd, int *in_fd, t_shell *shell)
 	{
 		shell->env_matrix = env_to_matrix(shell->envs);
 		shell->ret = cuta(shell);
-		free_commands(shell->commands);
-		free_envs(shell->envs);
+		free_all(shell);
 		free_matrix(shell->env_matrix);
 		exit(shell->ret);
 	}
@@ -66,8 +65,7 @@ void	fork_and_execute(int *pipe_fd, int *in_fd, t_shell *shell)
 	pid_t	pid;
 	int		status;
 
-	g_int(1);
-	signal(SIGQUIT, sigquit);
+	signal_on_off(0);
 	pid = fork();
 	if (pid == -1)
 	{
@@ -88,8 +86,7 @@ void	fork_and_execute(int *pipe_fd, int *in_fd, t_shell *shell)
 			*in_fd = pipe_fd[0];
 		}
 	}
-	signal(SIGQUIT, SIG_IGN);
-	g_int(0);
+	signal_on_off(1);
 }
 
 void	execute_commands_iterative(t_shell *shell)

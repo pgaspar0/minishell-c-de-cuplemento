@@ -3,12 +3,11 @@
 /*                                                        :::      ::::::::   */
 /*   expansion3.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gamekiller2111 <gamekiller2111@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 16:30:07 by jorcarva          #+#    #+#             */
-/*   Updated: 2025/02/03 16:56:15 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/02/04 21:57:49 by gamekiller2      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-

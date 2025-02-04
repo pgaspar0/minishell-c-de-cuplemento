@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_vars_builtins.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gamekiller2111 <gamekiller2111@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:36:36 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/23 16:50:09 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/02/04 23:57:45 by gamekiller2      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,7 @@ void	ft_unset(t_env **env, char *var)
 	{
 		current = *env;
 		*env = (*env)->next;
-		free(current->key);
-		free(current->value);
-		free(current);
+		unset_free(current);
 	}
 	current = *env;
 	prev = NULL;
@@ -32,9 +30,7 @@ void	ft_unset(t_env **env, char *var)
 		if (ft_strcmp(current->key, var) == 0)
 		{
 			prev->next = current->next;
-			free(current->key);
-			free(current->value);
-			free(current);
+			unset_free(current);
 			break ;
 		}
 		prev = current;
@@ -80,57 +76,27 @@ int	is_valid_identifier(char *key)
 void	update_env(t_env **env, char *key, char *value, int flag)
 {
 	t_env	*current;
-	t_env	*new_node;
 
 	current = *env;
 	while (current)
 	{
 		if (ft_strcmp(current->key, key) == 0)
 		{
-			if (value)
-			{
-				free(current->value);
-				if (current->flag != flag)
-					current->flag = flag;
-				current->value = ft_strdup(value);
-			}
+			update_existing_env(current, value, flag);
 			return ;
 		}
 		current = current->next;
 	}
-	new_node = malloc(sizeof(t_env));
-	if (!new_node)
-		return ;
-	new_node->key = ft_strdup(key);
-	if (value)
-		new_node->value = ft_strdup(value);
-	else
-		new_node->value = NULL;
-	new_node->flag = flag;
-	new_node->next = *env;
-	*env = new_node;
+	add_new_env(env, key, value, flag);
 }
 
 void	ft_export(t_env **env, char *var)
 {
-	int		flag;
-	char	*equal;
 	char	*key;
 	char	*value;
+	int		flag;
 
-	equal = ft_strchr(var, '=');
-	if (!equal)
-	{
-		key = ft_strdup(var);
-		value = NULL;
-		flag = 1;
-	}
-	else
-	{
-		key = ft_substr(var, 0, equal - var);
-		value = ft_strdup(equal + 1);
-		flag = 0;
-	}
+	parse_var(var, &key, &value, &flag);
 	if (!is_valid_identifier(key))
 	{
 		printf("export: `%s': not a valid identifier\n", key);

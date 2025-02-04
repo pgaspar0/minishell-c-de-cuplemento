@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_execution.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gamekiller2111 <gamekiller2111@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 18:47:33 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/02/03 16:03:11 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/02/04 22:00:02 by gamekiller2      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	execute_builtin2(t_shell *shell, char **args)
 			ft_export_multiple(&shell->envs, args);
 	}
 	else if (ft_strcmp(args[0], "unset") == 0)
-	{	
+	{
 		if (!args[1])
 			return (0);
 		ft_unset_multiple(&shell->envs, args);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gamekiller2111 <gamekiller2111@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/18 13:41:54 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/02/03 15:35:53 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/02/04 22:48:43 by gamekiller2      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,20 @@ void	print_error(char *arg)
 	ft_putstr_fd(": numeric argument required\n", 2);
 }
 
+void	finish_exit(t_env **env, char *exit_code, t_shell *shell)
+{
+	g_status_changer(ft_atoi(exit_code));
+	update_env(env, "?", exit_code, 2);
+	free_all(shell);
+}
+
 int	ft_exit(t_env **env, char **args, char *exit_code, t_shell *shell)
 {
 	ft_putstr_fd("exit\n", 2);
 	if (!args[1])
 	{
 		update_env(env, "?", "0", 2);
-		free_commands(shell->commands);
-		free_envs(shell->envs);
+		free_all(shell);
 		exit(0);
 	}
 	if (!is_nbr(args[1]) || (ft_atol(args[1]) < INT_MIN
@@ -59,8 +65,7 @@ int	ft_exit(t_env **env, char **args, char *exit_code, t_shell *shell)
 	{
 		print_error(args[1]);
 		update_env(env, "?", "2", 2);
-		free_commands(shell->commands);
-		free_envs(shell->envs);
+		free_all(shell);
 		exit(2);
 	}
 	if (args[2])
@@ -70,10 +75,7 @@ int	ft_exit(t_env **env, char **args, char *exit_code, t_shell *shell)
 		return (1);
 	}
 	exit_code = ft_itoa(exit_func(args[1]));
-	g_status_changer(ft_atoi(exit_code));
-	update_env(env, "?", exit_code, 2);
+	finish_exit(env, exit_code, shell);
 	free(exit_code);
-	free_commands(shell->commands);
-	free_envs(shell->envs);
 	exit(g_status_changer(-1));
 }

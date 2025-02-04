@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gamekiller2111 <gamekiller2111@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 19:33:16 by jorcarva          #+#    #+#             */
-/*   Updated: 2025/02/03 16:55:36 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/02/04 21:57:09 by gamekiller2      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ char	*get_env_value(t_env *envs, const char *key, int *flag)
 	}
 	return (NULL);
 }
+
 int	is_valid_char(char *input, int i)
 {
 	int	key_len;

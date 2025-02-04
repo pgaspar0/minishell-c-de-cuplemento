@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gamekiller2111 <gamekiller2111@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:26:17 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/02/03 19:03:19 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/02/04 22:06:53 by gamekiller2      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,8 @@ void	free_envs(t_env *envs)
 
 void	free_all(t_shell *shell)
 {
-	if (shell->input)
-		free(shell->input);
-	if (shell->tokens)
-		free_matrix(shell->tokens);
-	if (shell->commands)
-		free_commands(shell->commands);
-	if (shell->envs)
-		free_envs(shell->envs);
+	free_envs(shell->envs);
+	free_commands(shell->commands);
 }
 
 void	free_redirections(t_redirection *redir)
