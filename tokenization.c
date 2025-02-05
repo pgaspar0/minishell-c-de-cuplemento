@@ -6,7 +6,7 @@
 /*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:31:19 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/02/05 16:14:13 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/02/05 20:06:22 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int	tokenize2(t_tokenizer *tk, size_t i)
 		if (tk->new_input[i] == '\0')
 			break ;
 		tk->start = i;
+		printf("valor de i: %ld\n",i);
 		do_tokenize(&(*tk), &i);
 	}
 	return (i);
