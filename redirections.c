@@ -6,7 +6,7 @@
 /*   By: gamekiller2111 <gamekiller2111@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:33:59 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/02/01 10:14:24 by gamekiller2      ###   ########.fr       */
+/*   Updated: 2025/02/06 07:06:21 by gamekiller2      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,9 @@ void	redir_type(t_redirection *redir, int *fd, t_shell *shell)
 	}
 	else if (redir->type == 3)
 	{
+		signal(SIGINT, SIG_DFL);
 		*fd = here_doc(redir->file, shell);
+		signal(SIGINT, handle_sigint);
 		dup2(*fd, 0);
 	}
 }
