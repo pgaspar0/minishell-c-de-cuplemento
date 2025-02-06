@@ -6,7 +6,7 @@
 /*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 08:00:27 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/02/05 15:07:14 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/02/06 19:46:21 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ void	shell_loop(char **envp)
 			free(shell.input);
 			continue ;
 		}
-		for(int i = 0; shell.tokens[i]; i++)
-			printf("tokens: %s\n",shell.tokens[i]);
 		shell.commands = parse_commands(shell.tokens);
 		free_matrix(shell.tokens);
 		execute_commands(&shell);

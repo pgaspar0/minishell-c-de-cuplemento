@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gamekiller2111 <gamekiller2111@student.    +#+  +:+       +#+        */
+/*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 08:01:11 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/02/05 00:10:22 by gamekiller2      ###   ########.fr       */
+/*   Updated: 2025/02/06 19:37:42 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,5 +146,9 @@ char						**env_to_matrix(t_env *env_list);
 char						**tokenize(t_shell *shell);
 char						*ft_expansion(const char *input, t_env *envs,
 								int flag);
+char						**do_tokenize1(t_tokenizer *tk, size_t *i,
+								int in_single_quote, int in_double_quote);
+char						**do_tokenize2(t_tokenizer *tk, size_t *i,
+								int in_single_quote, int in_double_quote);
 
 #endif

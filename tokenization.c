@@ -6,7 +6,7 @@
 /*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:31:19 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/02/05 20:06:22 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/02/06 19:45:07 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,15 @@
 
 void	do_tokenize(t_tokenizer *tk, size_t *i)
 {
+	int	in_single_quote;
+	int	in_double_quote;
+
+	in_single_quote = 0;
+	in_double_quote = 0;
 	tk->quoted = (tk->new_input[*i] == '\'' || tk->new_input[*i] == '"');
 	if (tk->quoted)
 	{
-		skip_quotes(tk->new_input, i, tk->new_input[*i]);
-		tk->tokens[tk->token_count++] = ft_substr(tk->new_input, tk->start + 1,
-				*i - tk->start - 2);
+		tk->tokens = do_tokenize1(tk, i, in_single_quote, in_double_quote);
 	}
 	else if (is_special_char(tk->new_input[*i]))
 	{
@@ -32,11 +35,7 @@ void	do_tokenize(t_tokenizer *tk, size_t *i)
 	}
 	else
 	{
-		while (tk->new_input[*i] && !ft_isspace(tk->new_input[*i])
-			&& !is_special_char(tk->new_input[*i]))
-			(*i)++;
-		tk->tokens[tk->token_count++] = ft_substr(tk->new_input, tk->start, *i
-				- tk->start);
+		tk->tokens = do_tokenize2(tk, i, in_single_quote, in_double_quote);
 	}
 }
 
@@ -70,7 +69,6 @@ int	tokenize2(t_tokenizer *tk, size_t i)
 		if (tk->new_input[i] == '\0')
 			break ;
 		tk->start = i;
-		printf("valor de i: %ld\n",i);
 		do_tokenize(&(*tk), &i);
 	}
 	return (i);

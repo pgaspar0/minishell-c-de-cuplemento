@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_status.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 11:58:02 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/23 14:59:50 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/02/06 20:01:40 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,34 @@ void	update_exit_status(t_env **envs, int status)
 {
 	char	*status_str;
 
+	if (!envs)
+		return;
 	if (WIFEXITED(status))
 		g_status_changer(WEXITSTATUS(status));
 	else if (WIFSIGNALED(status))
 		g_status_changer(128 + WTERMSIG(status));
 	else
 		g_status_changer(1);
-	status_str = ft_itoa(g_status_changer(-1));
+	status_str = ft_itoa(g_status_changer(0));
+	if (!status_str)
+		return;
 	update_env(envs, "?", status_str, 2);
 	free(status_str);
 }
+
+// void	update_exit_status(t_env **envs, int status)
+// {
+// 	char	*status_str;
+
+// 	if (!status)
+// 		return ;
+// 	if (WIFEXITED(status))
+// 		g_status_changer(WEXITSTATUS(status));
+// 	else if (WIFSIGNALED(status))
+// 		g_status_changer(128 + WTERMSIG(status));
+// 	else
+// 		g_status_changer(1);
+// 	status_str = ft_itoa(g_status_changer(0));
+// 	update_env(envs, "?", status_str, 2);
+// 	free(status_str);
+// }

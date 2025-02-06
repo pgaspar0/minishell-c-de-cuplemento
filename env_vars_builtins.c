@@ -6,7 +6,7 @@
 /*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:36:36 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/02/05 15:03:13 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/02/06 19:45:35 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ int	is_valid_identifier(char *key)
 	i = 1;
 	while (key[i])
 	{
-		if (!ft_isalnum(key[i]) && key[i] != '_' && key[i] != ' ' && key[i] != '\t')
+		if (!ft_isalnum(key[i]) && key[i] != '_' && key[i] != ' '
+			&& key[i] != '\t')
 			return (0);
 		i++;
 	}
@@ -97,7 +98,6 @@ void	ft_export(t_env **env, char *var)
 	int		flag;
 
 	parse_var(var, &key, &value, &flag);
-	printf("key value: %s\n",key);
 	if (!is_valid_identifier(key))
 	{
 		printf("export: `%s': not a valid identifier\n", key);
