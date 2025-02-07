@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 14:50:46 by jorcarva          #+#    #+#             */
-/*   Updated: 2025/02/03 16:22:11 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/02/07 12:47:34 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,15 +58,11 @@ void	ft_echo(char **args)
 	{
 		printf("%s", args[i]);
 		if (args[i + 1] != NULL)
-		{
 			printf(" ");
-		}
 		i++;
 	}
 	if (!suppress_newline)
-	{
 		printf("\n");
-	}
 }
 
 int	ft_pwd(void)

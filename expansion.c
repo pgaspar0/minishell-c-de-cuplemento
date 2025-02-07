@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gamekiller2111 <gamekiller2111@student.    +#+  +:+       +#+        */
+/*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 19:33:16 by jorcarva          #+#    #+#             */
-/*   Updated: 2025/02/06 07:36:30 by gamekiller2      ###   ########.fr       */
+/*   Updated: 2025/02/07 13:14:48 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,28 +44,28 @@ int	is_valid_char(char *input, int i)
 char	*expand_variable(char *input, int pos, t_env *envs)
 {
 	char	*key;
-	char	*value;
+	char	*val;
 	char	*new_str;
 	int		flag;
-	int		key_len;
+	int		len;
 
 	flag = 0;
-	key_len = is_valid_char(input, (pos + 1));
-	if (key_len == 0)
+	len = is_valid_char(input, (pos + 1));
+	if (len == 0)
 		return (input);
-	key = strndup(&input[pos + 1], key_len);
-	value = get_env_value(envs, key, &flag);
+	key = strndup(&input[pos + 1], len);
+	val = get_env_value(envs, key, &flag);
 	free(key);
-	if (!value && flag == 0)
+	if (!val && flag == 0)
 		return (input);
-	else if (!value && flag == 1)
-		value = "";
-	new_str = malloc((strlen(input) - key_len + strlen(value)) + 1);
+	else if (!val && flag == 1)
+		val = "";
+	new_str = ft_calloc(sizeof(char), (strlen(input) - len + strlen(val)) + 5);
 	if (!new_str)
 		return (NULL);
 	strncpy(new_str, input, pos);
-	strcpy(new_str + pos, value);
-	strcpy(new_str + pos + strlen(value), &input[pos + 1 + key_len]);
+	strcpy(new_str + pos, val);
+	strcpy(new_str + pos + strlen(val), &input[pos + 1 + len]);
 	free(input);
 	return (new_str);
 }
@@ -74,17 +74,12 @@ char	*expand_variables(char *input, t_env *envs)
 {
 	int	i;
 
-	i = 0;
+	i = -1;
 	if (!input)
 		return (NULL);
-	while (input[i])
-	{
+	while (input != NULL && input[++i])
 		if (input[i] == '$')
-		{
 			input = expand_variable(input, i, envs);
-		}
-		i++;
-	}
 	return (input);
 }
 

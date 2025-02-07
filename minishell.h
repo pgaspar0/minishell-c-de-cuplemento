@@ -6,7 +6,7 @@
 /*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 08:01:11 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/02/06 19:37:42 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/02/07 13:08:20 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ typedef struct s_shell
 {
 	int						original_stdout_fd;
 	int						exit_status;
+	int						status;
 	int						ret;
 	t_env					*envs;
 	char					*input;

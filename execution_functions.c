@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_functions.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gamekiller2111 <gamekiller2111@student.    +#+  +:+       +#+        */
+/*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:28:31 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/02/04 22:13:15 by gamekiller2      ###   ########.fr       */
+/*   Updated: 2025/02/07 13:09:38 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	execute_commands(t_shell *shell)
 {
 	if (!shell->commands)
 		return ;
+	shell->status = 0;
 	execute_commands_iterative(shell);
 	free_commands(shell->commands);
 	free(shell->input);
@@ -63,7 +64,6 @@ void	execute_child(int *pipe_fd, int *in_fd, t_shell *shell)
 void	fork_and_execute(int *pipe_fd, int *in_fd, t_shell *shell)
 {
 	pid_t	pid;
-	int		status;
 
 	signal_on_off(0);
 	pid = fork();
@@ -76,8 +76,8 @@ void	fork_and_execute(int *pipe_fd, int *in_fd, t_shell *shell)
 		execute_child(pipe_fd, in_fd, shell);
 	else
 	{
-		waitpid(pid, &status, 0);
-		update_exit_status(&shell->envs, status);
+		waitpid(pid, &shell->status, 0);
+		update_exit_status(&shell->envs, shell->status);
 		if (*in_fd != 0)
 			close(*in_fd);
 		if (shell->current->next)

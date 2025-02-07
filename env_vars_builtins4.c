@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_vars_builtins4.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gamekiller2111 <gamekiller2111@student.    +#+  +:+       +#+        */
+/*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 23:23:15 by gamekiller2       #+#    #+#             */
-/*   Updated: 2025/02/05 00:06:28 by gamekiller2      ###   ########.fr       */
+/*   Updated: 2025/02/07 12:45:19 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	add_new_env(t_env **env, char *key, char *value, int flag)
 {
 	t_env	*new_node;
 
-	new_node = malloc(sizeof(t_env));
+	new_node = ft_calloc(sizeof(t_env), 1);
 	if (!new_node)
 		return ;
 	new_node->key = ft_strdup(key);

@@ -6,7 +6,7 @@
 /*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 11:58:02 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/02/06 20:01:40 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/02/07 13:04:08 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,16 @@ void	update_exit_status(t_env **envs, int status)
 	char	*status_str;
 
 	if (!envs)
-		return;
+		return ;
 	if (WIFEXITED(status))
 		g_status_changer(WEXITSTATUS(status));
 	else if (WIFSIGNALED(status))
 		g_status_changer(128 + WTERMSIG(status));
 	else
 		g_status_changer(1);
-	status_str = ft_itoa(g_status_changer(0));
+	status_str = ft_itoa(g_status_changer(-1));
 	if (!status_str)
-		return;
+		return ;
 	update_env(envs, "?", status_str, 2);
 	free(status_str);
 }
