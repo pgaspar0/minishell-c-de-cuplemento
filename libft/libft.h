@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gamekiller2111 <gamekiller2111@student.    +#+  +:+       +#+        */
+/*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 17:37:53 by pgaspar           #+#    #+#             */
-/*   Updated: 2024/12/05 21:07:15 by gamekiller2      ###   ########.fr       */
+/*   Updated: 2025/02/08 18:33:16 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,9 @@ int					ft_strcmp(char *s1, char *s2);
 int					ft_strncmp(const char *str1, const char *str2, size_t n);
 int					ft_memcmp(const void *ptr1, const void *ptr2, size_t n);
 int					get_strlen(char *s);
+char				*ft_strndup(const char *s, size_t n);
+char				*ft_strcpy(char *dst, const char *src);
+char				*ft_strncpy(char *dst, const char *src, size_t len);
 char				*ft_itoa(int i);
 char				*ft_strchr(const char *str, int c);
 char				**ft_split(const char *s, char c);

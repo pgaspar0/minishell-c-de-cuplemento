@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gamekiller2111 <gamekiller2111@student.    +#+  +:+       +#+        */
+/*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:33:59 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/02/06 07:06:21 by gamekiller2      ###   ########.fr       */
+/*   Updated: 2025/02/08 18:09:32 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ int	here_doc(char *delimiter, t_shell *shell)
 	}
 	saved_stdout = dup(STDOUT_FILENO);
 	dup2(shell->original_stdout_fd, STDOUT_FILENO);
-	line = ft_expansion(readline("heredoc> "), shell->envs, 1);
+	line = ft_expansion(readline("> "), shell->envs, 1);
 	while (line && ft_strncmp(delimiter, line, ft_strlen(delimiter)))
 	{
 		ft_putstr_fd(line, pipe_fd[1]);
 		ft_putchar_fd('\n', pipe_fd[1]);
 		free(line);
-		line = ft_expansion(readline("heredoc> "), shell->envs, 1);
+		line = ft_expansion(readline("> "), shell->envs, 1);
 	}
 	free(line);
 	close(pipe_fd[1]);
@@ -59,14 +59,12 @@ void	redir_type(t_redirection *redir, int *fd, t_shell *shell)
 	}
 	else if (redir->type == 3)
 	{
-		signal(SIGINT, SIG_DFL);
 		*fd = here_doc(redir->file, shell);
-		signal(SIGINT, handle_sigint);
 		dup2(*fd, 0);
 	}
 }
 
-void	handle_redirections(t_shell *shell)
+int	handle_redirections(t_shell *shell)
 {
 	int				fd;
 	t_redirection	*redir;
@@ -75,7 +73,10 @@ void	handle_redirections(t_shell *shell)
 	while (redir)
 	{
 		redir_type(redir, &fd, shell);
+		if (fd == -1)
+			return (-1);
 		close(fd);
 		redir = redir->next;
 	}
+	return (0);
 }

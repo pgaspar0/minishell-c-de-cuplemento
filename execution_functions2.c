@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_functions2.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgaspar <pgaspar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 19:08:50 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/02/03 18:55:02 by pgaspar          ###   ########.fr       */
+/*   Updated: 2025/02/08 17:29:18 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,15 @@ int	error_check(t_shell *shell)
 	else if (ft_strlen(shell->current->args[0]) == 0)
 		return (1);
 	return (0);
+}
+
+void	do_execute(t_shell *shell)
+{
+	shell->env_matrix = env_to_matrix(shell->envs);
+	shell->ret = cuta(shell);
+	free_all(shell);
+	free_matrix(shell->env_matrix);
+	exit(shell->ret);
 }
 
 int	cuta(t_shell *shell)

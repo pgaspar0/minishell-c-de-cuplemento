@@ -6,21 +6,18 @@
 /*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 19:33:16 by jorcarva          #+#    #+#             */
-/*   Updated: 2025/02/07 13:14:48 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/02/08 18:55:30 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_env_value(t_env *envs, const char *key, int *flag)
+char	*get_env_value(t_env *envs, const char *key)
 {
 	while (envs)
 	{
 		if (strcmp(envs->key, key) == 0)
-		{
-			*flag = 1;
 			return (envs->value);
-		}
 		envs = envs->next;
 	}
 	return (NULL);
@@ -46,26 +43,23 @@ char	*expand_variable(char *input, int pos, t_env *envs)
 	char	*key;
 	char	*val;
 	char	*new_str;
-	int		flag;
 	int		len;
 
-	flag = 0;
 	len = is_valid_char(input, (pos + 1));
 	if (len == 0)
 		return (input);
-	key = strndup(&input[pos + 1], len);
-	val = get_env_value(envs, key, &flag);
+	key = ft_strndup(&input[pos + 1], len);
+	val = get_env_value(envs, key);
 	free(key);
-	if (!val && flag == 0)
-		return (input);
-	else if (!val && flag == 1)
+	if (!val)
 		val = "";
-	new_str = ft_calloc(sizeof(char), (strlen(input) - len + strlen(val)) + 5);
+	new_str = ft_calloc(sizeof(char), (ft_strlen(input) - len + ft_strlen(val))
+			+ 5);
 	if (!new_str)
 		return (NULL);
-	strncpy(new_str, input, pos);
-	strcpy(new_str + pos, val);
-	strcpy(new_str + pos + strlen(val), &input[pos + 1 + len]);
+	ft_strncpy(new_str, input, pos);
+	ft_strcpy(new_str + pos, val);
+	ft_strcpy(new_str + pos + strlen(val), &input[pos + 1 + len]);
 	free(input);
 	return (new_str);
 }
@@ -87,6 +81,8 @@ char	*ft_expansion(const char *input, t_env *envs, int flag)
 {
 	char	*new_input;
 
+	if (!input)
+		return (NULL);
 	new_input = ft_strdup(input);
 	if (has_squotes(input) && flag == 0)
 		return (new_input);

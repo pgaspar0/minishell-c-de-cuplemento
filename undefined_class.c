@@ -6,7 +6,7 @@
 /*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 12:39:31 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/01/30 08:34:27 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/02/08 17:22:42 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	open_file(const char *filename, int flags, int mode)
 	if (fd == -1)
 	{
 		perror("Error opening file");
-		exit(1);
+		return (-1);
 	}
 	return (fd);
 }

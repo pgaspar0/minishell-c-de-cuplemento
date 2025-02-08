@@ -6,7 +6,7 @@
 /*   By: jorcarva <jorcarva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 08:01:11 by pgaspar           #+#    #+#             */
-/*   Updated: 2025/02/07 13:08:20 by jorcarva         ###   ########.fr       */
+/*   Updated: 2025/02/08 18:07:46 by jorcarva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,8 @@ int							ft_cd(char **input_path);
 int							ft_pwd(void);
 int							has_squotes(const char *str);
 int							cuta(t_shell *shell);
+int							handle_redirections(t_shell *shell);
 
-void						handle_redirections(t_shell *shell);
 void						free_redirections(t_redirection *redir);
 void						free_commands(t_command *cmd);
 void						ft_export_multiple(t_env **env, char **args);
@@ -117,6 +117,7 @@ void						print_error(char *arg);
 void						skip_quotes(const char *input, size_t *index,
 								char quote);
 void						ft_env(t_env *env);
+void						do_execute(t_shell *shell);
 void						handle_sigint(int sig);
 void						signal_on_off(int flag);
 void						sigquit(int sig);
